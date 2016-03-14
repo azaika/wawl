@@ -86,7 +86,7 @@ namespace wawl {
 			EnableSecurityCamouflage = SECURITY_SQOS_PRESENT
 		};
 
-		// access mode for pipe access
+		// simple access descriptor
 		enum SimpleAccessDesc : Uint32 {
 			Write = GENERIC_WRITE,
 			Read = GENERIC_READ,
