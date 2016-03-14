@@ -128,19 +128,20 @@ namespace wawl {
 
 
 		// get file size in byte 
-		inline std::int64_t getFileSize(FileHandle file) {
+		inline Int64 getFileSize(FileHandle file) {
 			::LARGE_INTEGER li;
+
 			if (::GetFileSizeEx(file, &li))
 				throw static_cast<Error>(::GetLastError());
 
-			return static_cast<std::int64_t>(li.QuadPart);
+			return static_cast<Int64>(li.QuadPart);
 		}
 
 		// read text from file and write it buffer
 		inline bool readFile(
 			FileHandle file,
 			Tstring& buf,
-			std::size_t n
+			Uint32 n
 			) {
 			Uint32 readSize;
 
