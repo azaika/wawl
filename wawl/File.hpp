@@ -175,5 +175,22 @@ namespace wawl {
 					) != 0;
 		}
 
+		// copy a file (not an async function)
+		inline bool copyFile(
+			const Tstring& baseFileName,
+			const Tstring& newFileName,
+			bool isOverwrite = true
+			) {
+			return ::CopyFile(
+				baseFileName.c_str(),
+				newFileName.c_str(),
+				isOverwrite
+				) != 0;
+		}
+
+		inline FileType getFileType(FileHandle file) {
+			return static_cast<FileType>(::GetFileType(file));
+		}
+
 	} // ::wawl::fs
 } // ::wawl

@@ -87,10 +87,18 @@ namespace wawl {
 		};
 
 		// simple access descriptor
-		enum SimpleAccessDesc : Uint32 {
+		enum class SimpleAccessDesc : Uint32 {
 			Write = GENERIC_WRITE,
 			Read = GENERIC_READ,
 			All = GENERIC_READ | GENERIC_WRITE
+		};
+
+		enum class FileType : Uint32 {
+			Text = FILE_TYPE_CHAR,
+			Disk = FILE_TYPE_DISK,
+			Pipe = FILE_TYPE_PIPE,
+			Remote = FILE_TYPE_REMOTE,
+			Unknown = FILE_TYPE_UNKNOWN
 		};
 
 	} // ::wawl::fs

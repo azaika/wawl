@@ -412,6 +412,27 @@ namespace wawl {
 						);
 			}
 
+			// force terminate process (normally deprecated)
+			inline bool terminateProcess(
+				const ProcessInfo& proc,
+				Uint exitCode = 0
+				) {
+				return ::TerminateProcess(proc.hProcess, exitCode) != 0;
+			}
+
+			// represent the process is still runnning
+			constexpr Uint32 StillActive = STILL_ACTIVE;
+
+			// get exit code of process
+			// if the process is still running, return StillActive
+			inline Uint32 getExitCode(const ProcessInfo& proc) {
+				Uint32 exitCode;
+
+				::GetExitCodeProcess(proc.hProcess, &exitCode);
+
+				return exitCode;
+			}
+
 		} // ::wawl::fs::proc
 	} // ::wawl::fs
 } // ::wawl
