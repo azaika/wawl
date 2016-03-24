@@ -6,6 +6,15 @@
 namespace wawl {
 	namespace wnd {
 
+		enum class ImageLoadOption : Uint {
+			DefaultColor = LR_DEFAULTCOLOR,
+			UseDIBSection = LR_CREATEDIBSECTION,
+			SysDefaultSize = LR_DEFAULTSIZE,
+			Monochrome = LR_MONOCHROME,
+			ShareHandle = LR_SHARED,
+			UseVGA = LR_VGACOLOR
+		};
+
 		// window show mode
 		enum class ShowMode : Uint16 {
 			ForceMinimize = SW_FORCEMINIMIZE,
@@ -37,28 +46,6 @@ namespace wawl {
 			Global = CS_GLOBALCLASS,
 			SaveBitmap = CS_SAVEBITS,
 			DropShadow = CS_DROPSHADOW
-		};
-
-		using IconHandle = ::HICON;
-
-		// default window icon
-		struct DefaultIcon {
-			static constexpr Tchar* App = IDI_APPLICATION;
-			static constexpr Tchar* Info = IDI_INFORMATION;
-			static constexpr Tchar* Question = IDI_QUESTION;
-			static constexpr Tchar* Error = IDI_ERROR;
-			static constexpr Tchar* Warning = IDI_WARNING;
-			static constexpr Tchar* WinLogo = IDI_WINLOGO;
-		};
-
-		using CursorHandle = ::HCURSOR;
-
-		// default cursor icon
-		struct DefaultCursor {
-			static constexpr Tchar* Arrow = IDC_ARROW;
-			static constexpr Tchar* Cross = IDC_CROSS;
-			static constexpr Tchar* IBeam = IDC_IBEAM;
-			static constexpr Tchar* Wait = IDC_WAIT;
 		};
 
 		// gdi color brushes
