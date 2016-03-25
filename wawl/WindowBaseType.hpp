@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #define ENABLE_WAWL_WINDOWBASETYPE
 
 #include "BaseType.hpp"
