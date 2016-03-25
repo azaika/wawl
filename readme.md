@@ -9,4 +9,7 @@ This is header only library.
 Use it free (of because, please according to license)  
 It is tested in VS2015.
 
-作者twitter: [@azaika_](http://www.twitter.com/azaika_)
+###LICENSE
+MIT license
+
+twitter: [@azaika_](http://www.twitter.com/azaika_)
