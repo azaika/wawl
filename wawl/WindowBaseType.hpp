@@ -2,6 +2,7 @@
 #define ENABLE_WAWL_WINDOWBASETYPE
 
 #include "BaseType.hpp"
+#include "MenuBaseType.hpp"
 
 namespace wawl {
 	namespace wnd {
@@ -140,6 +141,11 @@ namespace wawl {
 
 		// window procedure function
 		using ProcFunc = std::remove_pointer_t<::WNDPROC>;
+
+		using WindowHandle = ::HWND;
+		using ChildID = MenuHandle;
+
+		using CreateStruct = ::CREATESTRUCT;
 
 	} // ::wawl::wnd
 } // ::wawl
