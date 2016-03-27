@@ -95,7 +95,7 @@ namespace wawl {
 
 		static constexpr Position DefaultWindowPos = { CW_USEDEFAULT, CW_USEDEFAULT };
 
-		WindowHandle createWindow(
+		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
 			const Rectangle& wndRect,
@@ -120,7 +120,7 @@ namespace wawl {
 					(createStruct ? const_cast<CreateStruct*>(createStruct) : nullptr)
 					);
 		}
-		WindowHandle createWindow(
+		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
 			const Rectangle& wndRect
@@ -136,7 +136,7 @@ namespace wawl {
 					nullptr
 					);
 		}
-		WindowHandle createWindow(
+		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
 			const Rectangle& wndRect,
@@ -153,7 +153,7 @@ namespace wawl {
 					nullptr
 					);
 		}
-		WindowHandle createWindow(
+		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
 			const Rectangle& wndRect,
@@ -172,7 +172,7 @@ namespace wawl {
 					nullptr
 					);
 		}
-		WindowHandle createWindow(
+		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
 			const Rectangle& wndRect,
@@ -193,7 +193,7 @@ namespace wawl {
 					);
 		}
 
-		WindowHandle createChildWindow(
+		inline WindowHandle createChildWindow(
 			const Tstring& propName,
 			const Tstring& title,
 			const Rectangle& wndRect,
@@ -219,7 +219,7 @@ namespace wawl {
 					(createStruct ? const_cast<CreateStruct*>(createStruct) : nullptr)
 					);
 		}
-		WindowHandle createChildWindow(
+		inline WindowHandle createChildWindow(
 			const Tstring& propName,
 			const Tstring& title,
 			const Rectangle& wndRect,
@@ -238,7 +238,7 @@ namespace wawl {
 					nullptr
 					);
 		}
-		WindowHandle createChildWindow(
+		inline WindowHandle createChildWindow(
 			const Tstring& propName,
 			const Tstring& title,
 			const Rectangle& wndRect,
@@ -259,7 +259,7 @@ namespace wawl {
 					nullptr
 					);
 		}
-		WindowHandle createChildWindow(
+		inline WindowHandle createChildWindow(
 			const Tstring& propName,
 			const Tstring& title,
 			const Rectangle& wndRect,
@@ -281,6 +281,8 @@ namespace wawl {
 					&createStruct
 					);
 		}
+
+
 
 	} // ::wawl::wnd
 } // ::wawl
