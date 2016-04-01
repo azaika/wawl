@@ -5,6 +5,7 @@
 #include "Cursor.hpp"
 #include "Icon.hpp"
 #include "Menu.hpp"
+#include "BaseUtility.hpp"
 
 namespace wawl {
 	namespace wnd {
@@ -282,7 +283,63 @@ namespace wawl {
 					);
 		}
 
+		inline bool setRect(WindowHandle window, const Rectangle& rect, bool doRedraw = true) {
+			return ::MoveWindow(window, rect.x, rect.y, rect.w, rect.h, doRedraw) != 0;
+		}
+		inline Rectangle getRect(WindowHandle window) {
+			::RECT rect = {};
 
+			bool res =
+				::GetWindowRect(
+					window,
+					&rect
+					) != 0;
+
+			return { rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top };
+		}
+
+		inline bool moveWindow(WindowHandle window, const Position& newPos, bool doRedraw = false) {
+			Rectangle&& old = getRect(window);
+
+			return ::MoveWindow(window, newPos.x, newPos.y, old.h, old.w, doRedraw) != 0;
+		}
+
+		inline bool resizeWindow(WindowHandle window, const Size& newSize, bool doRedraw = true) {
+			Rectangle&& old = getRect(window);
+
+			return ::MoveWindow(window, old.x, old.y, newSize.x, newSize.y, doRedraw) != 0;
+		}
+
+		inline bool setShowWindow(WindowHandle window, ShowMode mode) {
+			return ::ShowWindow(window, unpackEnum(mode)) != 0;
+		}
+
+		inline Option getStyle(WindowHandle window) {
+			return static_cast<Option>(::GetWindowLong(window, GWL_STYLE));
+		}
+
+		inline Position toScreenPos(WindowHandle window, const Position& clientPos) {
+			::LPPOINT posBuf;
+			posBuf->x = clientPos.x;
+			posBuf->y = clientPos.y;
+
+			::ClientToScreen(window, posBuf);
+
+			return{ posBuf->x, posBuf->y };
+		}
+		inline Position toClientPos(WindowHandle window, const Position& screenPos) {
+			::LPPOINT posBuf;
+			posBuf->x = screenPos.x;
+			posBuf->y = screenPos.y;
+
+			::ScreenToClient(window, posBuf);
+
+			return{ posBuf->x, posBuf->y };
+		}
+
+		inline LongPtr defaultProc(WindowHandle window, Msg msg, UintPtr lp, IntPtr rp) {
+			return ::DefWindowProc(window, unpackEnum(msg), lp, rp);
+		}
 
 	} // ::wawl::wnd
 } // ::wawl
