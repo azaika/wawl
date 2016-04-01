@@ -34,7 +34,7 @@ namespace wawl {
 		inline MenuItemInfo makeMenuSeparator(Uint id, bool drawByOwer = false) {
 			MenuItemInfo info = {};
 			info.cbSize = sizeof(MenuItemInfo);
-			info.fMask != MIIM_FTYPE;
+			info.fMask |= MIIM_FTYPE;
 			info.fType = MFT_SEPARATOR;
 
 			info.wID = id;

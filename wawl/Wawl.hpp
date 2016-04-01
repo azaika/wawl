@@ -7,3 +7,5 @@
 #include "Window.hpp"
 #include "MessageBox.hpp"
 #include "System.hpp"
+
+#define WawlMain _tWinMain

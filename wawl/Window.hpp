@@ -337,9 +337,14 @@ namespace wawl {
 			return{ posBuf->x, posBuf->y };
 		}
 
+		static auto& getForegroundWindow = ::GetForegroundWindow;
+		static auto& getActiveWindow = ::GetActiveWindow;
+
 		inline LongPtr defaultProc(WindowHandle window, Msg msg, UintPtr lp, IntPtr rp) {
 			return ::DefWindowProc(window, unpackEnum(msg), lp, rp);
 		}
+
+		static auto& quitAll = ::PostQuitMessage;
 
 	} // ::wawl::wnd
 } // ::wawl

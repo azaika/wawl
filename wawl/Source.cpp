@@ -1,6 +1,6 @@
 ﻿#include "Wawl.hpp"
 
-int WINAPI _tWinMain(
+int WINAPI WawlMain(
 	wawl::AppHandle,
 	wawl::AppHandle,
 	wawl::Tchar*,
