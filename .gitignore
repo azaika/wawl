@@ -6,8 +6,7 @@
 *.idb
 *.opensdf
 *.suo
-*.vcxproj
-*.filters
+*.vcxproj.user
 *.opendb
 Debug
 Release
