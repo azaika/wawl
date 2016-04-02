@@ -311,7 +311,7 @@ namespace wawl {
 			return ::MoveWindow(window, old.x, old.y, newSize.x, newSize.y, doRedraw) != 0;
 		}
 
-		inline void setRegionWindow(WindowHandle window, RegionData region) {
+		inline void setRegionWindow(WindowHandle window, const RegionData& region) {
 			::SetWindowRgn(window, region, true);
 		}
 
