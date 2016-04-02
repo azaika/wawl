@@ -137,6 +137,8 @@
     <ClInclude Include="MessageBox.hpp" />
     <ClInclude Include="Pipe.hpp" />
     <ClInclude Include="Process.hpp" />
+    <ClInclude Include="Region.hpp" />
+    <ClInclude Include="RegionBaseType.hpp" />
     <ClInclude Include="SecurityObjects.hpp" />
     <ClInclude Include="System.hpp" />
     <ClInclude Include="Wawl.hpp" />

@@ -8,6 +8,8 @@ namespace wawl {
 
 		using BitmapHandle = ::HBITMAP;
 
+		using BitmapHeader = ::BITMAP;
+
 		// options of image copy
 		enum class ImageCopyOption : Uint {
 			Move = LR_COPYDELETEORG,

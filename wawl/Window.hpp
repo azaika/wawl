@@ -5,6 +5,7 @@
 #include "Cursor.hpp"
 #include "Icon.hpp"
 #include "Menu.hpp"
+#include "Region.hpp"
 #include "BaseUtility.hpp"
 
 namespace wawl {
@@ -308,6 +309,10 @@ namespace wawl {
 			Rectangle&& old = getRect(window);
 
 			return ::MoveWindow(window, old.x, old.y, newSize.x, newSize.y, doRedraw) != 0;
+		}
+
+		inline void setRegionWindow(WindowHandle window, RegionData region) {
+			::SetWindowRgn(window, region, true);
 		}
 
 		inline bool setShowWindow(WindowHandle window, ShowMode mode) {

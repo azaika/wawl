@@ -37,6 +37,9 @@
     <Filter Include="ヘッダー ファイル\Window\Bitmap">
       <UniqueIdentifier>{1386748c-0c4a-40f0-826e-de15ffc5d934}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Window\Region">
+      <UniqueIdentifier>{5f5099fd-0cde-4e8a-a6fb-57d4f87d5bde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\readme.md">
@@ -124,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="BitmapBaseType.hpp">
       <Filter>ヘッダー ファイル\Window\Bitmap</Filter>
+    </ClInclude>
+    <ClInclude Include="Region.hpp">
+      <Filter>ヘッダー ファイル\Window\Region</Filter>
+    </ClInclude>
+    <ClInclude Include="RegionBaseType.hpp">
+      <Filter>ヘッダー ファイル\Window\Region</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
