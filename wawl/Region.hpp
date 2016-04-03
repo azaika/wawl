@@ -53,7 +53,7 @@ namespace wawl {
 			std::vector<POINT> points_;
 
 			for (auto point : points) {
-				POINT p;
+				::POINT p;
 				p.x = point.x;
 				p.y = point.y;
 				points_.push_back(p);
@@ -84,6 +84,10 @@ namespace wawl {
 		inline RegionData createRegion(const wawl::Position& pos, const double& radius) {
 			
 			return wawl::wnd::createRegion(pos, radius, radius);
+		}
+
+		inline void setRegionWindow(WindowHandle window, const RegionData& region) {
+			::SetWindowRgn(window, region, true);
 		}
 
 	}

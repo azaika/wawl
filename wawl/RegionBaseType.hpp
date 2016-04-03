@@ -1,6 +1,8 @@
 #pragma once
 #define ENABLE_WAWL_BITMAPBASETYPE
 
+#include <vector>
+
 #include"Region.hpp"
 
 namespace wawl {
