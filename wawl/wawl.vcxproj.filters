@@ -37,6 +37,9 @@
     <Filter Include="ヘッダー ファイル\Window\Bitmap">
       <UniqueIdentifier>{1386748c-0c4a-40f0-826e-de15ffc5d934}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\FileSystem\Process">
+      <UniqueIdentifier>{f8099695-31a6-4321-9ed2-7228c0780525}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\readme.md">
@@ -66,9 +69,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="FileSystem.hpp">
-      <Filter>ヘッダー ファイル\FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Process.hpp">
       <Filter>ヘッダー ファイル\FileSystem</Filter>
     </ClInclude>
     <ClInclude Include="WindowBaseType.hpp">
@@ -124,6 +124,15 @@
     </ClInclude>
     <ClInclude Include="BitmapBaseType.hpp">
       <Filter>ヘッダー ファイル\Window\Bitmap</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.hpp">
+      <Filter>ヘッダー ファイル\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Process.hpp">
+      <Filter>ヘッダー ファイル\FileSystem\Process</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessBaseType.hpp">
+      <Filter>ヘッダー ファイル\FileSystem\Process</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

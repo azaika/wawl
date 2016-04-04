@@ -125,6 +125,7 @@
     <ClInclude Include="ConsoleBaseType.hpp" />
     <ClInclude Include="Cursor.hpp" />
     <ClInclude Include="CursorBaseType.hpp" />
+    <ClInclude Include="Debug.hpp" />
     <ClInclude Include="Error.hpp" />
     <ClInclude Include="File.hpp" />
     <ClInclude Include="FileSystem.hpp" />
@@ -137,6 +138,7 @@
     <ClInclude Include="MessageBox.hpp" />
     <ClInclude Include="Pipe.hpp" />
     <ClInclude Include="Process.hpp" />
+    <ClInclude Include="ProcessBaseType.hpp" />
     <ClInclude Include="SecurityObjects.hpp" />
     <ClInclude Include="System.hpp" />
     <ClInclude Include="Wawl.hpp" />
