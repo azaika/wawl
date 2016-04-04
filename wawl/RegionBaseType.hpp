@@ -3,8 +3,6 @@
 
 #include <vector>
 
-#include"Region.hpp"
-
 namespace wawl {
 	namespace wnd {
 
