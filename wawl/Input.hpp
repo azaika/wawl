@@ -1,11 +1,11 @@
 ﻿#pragma once
 #define ENABLE_WAWL_INPUT
 
-#include <array>
-
 #include "BaseType.hpp"
 #include "BaseUtility.hpp"
 #include "Error.hpp"
+
+#include <array>
 
 namespace wawl {
 	namespace input {
@@ -214,16 +214,15 @@ namespace wawl {
 		}
 		
 		using Keyboard = std::array<bool, endOfKey + 1>;
-		Keyboard getAllKeyState(bool doGetToggle = false) {
+		bool getAllKeyState(Keyboard& keyboard, bool doGetToggle = false) {
 			static thread_local Uint8 kb[endOfKey + 1];
 			if (::GetKeyboardState(kb) == false)
-				throw static_cast<Error>(getLastError());
+				return false;
 
-			Keyboard ret;
-			for (size_t i = 0; i < ret.size(); ++i)
-				ret[i] = (kb[i] & (doGetToggle ? 1 : 0x80)) != 0;
+			for (size_t i = 0; i < keyboard.size(); ++i)
+				keyboard[i] = (kb[i] & (doGetToggle ? 1 : 0x80)) != 0;
 
-			return ret;
+			return true;
 		}
 
 		// send key input and release event

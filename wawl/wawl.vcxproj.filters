@@ -39,6 +39,8 @@
     </Filter>
     <Filter Include="ヘッダー ファイル\Window\Region">
       <UniqueIdentifier>{5f5099fd-0cde-4e8a-a6fb-57d4f87d5bde}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\FileSystem\Process">
+      <UniqueIdentifier>{f8099695-31a6-4321-9ed2-7228c0780525}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -69,9 +71,6 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="FileSystem.hpp">
-      <Filter>ヘッダー ファイル\FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="Process.hpp">
       <Filter>ヘッダー ファイル\FileSystem</Filter>
     </ClInclude>
     <ClInclude Include="WindowBaseType.hpp">
@@ -128,11 +127,20 @@
     <ClInclude Include="BitmapBaseType.hpp">
       <Filter>ヘッダー ファイル\Window\Bitmap</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Region.hpp">
       <Filter>ヘッダー ファイル\Window\Region</Filter>
     </ClInclude>
     <ClInclude Include="RegionBaseType.hpp">
       <Filter>ヘッダー ファイル\Window\Region</Filter>
+    <ClInclude Include="Debug.hpp">
+      <Filter>ヘッダー ファイル\FileSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Process.hpp">
+      <Filter>ヘッダー ファイル\FileSystem\Process</Filter>
+    </ClInclude>
+    <ClInclude Include="ProcessBaseType.hpp">
+      <Filter>ヘッダー ファイル\FileSystem\Process</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
