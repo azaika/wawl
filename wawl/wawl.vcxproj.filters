@@ -127,7 +127,6 @@
     <ClInclude Include="BitmapBaseType.hpp">
       <Filter>ヘッダー ファイル\Window\Bitmap</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="Region.hpp">
       <Filter>ヘッダー ファイル\Window\Region</Filter>
     </ClInclude>

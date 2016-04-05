@@ -138,12 +138,9 @@
     <ClInclude Include="MessageBox.hpp" />
     <ClInclude Include="Pipe.hpp" />
     <ClInclude Include="Process.hpp" />
-<<<<<<< HEAD
     <ClInclude Include="Region.hpp" />
     <ClInclude Include="RegionBaseType.hpp" />
-=======
     <ClInclude Include="ProcessBaseType.hpp" />
->>>>>>> azaikaorigin/master
     <ClInclude Include="SecurityObjects.hpp" />
     <ClInclude Include="System.hpp" />
     <ClInclude Include="Wawl.hpp" />
