@@ -1,150 +1,149 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\FileSystem">
-      <UniqueIdentifier>{7ad71b1c-0631-418e-8da5-10c328adfa88}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Window">
-      <UniqueIdentifier>{c61694bc-2710-4ca9-922b-149e0b7676fa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\FileSystem\File">
-      <UniqueIdentifier>{e77de99f-60a8-49cd-b94e-2bd99d5bfb59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\FileSystem\Console">
-      <UniqueIdentifier>{e42e68bc-b9a6-493e-990b-568aff65d468}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Window\Cursor">
-      <UniqueIdentifier>{b7456a1e-59e8-4ebe-a3fc-cc0513fef611}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Window\Icon">
-      <UniqueIdentifier>{a43e98b0-db70-4c13-bd6a-46e75a928658}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Window\Menu">
-      <UniqueIdentifier>{7d125bf2-e88f-4aa8-a602-d9598199e5a1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Window\Bitmap">
-      <UniqueIdentifier>{1386748c-0c4a-40f0-826e-de15ffc5d934}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Window\Region">
-      <UniqueIdentifier>{5f5099fd-0cde-4e8a-a6fb-57d4f87d5bde}</UniqueIdentifier>
-    <Filter Include="ヘッダー ファイル\FileSystem\Process">
-      <UniqueIdentifier>{f8099695-31a6-4321-9ed2-7228c0780525}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\readme.md">
-      <Filter>リソース ファイル</Filter>
-    </None>
-    <None Include="..\license">
-      <Filter>リソース ファイル</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="BaseType.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Error.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="BaseUtility.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Wawl.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Error.hpp">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="Input.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="WawlBase.hpp">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="FileSystem.hpp">
-      <Filter>ヘッダー ファイル\FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="WindowBaseType.hpp">
-      <Filter>ヘッダー ファイル\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="Pipe.hpp">
-      <Filter>ヘッダー ファイル\FileSystem</Filter>
-    </ClInclude>
-    <ClInclude Include="File.hpp">
-      <Filter>ヘッダー ファイル\FileSystem\File</Filter>
-    </ClInclude>
-    <ClInclude Include="FileBaseType.hpp">
-      <Filter>ヘッダー ファイル\FileSystem\File</Filter>
-    </ClInclude>
-    <ClInclude Include="SecurityObjects.hpp">
-      <Filter>ヘッダー ファイル\FileSystem\File</Filter>
-    </ClInclude>
-    <ClInclude Include="ConsoleBaseType.hpp">
-      <Filter>ヘッダー ファイル\FileSystem\Console</Filter>
-    </ClInclude>
-    <ClInclude Include="Console.hpp">
-      <Filter>ヘッダー ファイル\FileSystem\Console</Filter>
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="System.hpp">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="MessageBox.hpp">
-      <Filter>ヘッダー ファイル\Window</Filter>
+    <ClInclude Include="Wawl.hpp">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Window.hpp">
-      <Filter>ヘッダー ファイル\Window</Filter>
+    <ClInclude Include="WawlBase.hpp">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CursorBaseType.hpp">
-      <Filter>ヘッダー ファイル\Window\Cursor</Filter>
+    <ClInclude Include="Debug.hpp">
+      <Filter>ヘッダーファイル\FileSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Cursor.hpp">
-      <Filter>ヘッダー ファイル\Window\Cursor</Filter>
+    <ClInclude Include="FileSystem.hpp">
+      <Filter>ヘッダーファイル\FileSystem</Filter>
     </ClInclude>
-    <ClInclude Include="Icon.hpp">
-      <Filter>ヘッダー ファイル\Window\Icon</Filter>
+    <ClInclude Include="Console.hpp">
+      <Filter>ヘッダーファイル\FileSystem\Console</Filter>
     </ClInclude>
-    <ClInclude Include="IconBaseType.hpp">
-      <Filter>ヘッダー ファイル\Window\Icon</Filter>
+    <ClInclude Include="ConsoleBaseType.hpp">
+      <Filter>ヘッダーファイル\FileSystem\Console</Filter>
     </ClInclude>
-    <ClInclude Include="MenuBaseType.hpp">
-      <Filter>ヘッダー ファイル\Window\Menu</Filter>
+    <ClInclude Include="File.hpp">
+      <Filter>ヘッダーファイル\FileSystem\File</Filter>
     </ClInclude>
-    <ClInclude Include="Menu.hpp">
-      <Filter>ヘッダー ファイル\Window\Menu</Filter>
+    <ClInclude Include="FileBaseType.hpp">
+      <Filter>ヘッダーファイル\FileSystem\File</Filter>
     </ClInclude>
     <ClInclude Include="Bitmap.hpp">
-      <Filter>ヘッダー ファイル\Window\Bitmap</Filter>
+      <Filter>ヘッダーファイル\Window\Bitmap</Filter>
     </ClInclude>
     <ClInclude Include="BitmapBaseType.hpp">
-      <Filter>ヘッダー ファイル\Window\Bitmap</Filter>
+      <Filter>ヘッダーファイル\Window\Bitmap</Filter>
     </ClInclude>
-    <ClInclude Include="Region.hpp">
-      <Filter>ヘッダー ファイル\Window\Region</Filter>
+    <ClInclude Include="Cursor.hpp">
+      <Filter>ヘッダーファイル\Window\Cursor</Filter>
     </ClInclude>
-    <ClInclude Include="RegionBaseType.hpp">
-      <Filter>ヘッダー ファイル\Window\Region</Filter>
-    <ClInclude Include="Debug.hpp">
-      <Filter>ヘッダー ファイル\FileSystem</Filter>
+    <ClInclude Include="CursorBaseType.hpp">
+      <Filter>ヘッダーファイル\Window\Cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="Icon.hpp">
+      <Filter>ヘッダーファイル\Window\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="IconBaseType.hpp">
+      <Filter>ヘッダーファイル\Window\Icon</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.hpp">
+      <Filter>ヘッダーファイル\Window\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuBaseType.hpp">
+      <Filter>ヘッダーファイル\Window\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageBox.hpp">
+      <Filter>ヘッダーファイル\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.hpp">
+      <Filter>ヘッダーファイル\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowBaseType.hpp">
+      <Filter>ヘッダーファイル\Window</Filter>
+    </ClInclude>
+    <ClInclude Include="Pipe.hpp">
+      <Filter>ヘッダーファイル\FileSystem</Filter>
     </ClInclude>
     <ClInclude Include="Process.hpp">
-      <Filter>ヘッダー ファイル\FileSystem\Process</Filter>
+      <Filter>ヘッダーファイル\FileSystem\Process</Filter>
     </ClInclude>
     <ClInclude Include="ProcessBaseType.hpp">
-      <Filter>ヘッダー ファイル\FileSystem\Process</Filter>
+      <Filter>ヘッダーファイル\FileSystem\Process</Filter>
     </ClInclude>
+    <ClInclude Include="Region.hpp">
+      <Filter>ヘッダーファイル\Window\Region</Filter>
+    </ClInclude>
+    <ClInclude Include="RegionBaseType.hpp">
+      <Filter>ヘッダーファイル\Window\Region</Filter>
+    </ClInclude>
+    <ClInclude Include="SecurityObjects.hpp">
+      <Filter>ヘッダーファイル\FileSystem\File</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\license">
+      <Filter>リソースファイル</Filter>
+    </None>
+    <None Include="..\readme.md">
+      <Filter>リソースファイル</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ソースファイル">
+      <UniqueIdentifier>{3ddf2203-7eaa-41df-b181-780717469394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル">
+      <UniqueIdentifier>{2800c432-2282-4637-91f9-00ae904ad013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="リソースファイル">
+      <UniqueIdentifier>{85867e80-b528-4d57-b6dc-941319931d84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\FileSystem">
+      <UniqueIdentifier>{41f25d8e-24ac-4f34-8d4b-da79a24f81ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\FileSystem\Console">
+      <UniqueIdentifier>{be7b5688-2202-4a59-bd40-1dcb702150a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\FileSystem\File">
+      <UniqueIdentifier>{7aae69fe-8163-4d2e-921a-ef19b0919169}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\FileSystem\Process">
+      <UniqueIdentifier>{f7a685d4-ade5-42d5-ad21-2cb2d2d12d63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Window">
+      <UniqueIdentifier>{94832c29-d783-44f8-89ab-153c4a68f792}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Window\Bitmap">
+      <UniqueIdentifier>{163cb411-ac8f-4d51-bc57-7931f4592a08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Window\Cursor">
+      <UniqueIdentifier>{8f2f8db9-faa5-46e5-9477-1335b9958ef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Window\Icon">
+      <UniqueIdentifier>{ecac5892-9de8-4c14-8127-a9964460feb2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Window\Menu">
+      <UniqueIdentifier>{7ee0816f-b64b-48bf-bd19-2cc9d523756d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダーファイル\Window\Region">
+      <UniqueIdentifier>{d2bd36eb-fa81-4e6d-a47a-5a60a447346e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
