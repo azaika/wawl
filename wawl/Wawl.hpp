@@ -5,6 +5,7 @@
 #include "Input.hpp"
 #include "FileSystem.hpp"
 #include "Window.hpp"
+#include "Region.hpp"
 #include "MessageBox.hpp"
 #include "System.hpp"
 
