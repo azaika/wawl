@@ -1,12 +1,13 @@
-#pragma once
-#define ENABLE_WAWL_BITMAPBASETYPE
+﻿#pragma once
+#define ENABLE_WAWL_REGIONBASETYPE
 
-#include <vector>
+#include "BaseType.hpp"
 
 namespace wawl {
 	namespace wnd {
 
-		enum class CombineMode {
+		// region combine mode
+		enum class CombineMode : int {
 			And = RGN_AND,
 			Copy = RGN_COPY,
 			Dif = RGN_DIFF,
@@ -17,12 +18,21 @@ namespace wawl {
 			Xor = RGN_XOR,
 		};
 
-		enum class FillMode {
+		// result of combineRegion
+		enum class CombineResult : int {
+			Null = NULLREGION,
+			Rectangle = SIMPLEREGION,
+			Complex = COMPLEXREGION,
+			Failed = ERROR
+		};
+
+		// region fill mode
+		enum class FillMode : int {
 			Alternate = ALTERNATE,
 			Winding = WINDING
 		};
 
-		using RegionData = ::HRGN;
+		using RegionHandle = ::HRGN;
 
 	}
 }

@@ -5,7 +5,6 @@
 #include "Cursor.hpp"
 #include "Icon.hpp"
 #include "Menu.hpp"
-#include "Region.hpp"
 #include "BaseUtility.hpp"
 
 namespace wawl {

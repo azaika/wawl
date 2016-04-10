@@ -1,93 +1,88 @@
-#pragma once
-#define ENABLE_WAWL_BITMAP
+﻿#pragma once
+#define ENABLE_WAWL_REGION
 
-#include"BaseType.hpp"
-#include"BaseUtility.hpp"
-#include"RegionBaseType.hpp"
+#include <array>
+#include <vector>
+
+#include "WawlBase.hpp"
+#include "WindowBaseType.hpp"
+#include "RegionBaseType.hpp"
 
 namespace wawl {
 	namespace wnd {
 
-		inline const bool& cmpRegion(const RegionData& rgn1, const RegionData& rgn2) {
+		// equivalence comparison of region
+		inline bool equalsRegion(RegionHandle lhv, RegionHandle rhv) {
+			return ::EqualRgn(lhv, rhv) != 0;
+		}
+
+		inline CombineResult combineRegion(RegionHandle target, RegionHandle rgn1, RegionHandle rgn2, CombineMode mode) {
+			::CombineRgn(target, rgn1, rgn2, unpackEnum(mode));
+		}
+
+		inline RegionHandle createRegion(const Rectangle& rect, const Size& roundSize) {
 			return
-				static_cast<bool>(
-					::EqualRgn(
-						static_cast<HRGN>(rgn1),
-						static_cast<HRGN>(rgn2)
-						)
-					);
-		}
-
-		inline RegionData combine(const RegionData& rgn1, const RegionData& rgn2, CombineMode mode) {
-			RegionData ret;
-			::CombineRgn(static_cast<HRGN>(ret), static_cast<HRGN>(rgn1), static_cast<HRGN>(rgn2), static_cast<int>(mode));
-
-			return ret;
-		}
-
-		inline RegionData createRegion(const wawl::Rectangle& rect, const double& rx, const double& ry) {
-
-			return
-				static_cast<RegionData>(
-					::CreateRoundRectRgn(
-						rect.x,
-						rect.y,
-						rect.x + rect.w,
-						rect.y + rect.h,
-						rx,
-						ry
-						)
-					);
-		}
-
-		inline RegionData createRegion(const wawl::Rectangle& rect) {
-			return
-				static_cast<RegionData>(
-					wawl::wnd::createRegion(
-						rect
-						)
-					);
-		}
-
-		inline RegionData createRegion(const std::vector<wawl::Position>& points, FillMode mode) {
-			std::vector<POINT> points_;
-
-			for (auto point : points) {
-				::POINT p;
-				p.x = point.x;
-				p.y = point.y;
-				points_.push_back(p);
-			}
-
-			return static_cast<RegionData>(
-				::CreatePolygonRgn(
-					points_.data(),
-					points_.size(),
-					static_cast<int>(mode)
-					)
+				::CreateRoundRectRgn(
+					rect.x,
+					rect.y,
+					rect.x + rect.w,
+					rect.y + rect.h,
+					roundSize.x,
+					roundSize.y
 				);
 		}
 
-		inline RegionData createRegion(const wawl::Position& pos, const double& rx, const double& ry) {
-
+		inline RegionHandle createRectRegion(const Rectangle& rect) {
 			return
-				static_cast<RegionData>(
-					::CreateEllipticRgn(
-						pos.x - rx,
-						pos.y - ry,
-						pos.x + rx,
-						pos.y + ry
-						)
-					);
+				::CreateRectRgn(
+					rect.x,
+					rect.y,
+					rect.x + rect.w,
+					rect.y + rect.h
+				);
 		}
 
-		inline RegionData createRegion(const wawl::Position& pos, const double& radius) {
-			
-			return wawl::wnd::createRegion(pos, radius, radius);
+		inline RegionHandle createPolygonRegion(const Position* points, int n, FillMode fillMode) {
+			return
+				::CreatePolygonRgn(
+					reinterpret_cast<const ::POINT*>(points),
+					n,
+					unpackEnum(fillMode)
+				);
+		}
+		inline RegionHandle createPolygonRegion(const std::vector<Position>& points, FillMode fillMode) {
+			return
+				createPolygonRegion(
+					points.data(),
+					static_cast<int>(points.size()),
+					fillMode
+				);
+		}
+		template <size_t N>
+		inline RegionHandle createPolygonRegion(const std::array<Position, N>& points, FillMode fillMode) {
+			return
+				ceatePolygonRegion(
+					points.data(),
+					static_cast<int>(N),
+					fillMode
+				);
 		}
 
-		inline void setRegionWindow(WindowHandle window, const RegionData& region) {
-			::SetWindowRgn(window, region, true);
+		inline RegionHandle createEllipticRegion(const Rectangle& circumscribeRect) {
+			return
+				::CreateEllipticRgn(
+					circumscribeRect.x,
+					circumscribeRect.y,
+					circumscribeRect.x + circumscribeRect.w,
+					circumscribeRect.y + circumscribeRect.h
+				);
+		}
+
+		inline bool setWindowRegion(WindowHandle window, RegionHandle region, bool doRedraw = true) {
+			return ::SetWindowRgn(window, region, doRedraw) != 0;
+		}
+		inline bool resetWindowRegion(WindowHandle window, bool doRedraw = true) {
+			return ::SetWindowRgn(window, nullptr, doRedraw) != 0;
 		}
 
 	}
