@@ -23,7 +23,9 @@ namespace wawl {
 		}
 
 		static auto& occurLocalDebugException = ::DebugBreak;
-		static auto& occurDebugException = ::DebugBreakProcess;
+		inline bool occurDebugException(Handle procHandle) {
+			return ::DebugBreakProcess(handle);
+		}
 
 		static auto& fatalExit = ::FatalExit;
 
@@ -65,7 +67,7 @@ namespace wawl {
 		inline Uint32 writeMemory(
 			Handle procHandle,
 			const void* begin,
-			std::vector<Uint8> buffer
+			std::vector<Uint8>& buffer
 		) {
 			Uint32 writtenSize;
 
@@ -82,5 +84,5 @@ namespace wawl {
 				);
 		}
 
-	} // ::wawl::fs::debug
+	} // ::wawl::debug
 } // ::wawl

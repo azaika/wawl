@@ -9,4 +9,8 @@
 #include "MessageBox.hpp"
 #include "System.hpp"
 
+#ifdef _USRDLL
+#define WawlMain DllMain
+#else // _USRDLL
 #define WawlMain _tWinMain
+#endif // _USRDLL
