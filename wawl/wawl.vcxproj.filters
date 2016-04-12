@@ -22,9 +22,6 @@
     <ClInclude Include="WawlBase.hpp">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Debug.hpp">
-      <Filter>ヘッダーファイル\FileSystem</Filter>
-    </ClInclude>
     <ClInclude Include="FileSystem.hpp">
       <Filter>ヘッダーファイル\FileSystem</Filter>
     </ClInclude>
@@ -90,6 +87,9 @@
     </ClInclude>
     <ClInclude Include="SecurityObjects.hpp">
       <Filter>ヘッダーファイル\FileSystem\File</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.hpp">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
