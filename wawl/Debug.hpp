@@ -24,7 +24,7 @@ namespace wawl {
 
 		static auto& occurLocalDebugException = ::DebugBreak;
 		inline bool occurDebugException(Handle procHandle) {
-			return ::DebugBreakProcess(handle);
+			return ::DebugBreakProcess(procHandle) != 0;
 		}
 
 		static auto& fatalExit = ::FatalExit;
