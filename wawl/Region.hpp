@@ -17,10 +17,13 @@ namespace wawl {
 		}
 
 		inline CombineResult combineRegion(RegionHandle target, RegionHandle rgn1, RegionHandle rgn2, CombineMode mode) {
-			::CombineRgn(target, rgn1, rgn2, unpackEnum(mode));
+			return static_cast<CombineResult>(::CombineRgn(target, rgn1, rgn2, unpackEnum(mode)));
 		}
+        inline CombineResult mergeRegion(RegionHandle to, RegionHandle from, CombineMode mode) {
+            return static_cast<CombineResult>(::CombineRgn(to, to, from, unpackEnum(mode)));
+        }
 
-		inline RegionHandle createRegion(const Rectangle& rect, const Size& roundSize) {
+		inline RegionHandle createRoundRectRegion(const Rectangle& rect, const Size& roundSize) {
 			return
 				::CreateRoundRectRgn(
 					rect.x,

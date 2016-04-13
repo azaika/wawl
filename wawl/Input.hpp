@@ -11,7 +11,7 @@ namespace wawl {
 	namespace input {
 
 		inline Position getCursorPos() {
-			LPPOINT pos;
+			::LPPOINT pos;
 			::GetCursorPos(pos);
 
 			return Position{ pos->x, pos->y };
@@ -207,7 +207,7 @@ namespace wawl {
 			PA1 = VK_PA1,
 			SpecialClear = VK_OEM_CLEAR
 		};
-		constexpr size_t endOfKey = 0xff;
+		static constexpr size_t endOfKey = 0xff;
 
 		inline bool getKeyState(KeyCode key, bool doGetToggle = false) {
 			return (::GetAsyncKeyState(static_cast<int>(key)) & (doGetToggle ? 1 : 0x8000)) != 0;
