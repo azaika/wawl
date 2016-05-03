@@ -169,7 +169,7 @@ namespace wawl {
 				::WriteFile(
 					file,
 					str.c_str(),
-					str.size() + 1,
+					static_cast<Uint32>(str.size() + 1),
 					&writtenSize,
 					nullptr
 					) != 0;

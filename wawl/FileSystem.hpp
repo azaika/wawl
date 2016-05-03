@@ -29,35 +29,35 @@ namespace wawl {
         // get system temporary directory path
 		inline bool getTempDirPath(Tstring& buf) {
 			buf.resize(MAX_PATH);
-			buf.resize(::GetTempPath(buf.size(), &buf[0]));
+			buf.resize(::GetTempPath(static_cast<Uint32>(buf.size()), &buf[0]));
 			return buf.size() != 0;
 		}
         
         // get current directory path of this process
 		inline bool getCurrentDirPath(Tstring& buf) {
 			buf.resize(MAX_PATH);
-			buf.resize(::GetCurrentDirectory(buf.size(), &buf[0]));
+			buf.resize(::GetCurrentDirectory(static_cast<Uint32>(buf.size()), &buf[0]));
 			return buf.size() != 0;
 		}
         
         // get system32 directory path
 		inline bool getSystemDirPath(Tstring& buf) {
 			buf.resize(MAX_PATH);
-			buf.resize(::GetSystemDirectory(&buf[0], buf.size()));
+			buf.resize(::GetSystemDirectory(&buf[0], static_cast<Uint>(buf.size())));
 			return buf.size() != 0;
 		}
         
         // get Windows directory path of local user
 		inline bool getWindowsDirPath(Tstring& buf) {
 			buf.resize(MAX_PATH);
-			buf.resize(::GetWindowsDirectory(&buf[0], buf.size()));
+			buf.resize(::GetWindowsDirectory(&buf[0], static_cast<Uint>(buf.size())));
 			return buf.size() != 0;
 		}
         
         // get common Windows directory path of all user
 		inline bool getSystemWindowsDirPath(Tstring& buf) {
 			buf.resize(MAX_PATH);
-			buf.resize(::GetSystemWindowsDirectory(&buf[0], buf.size()));
+			buf.resize(::GetSystemWindowsDirectory(&buf[0], static_cast<Uint>(buf.size())));
 			return buf.size() != 0;
 		}
 

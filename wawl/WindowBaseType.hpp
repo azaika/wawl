@@ -32,7 +32,7 @@ namespace wawl {
 			NormalShow = SW_SHOWNORMAL,
 			NoactivateNormalShow = SW_SHOWNOACTIVATE
 		};
-
+		
 		// window property option
 		enum class PropOption : unsigned int {
 			AlignClientByByte = CS_BYTEALIGNCLIENT,
@@ -70,9 +70,9 @@ namespace wawl {
 			Destroy = WM_DESTROY,
 			ToggleState = WM_ENABLE,
 			Timer = WM_TIMER,
-			LClick = WM_LBUTTONDOWN,
-			MClick = WM_MBUTTONDOWN,
-			RClick = WM_RBUTTONDOWN,
+			MouseLClick = WM_LBUTTONDOWN,
+			MouseMClick = WM_MBUTTONDOWN,
+			MouseRClick = WM_RBUTTONDOWN,
 			MouseLDoubleClick = WM_LBUTTONDBLCLK,
 			MouseMDoubleClick = WM_MBUTTONDBLCLK,
 			MouseRDoubleClick = WM_RBUTTONDBLCLK,
@@ -163,7 +163,10 @@ namespace wawl {
 		};
 
 		// window procedure function
-		using ProcFunc = std::remove_pointer_t<::WNDPROC>;
+		using MsgProc = std::remove_pointer_t<::WNDPROC>;
+
+		// timer procedure function
+		using TimerProc = std::remove_pointer_t<::TIMERPROC>;
 
 		using WindowHandle = ::HWND;
 		using ChildID = MenuHandle;
@@ -171,4 +174,11 @@ namespace wawl {
 		using CreateStruct = ::CREATESTRUCT;
 
 	} // ::wawl::wnd
+
+	WAWL_ENABLE_ENUM_COMPOSE(wnd::ImageLoadOption)
+	WAWL_ENABLE_ENUM_COMPOSE(wnd::ShowMode)
+	WAWL_ENABLE_ENUM_COMPOSE(wnd::PropOption)
+	WAWL_ENABLE_ENUM_COMPOSE(wnd::Option)
+	WAWL_ENABLE_ENUM_COMPOSE(wnd::ExtOption)
+
 } // ::wawl

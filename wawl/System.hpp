@@ -20,7 +20,7 @@ namespace wawl {
 
 		// get system time milli second
 		inline Uint32 getTimeMs() {
-			return static_cast<Uint32>(timeGetTime());
+			return timeGetTime();
 		}
 
 		enum class ExitMode : Uint {

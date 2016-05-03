@@ -27,4 +27,7 @@ namespace wawl {
 		using MenuItemInfo = ::MENUITEMINFO;
 
 	} // ::wawl::wnd
+
+	WAWL_ENABLE_ENUM_COMPOSE(wnd::MenuOption)
+
 } // ::wawl

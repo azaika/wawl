@@ -6,5 +6,6 @@ int WINAPI WawlMain(
 	wawl::Tchar*,
 	int
 	) {
+	using namespace wawl;
 	return 0;
 }

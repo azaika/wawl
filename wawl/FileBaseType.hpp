@@ -102,4 +102,9 @@ namespace wawl {
 		};
 
 	} // ::wawl::fs
+
+	WAWL_ENABLE_ENUM_COMPOSE(fs::StartupOption)
+	WAWL_ENABLE_ENUM_COMPOSE(fs::AccessDesc)
+	WAWL_ENABLE_ENUM_COMPOSE(fs::FileAttr)
+
 } // ::wawl

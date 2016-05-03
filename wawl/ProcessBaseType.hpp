@@ -36,4 +36,7 @@ namespace wawl {
 		using ProcessInfo = ::PROCESS_INFORMATION;
 
 	}
+
+	WAWL_ENABLE_ENUM_COMPOSE(fs::ProcessCreateProv)
+
 }

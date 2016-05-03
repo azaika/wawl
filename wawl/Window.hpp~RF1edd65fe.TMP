@@ -9,12 +9,12 @@
 
 namespace wawl {
 	namespace wnd {
-		
+
 		using Property = ::WNDCLASSEX;
 
 		inline Property makeProperty(
 			const Tstring& name,
-			MsgProc& procFunc,
+			ProcFunc& procFunc,
 			AppHandle app,
 			PropOption* options,
 			IconHandle icon,
@@ -44,7 +44,7 @@ namespace wawl {
 		}
 		inline Property makeProperty(
 			const Tstring& name,
-			MsgProc& procFunc,
+			ProcFunc& procFunc,
 			AppHandle app,
 			PropOption options,
 			IconHandle icon,
@@ -67,7 +67,7 @@ namespace wawl {
 		}
 		inline Property makeProperty(
 			const Tstring& name,
-			MsgProc& procFunc,
+			ProcFunc& procFunc,
 			AppHandle app,
 			PropOption options,
 			IconHandle icon,
@@ -283,73 +283,39 @@ namespace wawl {
 					);
 		}
 
-		inline Rectangle getWindowRect(WindowHandle window) {
+		inline bool setRect(WindowHandle window, const Rectangle& rect, bool doRedraw = true) {
+			return ::MoveWindow(window, rect.x, rect.y, rect.w, rect.h, doRedraw) != 0;
+		}
+		inline Rectangle getRect(WindowHandle window) {
 			::RECT rect = {};
 
 			bool res =
 				::GetWindowRect(
 					window,
 					&rect
-				) != 0;
+					) != 0;
 
-			return{ rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top };
-		}
-		inline Rectangle getClientRect(WindowHandle window) {
-			::RECT rect = {};
-
-			bool res =
-				::GetClientRect(
-					window,
-					&rect
-				) != 0;
-
-			return{ rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top };
+			return { rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top };
 		}
 
-		inline bool setWindowRect(WindowHandle window, const Rectangle& newRect, bool doRedraw = true) {
-			return ::MoveWindow(window, newRect.x, newRect.y, newRect.w, newRect.h, doRedraw) != 0;
-		}
-		inline bool setClientRect(WindowHandle window, const Rectangle& newRect, bool doRedraw = true) {
-			Rectangle oldRect = getWindowRect(window);
-			Rectangle oldScreen = getClientRect(window);
-
-			return
-				::MoveWindow(
-					window,
-					oldRect.x,
-					oldRect.y,
-					oldRect.w - oldScreen.w + newRect.w,
-					oldRect.h - oldScreen.h + newRect.h,
-					doRedraw
-				) != 0;
-		}
-		
-		inline bool setPos(WindowHandle window, const Position& newPos, bool doRedraw = false) {
-			Rectangle&& old = getWindowRect(window);
+		inline bool moveWindow(WindowHandle window, const Position& newPos, bool doRedraw = false) {
+			Rectangle&& old = getRect(window);
 
 			return ::MoveWindow(window, newPos.x, newPos.y, old.h, old.w, doRedraw) != 0;
 		}
 
-		inline bool resize(WindowHandle window, const Size& newSize, bool doRedraw = true) {
-			Rectangle&& old = getWindowRect(window);
+		inline bool resizeWindow(WindowHandle window, const Size& newSize, bool doRedraw = true) {
+			Rectangle&& old = getRect(window);
 
 			return ::MoveWindow(window, old.x, old.y, newSize.x, newSize.y, doRedraw) != 0;
 		}
 
-		inline bool setShowMode(WindowHandle window, ShowMode mode) {
+		inline bool setShowWindow(WindowHandle window, ShowMode mode) {
 			return ::ShowWindow(window, unpackEnum(mode)) != 0;
-		}
-
-		inline bool setTitle(WindowHandle window, const Tstring& newTitle) {
-			return ::SetWindowText(window, newTitle.c_str()) != 0;
 		}
 
 		inline Option getStyle(WindowHandle window) {
 			return static_cast<Option>(::GetWindowLong(window, GWL_STYLE));
-		}
-
-		inline bool destroy(WindowHandle window) {
-			return ::DestroyWindow(window) != 0;
 		}
 
 		inline Position toScreenPos(WindowHandle window, const Position& clientPos) {
@@ -374,18 +340,11 @@ namespace wawl {
 		static auto& getForegroundWindow = ::GetForegroundWindow;
 		static auto& getActiveWindow = ::GetActiveWindow;
 
-		inline bool getMessage(Message& msg, WindowHandle window, Uint filterMin = 0, Uint filterMax = 0) {
+		inline bool waitMessage(Message& msg, WindowHandle window, Uint filterMin = 0, Uint filterMax = 0) {
 			return ::GetMessage(&msg, window, filterMin, filterMax) != 0;
 		}
-		inline bool checkMessage(Message& msg, WindowHandle window, bool doPopMsg, Uint filterMin = 0, Uint filterMax = 0) {
-			return
-				::PeekMessage(
-					&msg,
-					window,
-					filterMin,
-					filterMax,
-					(doPopMsg ? PM_REMOVE : PM_NOREMOVE)
-				) != 0;
+		inline bool isExistMessage() {
+
 		}
 
 		inline bool translateMessage(const Message& msg) {
@@ -401,23 +360,6 @@ namespace wawl {
 		}
 
 		static auto& quitAll = ::PostQuitMessage;
-
-		inline UintPtr setTImerEvent(Uint elapse, TimerProc proc) {
-			return ::SetTimer(nullptr, 0, elapse, proc);
-		}
-		inline UintPtr setTimerEvent(WindowHandle window, Uint eventId, Uint elapse) {
-			return ::SetTimer(window, eventId, elapse, nullptr);
-		}
-		inline UintPtr setTimerEvent(WindowHandle window, Uint eventId, Uint elapse, TimerProc proc) {
-			return ::SetTimer(window, eventId, elapse, proc);
-		}
-
-		inline bool killTimerEvent(Uint eventId) {
-			return ::KillTimer(nullptr, eventId) != 0;
-		}
-		inline bool killTimerEvent(WindowHandle window, Uint eventId) {
-			return ::KillTimer(window, eventId) != 0;
-		}
 
 	} // ::wawl::wnd
 } // ::wawl

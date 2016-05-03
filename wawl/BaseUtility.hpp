@@ -71,52 +71,33 @@ namespace wawl {
 		return static_cast<std::underlying_type_t<EnumType>>(val);
 	}
 
-	// compose enum and enum(only for WinAPI constant)
-	template <typename EnumType, std::underlying_type_t<EnumType> = 0>
-	constexpr EnumType composeEnum(EnumType lhv, EnumType rhv) {
-		return static_cast<EnumType>(unpackEnum(lhv) | unpackEnum(rhv));
+#define WAWL_ENABLE_ENUM_COMPOSE(type) \
+	constexpr type composeEnum(type lhv, type rhv) { \
+		return static_cast<type>(unpackEnum(lhv) | unpackEnum(rhv)); \
+	} \
+	template <typename... Others> \
+	constexpr type composeEnum(type arg1, type arg2, type arg3, Others... others) { \
+		return static_cast<type>(unpackEnum(arg1) | unpackEnum(composeEnum(arg2, arg3, others...))); \
+	} \
+	inline type& mergeEnum(type& lhv, type rhv) { \
+		lhv = static_cast<type>(unpackEnum(lhv) | unpackEnum(rhv)); \
+		return lhv; \
+	} \
+	template <typename... Others> \
+	type& mergeEnum(type& arg1, type arg2, type arg3, Others... others) { \
+		arg1 = static_cast<type>( \
+			unpackEnum(arg1) \
+			| unpackEnum( \
+				composeEnum(arg2, arg3, others...) \
+			) \
+			); \
+		return arg1; \
+	} \
+	constexpr type operator | (type lhv, type rhv) { \
+		return composeEnum(lhv, rhv); \
+	} \
+	inline type& operator |= (type& lhv, type rhv) { \
+		return mergeEnum(lhv, rhv); \
 	}
-	template <typename EnumType, typename... Others, std::underlying_type_t<EnumType> = 0>
-	constexpr EnumType composeEnum(EnumType arg1, EnumType arg2, EnumType arg3, Others... others ) {
-		return static_cast<EnumType>(unpackEnum(arg1) | unpackEnum(composeEnum(arg2, arg3, others...)));
-	}
-
-	// merge enum value into another enum(only for WinAPI constant) 
-	template <typename EnumType, std::underlying_type_t<EnumType> = 0>
-	inline EnumType& mergeEnum (EnumType& lhv, EnumType rhv) {
-		lhv = static_cast<EnumType>(unpackEnum(lhv) | unpackEnum(rhv));
-		return lhv;
-	}
-	template <typename EnumType, typename... Others, std::underlying_type_t<EnumType> = 0>
-	EnumType& mergeEnum(EnumType& arg1, EnumType arg2, EnumType arg3, Others... others) {
-		arg1 = static_cast<EnumType>(
-			unpackEnum(arg1)
-			| unpackEnum(
-				composeEnum(arg2, arg3, others...)
-				)
-			);
-		return arg1;
-	}
-
-	namespace literals {
-
-		// compose enum and enum(only for WinAPI constant) 
-		template <typename EnumType, std::underlying_type_t<EnumType> = 0>
-		constexpr EnumType operator | (EnumType lhv, EnumType rhv) {
-			return static_cast<EnumType>(unpackEnum(lhv) | unpackEnum(rhv));
-		}
-
-		// merge enum value into another enum(only for WinAPI constant) 
-		template <typename EnumType, std::underlying_type_t<EnumType> = 0>
-		inline EnumType& operator |= (EnumType& lhv, EnumType rhv) {
-			lhv = static_cast<EnumType>(unpackEnum(lhv) | unpackEnum(rhv));
-			return lhv;
-		}
-
-	#define WAWL_DELETE_ENUM_OPERATOR(type) \
-		type operator | (type, type) = delete; \
-		type& operator |= (type&, type) = delete; 
-
-	} // ::wawl::literals
 
 } // ::wawl

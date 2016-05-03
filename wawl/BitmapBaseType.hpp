@@ -19,4 +19,7 @@ namespace wawl {
 		};
 
 	} // ::wawl::wnd
+
+	WAWL_ENABLE_ENUM_COMPOSE(wnd::ImageCopyOption)
+
 } // ::wawl

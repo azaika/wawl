@@ -101,10 +101,6 @@ namespace wawl {
 		} // ::wawl::wnd::mb
 	} // ::wawl::wnd
 
-	namespace literals {
-		WAWL_DELETE_ENUM_OPERATOR(wnd::mb::Button)
-		WAWL_DELETE_ENUM_OPERATOR(wnd::mb::Icon)
-		WAWL_DELETE_ENUM_OPERATOR(wnd::mb::CtrlRegLevel)
-		WAWL_DELETE_ENUM_OPERATOR(wnd::mb::Result)
-	} // ::wawl::literals
+	WAWL_ENABLE_ENUM_COMPOSE(wnd::mb::ShowStyle)
+
 } // ::wawl
