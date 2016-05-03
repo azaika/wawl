@@ -13,3 +13,5 @@ Debug
 Release
 x64
 .*
+*.TMP
+*.tmp
