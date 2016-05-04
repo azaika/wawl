@@ -375,7 +375,7 @@ namespace wawl {
 		static auto& getActiveWindow = ::GetActiveWindow;
 
 		inline bool getMessage(Message& msg, WindowHandle window, Uint filterMin = 0, Uint filterMax = 0) {
-			return ::GetMessage(&msg, window, filterMin, filterMax) != 0;
+			return ::GetMessage(&msg, window, filterMin, filterMax) > 0;
 		}
 		inline bool checkMessage(Message& msg, WindowHandle window, bool doPopMsg, Uint filterMin = 0, Uint filterMax = 0) {
 			return
@@ -396,8 +396,12 @@ namespace wawl {
 			return ::DispatchMessage(&msg);
 		}
 
-		inline LongPtr defaultProc(WindowHandle window, Msg msg, UintPtr lp, IntPtr rp) {
-			return ::DefWindowProc(window, unpackEnum(msg), lp, rp);
+		inline bool update(WindowHandle window) {
+			return ::UpdateWindow(window) != 0;
+		}
+
+		inline LongPtr defaultProc(WindowHandle window, Msg msg, UintPtr wp, IntPtr lp) {
+			return ::DefWindowProc(window, unpackEnum(msg), wp, lp);
 		}
 
 		static auto& quitAll = ::PostQuitMessage;
@@ -417,6 +421,10 @@ namespace wawl {
 		}
 		inline bool killTimerEvent(WindowHandle window, Uint eventId) {
 			return ::KillTimer(window, eventId) != 0;
+		}
+
+		inline int getWindowMetrics(WindowMetrics type) {
+			return ::GetSystemMetrics(unpackEnum(type));
 		}
 
 	} // ::wawl::wnd

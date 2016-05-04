@@ -197,4 +197,22 @@ namespace wawl {
 		::SetLastError(unpackEnum(error));
 	}
 
+	inline Uint32 errorToStr(Tstring& buf, Error error) {
+		buf.resize(512);
+		Uint32 writtenSize =
+			::FormatMessage(
+				FORMAT_MESSAGE_FROM_SYSTEM,
+				nullptr,
+				unpackEnum(error),
+				0,
+				&buf[0],
+				static_cast<Uint32>(buf.size() + 1),
+				nullptr
+			);
+
+		buf.resize(writtenSize);
+
+		return writtenSize;
+	}
+
 } // ::wawl

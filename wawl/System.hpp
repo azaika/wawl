@@ -71,5 +71,28 @@ namespace wawl {
 			return ::timeEndPeriod(res) == TIMERR_NOERROR;
 		}
 
+		// type of system constant which is used in getSystemConstant
+		enum class SystemConstant : int {
+			Arrange = SM_ARRANGE,
+			BootMode = SM_CLEANBOOT,
+			NumMouseButton = SM_CMOUSEBUTTONS,
+			DubblebyteCharSetEnabled = SM_DBCSENABLED,
+			DebugEnabled = SM_DEBUG,
+			DropdownMenuRightAlignmented = SM_MENUDROPALIGNMENT,
+			MideastEnabled = SM_MIDEASTENABLED,
+			MouseEnabled = SM_MOUSEPRESENT,
+			MouseWheelEnabled = SM_MOUSEWHEELPRESENT,
+			NetworkEnabled = SM_NETWORK,
+			RemoteSessoned = SM_REMOTESESSION,
+			SecurityEnabled = SM_SECURE,
+			SoundHelpEnabled = SM_SHOWSOUNDS,
+			IsSlowMachine = SM_SLOWMACHINE,
+			ButtonSwapped = SM_SWAPBUTTON
+		};
+
+		inline int getSystemConstant(SystemConstant which) {
+			return ::GetSystemMetrics(unpackEnum(which));
+		}
+
 	} // ::wawl::sys
 } // ::wawl

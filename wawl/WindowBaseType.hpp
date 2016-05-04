@@ -10,7 +10,7 @@ namespace wawl {
 		enum class ImageLoadOption : Uint {
 			DefaultColor = LR_DEFAULTCOLOR,
 			UseDIBSection = LR_CREATEDIBSECTION,
-			SysDefaultSize = LR_DEFAULTSIZE,
+			DefaultSize = LR_DEFAULTSIZE,
 			Monochrome = LR_MONOCHROME,
 			ShareHandle = LR_SHARED,
 			UseVGA = LR_VGACOLOR
@@ -172,6 +172,60 @@ namespace wawl {
 		using ChildID = MenuHandle;
 
 		using CreateStruct = ::CREATESTRUCT;
+
+		// type of window metrics which is used in getWindowMetrics function
+		enum class WindowMetrics : int {
+			BorderW = SM_CXBORDER,
+			BorderH = SM_CYBORDER,
+			CursorW = SM_CXCURSOR,
+			CursorH = SM_CYCURSOR,
+			EdgeW = SM_CXEDGE,
+			EdgeH = SM_CYEDGE,
+			FixedFrameW = SM_CXFIXEDFRAME,
+			FixedFrameH = SM_CYFIXEDFRAME,
+			FullScreenW = SM_CXFULLSCREEN,
+			FullScreenH = SM_CYFULLSCREEN,
+			HScrollbarW = SM_CXHSCROLL,
+			HScrollbarH = SM_CYHSCROLL,
+			HScrollbarThumbW = SM_CXHTHUMB,
+			IconW = SM_CXICON,
+			IconH = SM_CYICON,
+			IconGridW = SM_CXICONSPACING,
+			IconGridH = SM_CYICONSPACING,
+			MaxWindowW = SM_CXMAXIMIZED,
+			MaxWindowH = SM_CYMAXIMIZED,
+			MaxWindowTrackW = SM_CXMAXTRACK,
+			MaxWindowTrackH = SM_CYMAXTRACK,
+			MenuCheckW = SM_CXMENUCHECK,
+			MenuCheckH = SM_CYMENUCHECK,
+			MenuButtonW = SM_CXMENUSIZE,
+			menuButtonH = SM_CXMENUSIZE,
+			MinWindowW = SM_CXMIN,
+			MinWindowH = SM_CYMIN,
+			MinimizedWindowW = SM_CXMINIMIZED,
+			MinimizedWindowH = SM_CYMINIMIZED,
+			MinimizedWindowGridW = SM_CXMINSPACING,
+			MinimizedWindowGridH = SM_CYMINSPACING,
+			MinWindowTrackW = SM_CXMINTRACK,
+			MinWindowTrackH = SM_CYMINTRACK,
+			ScreenX = SM_CXSCREEN,
+			ScreenY = SM_CYSCREEN,
+			TitleButtonW = SM_CXSIZE,
+			titleButtonH = SM_CYSIZE,
+			DynamicFrameW = SM_CXFRAME,
+			DynamicFrameH = SM_CYFRAME,
+			SmallIconW = SM_CXSMICON,
+			SmallIconH = SM_CYSMICON,
+			TitleSmallButtonW = SM_CXSMSIZE,
+			TitleSmallButtonH = SM_CYSMSIZE,
+			VScrollbarW = SM_CXVSCROLL,
+			VScrollbarH = SM_CYVSCROLL,
+			TitlebarH = SM_CYCAPTION,
+			KanjiWindowH = SM_CYKANJIWINDOW,
+			MenuLineH = SM_CYMENU,
+			SmallTitlebarH = SM_CYSMCAPTION,
+			VScrollbarThumbH = SM_CYVTHUMB
+		};
 
 	} // ::wawl::wnd
 

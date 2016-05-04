@@ -8,9 +8,10 @@
 #include "Region.hpp"
 #include "MessageBox.hpp"
 #include "System.hpp"
+#include "Debug.hpp"
 
 #ifdef _USRDLL
 #define WawlMain DllMain
 #else // _USRDLL
-#define WawlMain _tWinMain
+#define WawlMain WINAPI _tWinMain
 #endif // _USRDLL

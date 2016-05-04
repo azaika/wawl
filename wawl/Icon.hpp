@@ -45,7 +45,7 @@ namespace wawl {
 		inline IconHandle loadIconFromResource(
 			ModuleHandle module,
 			const Tstring& instName,
-			ImageLoadOption loadOption,
+			ImageLoadOption loadOption = ImageLoadOption::DefaultSize,
 			const Size& size = {}
 			) {
 			return
