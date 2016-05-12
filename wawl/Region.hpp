@@ -11,7 +11,7 @@
 namespace wawl {
 	namespace wnd {
 
-		// equivalence comparison of region
+		// equivalence comparison of initializedRegion
 		inline bool equalsRegion(RegionHandle lhv, RegionHandle rhv) {
 			return ::EqualRgn(lhv, rhv) != 0;
 		}
@@ -81,12 +81,16 @@ namespace wawl {
 				);
 		}
 
-		inline bool setWindowRegion(WindowHandle window, RegionHandle region, bool doRedraw = true) {
+		inline bool setRegion(WindowHandle window, RegionHandle region, bool doRedraw = true) {
 			return ::SetWindowRgn(window, region, doRedraw) != 0;
 		}
-		inline bool resetWindowRegion(WindowHandle window, bool doRedraw = true) {
+		inline bool resetRegion(WindowHandle window, bool doRedraw = true) {
 			return ::SetWindowRgn(window, nullptr, doRedraw) != 0;
 		}
 
-	}
-}
+		inline CombineResult copyRegion(WindowHandle window, RegionHandle initializedRegion) {
+			return static_cast<CombineResult>(::GetWindowRgn(window, initializedRegion));
+		}
+
+	} // ::wawl::wnd
+} // ::wawl

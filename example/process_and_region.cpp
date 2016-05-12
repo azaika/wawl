@@ -2,13 +2,37 @@
 
 using namespace wawl;
 
+fs::ProcessInfo procInfo = {};
+
 LongPtr CALLBACK MsgProc(
 	wnd::WindowHandle window,
 	Uint msg,
 	UintPtr wParam,
 	LongPtr lParam
 ) {
-	return wnd::defaultProc(window, static_cast<wnd::Msg>(msg), wParam, lParam);
+	using wnd::Msg;
+	static auto region = wnd::createRoundRectRegion({ 0, 0, 640, 480 }, { 200, 200 });
+
+	switch (static_cast<Msg>(msg)) {
+	case Msg::Create:
+		wnd::setRegion(window, region);
+		break;
+	case Msg::MouseLClick:
+		if(!procInfo.hProcess)
+			fs::proc::createProcess(procInfo, L"notepad.exe");
+		break;
+	case Msg::MouseRClick:
+		fs::proc::terminateProcess(procInfo);
+		procInfo = {};
+		break;
+	case Msg::MouseMClick:
+		wnd::quitAll(0);
+		break;
+	default:
+		return wnd::defaultProc(window, static_cast<wnd::Msg>(msg), wParam, lParam);
+	}
+
+	return 0;
 }
 
 int WawlMain(
@@ -40,8 +64,8 @@ int WawlMain(
 		wnd::createWindow(
 			propName,
 			L"wawl test",
-			{ wnd::DefaultWindowPos.x, wnd::DefaultWindowPos.y, 640, 480 },
-			wnd::Option::SysMenu | wnd::Option::EnableSizeChange
+			{wnd::DefaultWindowPos.x, wnd::DefaultWindowPos.y, 640, 480},
+			wnd::Option::Popup
 		);
 	if (!window)
 		return 0;

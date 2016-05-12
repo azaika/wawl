@@ -3,9 +3,9 @@
 using namespace wawl;
 
 int WawlMain(
-	wawl::AppHandle appInst,
-	wawl::AppHandle,
-	wawl::Tchar* cmdLine,
+	AppHandle appInst,
+	AppHandle,
+	Tchar* cmdLine,
 	int cmdShow
 ) {
 	return 0;

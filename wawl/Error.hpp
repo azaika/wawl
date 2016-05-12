@@ -209,7 +209,6 @@ namespace wawl {
 				static_cast<Uint32>(buf.size() + 1),
 				nullptr
 			);
-
 		buf.resize(writtenSize);
 
 		return writtenSize;
