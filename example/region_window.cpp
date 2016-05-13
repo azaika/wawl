@@ -18,14 +18,6 @@ LongPtr CALLBACK MsgProc(
 		wnd::setRegion(window, region);
 		break;
 	case Msg::MouseLClick:
-		if(!procInfo.hProcess)
-			fs::proc::createProcess(procInfo, L"notepad.exe");
-		break;
-	case Msg::MouseRClick:
-		fs::proc::terminateProcess(procInfo);
-		procInfo = {};
-		break;
-	case Msg::MouseMClick:
 		wnd::quitAll(0);
 		break;
 	default:
@@ -64,7 +56,7 @@ int WawlMain(
 		wnd::createWindow(
 			propName,
 			L"wawl test",
-			{wnd::DefaultWindowPos.x, wnd::DefaultWindowPos.y, 640, 480},
+			{ 300, 150, 640, 480 },
 			wnd::Option::Popup
 		);
 	if (!window)
