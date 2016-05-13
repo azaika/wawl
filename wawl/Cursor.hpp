@@ -25,6 +25,7 @@ namespace wawl {
 						)
 					);
 		}
+
 		inline CursorHandle loadCursor(
 			ModuleHandle module,
 			const Tstring& fileName,
@@ -43,6 +44,7 @@ namespace wawl {
 						)
 					);
 		}
+
 		inline CursorHandle loadCursorFromResource(
 			ModuleHandle module,
 			const Tstring& instName,

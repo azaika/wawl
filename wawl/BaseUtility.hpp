@@ -67,8 +67,14 @@ namespace wawl {
 	
 	// get underlying value of enum
 	template <typename EnumType, std::underlying_type_t<EnumType> = 0>
-	constexpr auto unpackEnum(const EnumType& val) {
+	constexpr auto unpackEnum(EnumType val) {
 		return static_cast<std::underlying_type_t<EnumType>>(val);
+	}
+
+	template <typename EnumType, std::underlying_type_t<EnumType>  = 0>
+	constexpr bool hasIncluded(EnumType base, EnumType val) {
+		auto unpacked = unpackEnum(val);
+		return static_cast<std::underlying_type_t<EnumType>>(base) & unpacked == unpacked;
 	}
 
 #define WAWL_ENABLE_ENUM_COMPOSE(type) \

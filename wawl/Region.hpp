@@ -16,6 +16,8 @@ namespace wawl {
 			return ::EqualRgn(lhv, rhv) != 0;
 		}
 
+		// combine region and region
+		// 'target' and 'rgn1' or 'rgn2' can be same handle
 		inline CombineResult combineRegion(RegionHandle target, RegionHandle rgn1, RegionHandle rgn2, CombineMode mode) {
 			return static_cast<CombineResult>(::CombineRgn(target, rgn1, rgn2, unpackEnum(mode)));
 		}
@@ -81,9 +83,11 @@ namespace wawl {
 				);
 		}
 
+		// set region to window
 		inline bool setRegion(WindowHandle window, RegionHandle region, bool doRedraw = true) {
 			return ::SetWindowRgn(window, region, doRedraw) != 0;
 		}
+		// reset window region
 		inline bool resetRegion(WindowHandle window, bool doRedraw = true) {
 			return ::SetWindowRgn(window, nullptr, doRedraw) != 0;
 		}

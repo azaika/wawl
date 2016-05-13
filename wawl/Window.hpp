@@ -9,8 +9,6 @@
 
 namespace wawl {
 	namespace wnd {
-		
-		using Property = ::WNDCLASSEX;
 
 		inline Property makeProperty(
 			const Tstring& name,
@@ -306,9 +304,11 @@ namespace wawl {
 			return{ rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top };
 		}
 
+		// set window potision and size
 		inline bool setWindowRect(WindowHandle window, const Rectangle& newRect, bool doRedraw = true) {
 			return ::MoveWindow(window, newRect.x, newRect.y, newRect.w, newRect.h, doRedraw) != 0;
 		}
+		// set client potision and size
 		inline bool setClientRect(WindowHandle window, const Rectangle& newRect, bool doRedraw = true) {
 			Rectangle oldRect = getWindowRect(window);
 			Rectangle oldScreen = getClientRect(window);
@@ -324,12 +324,14 @@ namespace wawl {
 				) != 0;
 		}
 		
+		// set window position
 		inline bool setPos(WindowHandle window, const Position& newPos, bool doRedraw = false) {
 			Rectangle&& old = getWindowRect(window);
 
 			return ::MoveWindow(window, newPos.x, newPos.y, old.h, old.w, doRedraw) != 0;
 		}
 
+		// resize window
 		inline bool resize(WindowHandle window, const Size& newSize, bool doRedraw = true) {
 			Rectangle&& old = getWindowRect(window);
 
@@ -340,18 +342,26 @@ namespace wawl {
 			return ::ShowWindow(window, unpackEnum(mode)) != 0;
 		}
 
+		// set window title
 		inline bool setTitle(WindowHandle window, const Tstring& newTitle) {
 			return ::SetWindowText(window, newTitle.c_str()) != 0;
 		}
 
+		// get window style
 		inline Option getStyle(WindowHandle window) {
 			return static_cast<Option>(::GetWindowLong(window, GWL_STYLE));
 		}
+		// get window extend style
+		inline ExtOption getExtStyle(WindowHandle window) {
+			return static_cast<ExtOption>(::GetWindowLong(window, GWL_EXSTYLE));
+		}
 
+		// destroy window (add Msg::Destory to message queue)
 		inline bool destroy(WindowHandle window) {
 			return ::DestroyWindow(window) != 0;
 		}
 
+		// convert client coordinate to screen coordinate
 		inline Position toScreenPos(WindowHandle window, const Position& clientPos) {
 			::LPPOINT posBuf;
 			posBuf->x = clientPos.x;
@@ -361,6 +371,7 @@ namespace wawl {
 
 			return{ posBuf->x, posBuf->y };
 		}
+		// convert screen coordinate to client coordinate
 		inline Position toClientPos(WindowHandle window, const Position& screenPos) {
 			::LPPOINT posBuf;
 			posBuf->x = screenPos.x;
@@ -371,12 +382,22 @@ namespace wawl {
 			return{ posBuf->x, posBuf->y };
 		}
 
-		static auto& getForegroundWindow = ::GetForegroundWindow;
-		static auto& getActiveWindow = ::GetActiveWindow;
+		// get top most window
+		inline WindowHandle getForegroundWindow() {
+			return ::GetForegroundWindow();
+		}
+		// get active window, which has focus
+		inline WindowHandle getActiveWindow() {
+			return ::GetActiveWindow();
+		}
 
+		// get message
+		// if message queue is empty, this function wait for new message with blocking
 		inline bool getMessage(Message& msg, WindowHandle window, Uint filterMin = 0, Uint filterMax = 0) {
 			return ::GetMessage(&msg, window, filterMin, filterMax) > 0;
 		}
+		// check message
+		// if message queue is empty, this function return false
 		inline bool checkMessage(Message& msg, WindowHandle window, bool doPopMsg, Uint filterMin = 0, Uint filterMax = 0) {
 			return
 				::PeekMessage(
@@ -396,6 +417,7 @@ namespace wawl {
 			return ::DispatchMessage(&msg);
 		}
 
+		// call window message procedure
 		inline bool update(WindowHandle window) {
 			return ::UpdateWindow(window) != 0;
 		}
@@ -406,19 +428,24 @@ namespace wawl {
 
 		static auto& quitAll = ::PostQuitMessage;
 
+		// set the timer to add Msg::Timer to message queue regularly
 		inline UintPtr setTImerEvent(Uint elapse, TimerProc proc) {
 			return ::SetTimer(nullptr, 0, elapse, proc);
 		}
+		// set the timer to add Msg::Timer to message queue regularly
 		inline UintPtr setTimerEvent(WindowHandle window, Uint eventId, Uint elapse) {
 			return ::SetTimer(window, eventId, elapse, nullptr);
 		}
+		// set the timer to add Msg::Timer to message queue regularly
 		inline UintPtr setTimerEvent(WindowHandle window, Uint eventId, Uint elapse, TimerProc proc) {
 			return ::SetTimer(window, eventId, elapse, proc);
 		}
 
+		// kill the timer, which has setted by setTimerEvent function
 		inline bool killTimerEvent(Uint eventId) {
 			return ::KillTimer(nullptr, eventId) != 0;
 		}
+		// kill the timer, which has setted by setTimerEvent function
 		inline bool killTimerEvent(WindowHandle window, Uint eventId) {
 			return ::KillTimer(window, eventId) != 0;
 		}

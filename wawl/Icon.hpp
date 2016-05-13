@@ -7,6 +7,7 @@
 
 namespace wawl {
 	namespace wnd {
+
 		inline IconHandle loadOEMIcon(
 			Tchar* type,
 			ImageLoadOption loadOption,
@@ -24,6 +25,7 @@ namespace wawl {
 						)
 					);
 		}
+
 		inline IconHandle loadIcon(
 			ModuleHandle module,
 			const Tstring& fileName,
@@ -42,6 +44,7 @@ namespace wawl {
 						)
 					);
 		}
+
 		inline IconHandle loadIconFromResource(
 			ModuleHandle module,
 			const Tstring& instName,
@@ -68,5 +71,6 @@ namespace wawl {
 		inline bool destroyIcon(IconHandle icon) {
 			return ::DestroyIcon(icon) != 0;
 		}
+
 	} // ::wawl::wnd
 } // ::wawl

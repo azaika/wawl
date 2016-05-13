@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLER_WAWL_FILESYSTEM
+#define ENABLE_WAWL_FILESYSTEM
 
 #include "File.hpp"
 #include "Pipe.hpp"

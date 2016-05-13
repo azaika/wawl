@@ -244,6 +244,7 @@ namespace wawl {
 			return ::SendInput(2, input, sizeof(::INPUT)) == 2;
 		}
 
+		// swap mouse button
 		bool swapMouseLR(bool doSwap) {
 			return ::SwapMouseButton(doSwap) != 0;
 		}
