@@ -26,7 +26,13 @@ namespace wawl {
 		using Wstring = std::basic_string<Wchar>;
 		// generic string type
 		using Tstring = std::basic_string<Tchar>;
-
+		
+		// signed 8bit int
+		using Int8 = std::int8_t;
+		// signed 16bit int
+		using Int16 = std::int16_t;
+		// signed 32bit int
+		using Int32 = std::int32_t;
 		// signed 64bit int
 		using Int64 = std::int64_t;
 
