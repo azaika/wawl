@@ -10,7 +10,7 @@ namespace wawl {
 	namespace fs {
         
         // result of findFile which contains file data
-		using FileInfo = WIN32_FIND_DATA;
+		using FileInfo = ::WIN32_FIND_DATA;
         
         // file search handle
 		using SearchHandle = Handle;

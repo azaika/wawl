@@ -51,27 +51,6 @@ namespace wawl {
 				MessageStream = PIPE_READMODE_MESSAGE,
 			};
 
-			SimpleAccessDesc toAccessDesc(AccessMode mode) {
-				switch (mode) {
-				case AccessMode::Duplex:
-					return SimpleAccessDesc::All;
-				case AccessMode::Inbound:
-					return SimpleAccessDesc::Write;
-				case AccessMode::Outbound:
-					return SimpleAccessDesc::Read;
-				}
-			}
-			AccessMode toAccessMode(SimpleAccessDesc desc) {
-				switch (desc){
-				case SimpleAccessDesc::Write:
-					return AccessMode::Outbound;
-				case SimpleAccessDesc::Read:
-					return AccessMode::Inbound;
-				case SimpleAccessDesc::All:
-					return AccessMode::Duplex;
-				}
-			}
-
 			constexpr Uint32 UnlimitedInstances = PIPE_UNLIMITED_INSTANCES;
 
 			inline FileHandle createNamedPipe(

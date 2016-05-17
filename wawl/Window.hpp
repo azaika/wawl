@@ -97,7 +97,7 @@ namespace wawl {
 		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
-			const Rectangle& wndRect,
+			const Rect& wndRect,
 			const Option* options,
 			const ExtOption* extOptions,
 			MenuHandle menu,
@@ -122,7 +122,7 @@ namespace wawl {
 		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
-			const Rectangle& wndRect
+			const Rect& wndRect
 			) {
 			return
 				createWindow(
@@ -138,7 +138,7 @@ namespace wawl {
 		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
-			const Rectangle& wndRect,
+			const Rect& wndRect,
 			Option options
 			) {
 			return
@@ -155,7 +155,7 @@ namespace wawl {
 		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
-			const Rectangle& wndRect,
+			const Rect& wndRect,
 			Option options,
 			ExtOption extOptions,
 			MenuHandle menu
@@ -174,7 +174,7 @@ namespace wawl {
 		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
-			const Rectangle& wndRect,
+			const Rect& wndRect,
 			Option options,
 			ExtOption extOptions,
 			MenuHandle menu,
@@ -195,7 +195,7 @@ namespace wawl {
 		inline WindowHandle createChildWindow(
 			const Tstring& propName,
 			const Tstring& title,
-			const Rectangle& wndRect,
+			const Rect& wndRect,
 			WindowHandle parent,
 			ChildID myID,
 			const Option* options,
@@ -221,7 +221,7 @@ namespace wawl {
 		inline WindowHandle createChildWindow(
 			const Tstring& propName,
 			const Tstring& title,
-			const Rectangle& wndRect,
+			const Rect& wndRect,
 			WindowHandle parent,
 			ChildID myID
 			) {
@@ -240,7 +240,7 @@ namespace wawl {
 		inline WindowHandle createChildWindow(
 			const Tstring& propName,
 			const Tstring& title,
-			const Rectangle& wndRect,
+			const Rect& wndRect,
 			WindowHandle parent,
 			ChildID myID,
 			Option options,
@@ -261,7 +261,7 @@ namespace wawl {
 		inline WindowHandle createChildWindow(
 			const Tstring& propName,
 			const Tstring& title,
-			const Rectangle& wndRect,
+			const Rect& wndRect,
 			WindowHandle parent,
 			ChildID myID,
 			Option options,
@@ -281,7 +281,7 @@ namespace wawl {
 					);
 		}
 
-		inline Rectangle getWindowRect(WindowHandle window) {
+		inline Rect getWindowRect(WindowHandle window) {
 			::RECT rect = {};
 
 			bool res =
@@ -292,7 +292,7 @@ namespace wawl {
 
 			return{ rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top };
 		}
-		inline Rectangle getClientRect(WindowHandle window) {
+		inline Rect getClientRect(WindowHandle window) {
 			::RECT rect = {};
 
 			bool res =
@@ -305,13 +305,13 @@ namespace wawl {
 		}
 
 		// set window potision and size
-		inline bool setWindowRect(WindowHandle window, const Rectangle& newRect, bool doRedraw = true) {
+		inline bool setWindowRect(WindowHandle window, const Rect& newRect, bool doRedraw = true) {
 			return ::MoveWindow(window, newRect.x, newRect.y, newRect.w, newRect.h, doRedraw) != 0;
 		}
 		// set client potision and size
-		inline bool setClientRect(WindowHandle window, const Rectangle& newRect, bool doRedraw = true) {
-			Rectangle oldRect = getWindowRect(window);
-			Rectangle oldScreen = getClientRect(window);
+		inline bool setClientRect(WindowHandle window, const Rect& newRect, bool doRedraw = true) {
+			Rect oldRect = getWindowRect(window);
+			Rect oldScreen = getClientRect(window);
 
 			return
 				::MoveWindow(
@@ -326,14 +326,14 @@ namespace wawl {
 		
 		// set window position
 		inline bool setPos(WindowHandle window, const Position& newPos, bool doRedraw = false) {
-			Rectangle&& old = getWindowRect(window);
+			Rect&& old = getWindowRect(window);
 
 			return ::MoveWindow(window, newPos.x, newPos.y, old.h, old.w, doRedraw) != 0;
 		}
 
 		// resize window
 		inline bool resize(WindowHandle window, const Size& newSize, bool doRedraw = true) {
-			Rectangle&& old = getWindowRect(window);
+			Rect&& old = getWindowRect(window);
 
 			return ::MoveWindow(window, old.x, old.y, newSize.x, newSize.y, doRedraw) != 0;
 		}

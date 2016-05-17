@@ -25,7 +25,7 @@ namespace wawl {
             return static_cast<CombineResult>(::CombineRgn(to, to, from, unpackEnum(mode)));
         }
 
-		inline RegionHandle createRoundRectRegion(const Rectangle& rect, const Size& roundSize) {
+		inline RegionHandle createRoundRectRegion(const Rect& rect, const Size& roundSize) {
 			return
 				::CreateRoundRectRgn(
 					rect.x,
@@ -37,7 +37,7 @@ namespace wawl {
 				);
 		}
 
-		inline RegionHandle createRectRegion(const Rectangle& rect) {
+		inline RegionHandle createRectRegion(const Rect& rect) {
 			return
 				::CreateRectRgn(
 					rect.x,
@@ -73,7 +73,7 @@ namespace wawl {
 				);
 		}
 
-		inline RegionHandle createEllipticRegion(const Rectangle& circumscribeRect) {
+		inline RegionHandle createEllipticRegion(const Rect& circumscribeRect) {
 			return
 				::CreateEllipticRgn(
 					circumscribeRect.x,
