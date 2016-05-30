@@ -12,21 +12,21 @@ namespace wawl {
 		inline FileHandle createFile(
 			const Tstring fileName,
 			FileCreateProv* createProv,
-			AccessDesc* accessDesc,
+			UnifyEnum<AccessDesc>* accessDescs,
 			FileSharePermit* shareMode,
 			SecurityAttr* secAttr,
-			FileAttr* fileAttr,
+			UnifyEnum<FileAttr>* fileAttrs,
 			FileHandle baseFile
 			) {
 			SecurityAttr sa = (secAttr ? *secAttr : SecurityAttr());
 
 			return ::CreateFile(
 				fileName.c_str(),
-				(accessDesc ? unpackEnum(*accessDesc) : GENERIC_ALL),
+				(accessDescs ? accessDescs->get() : GENERIC_ALL),
 				(shareMode ? unpackEnum(*shareMode) : 0),
 				&sa,
 				(createProv ? unpackEnum(*createProv) : CREATE_ALWAYS),
-				(fileAttr ? unpackEnum(*fileAttr) : FILE_ATTRIBUTE_NORMAL),
+				(fileAttrs ? fileAttrs->get() : FILE_ATTRIBUTE_NORMAL),
 				baseFile
 				);
 		}
@@ -75,13 +75,13 @@ namespace wawl {
 		inline FileHandle createFile(
 			const Tstring fileName,
 			FileCreateProv createProv,
-			AccessDesc accessDesc,
+			UnifyEnum<AccessDesc> accessDescs,
 			FileSharePermit shareMode
 			) {
 			return createFile(
 				fileName,
 				&createProv,
-				&accessDesc,
+				&accessDescs,
 				&shareMode,
 				nullptr,
 				nullptr,
@@ -91,59 +91,59 @@ namespace wawl {
 		inline FileHandle createFile(
 			const Tstring fileName,
 			FileCreateProv createProv,
-			AccessDesc accessDesc,
+			UnifyEnum<AccessDesc> accessDescs,
 			FileSharePermit shareMode,
 			SecurityAttr secAttr,
-			FileAttr fileAttr
+			UnifyEnum<FileAttr> fileAttrs
 			) {
 			return createFile(
 				fileName,
 				&createProv,
-				&accessDesc,
+				&accessDescs,
 				&shareMode,
 				&secAttr,
-				&fileAttr,
+				&fileAttrs,
 				nullptr
 				);
 		}
 		inline FileHandle createFile(
 			const Tstring fileName,
 			FileCreateProv createProv,
-			AccessDesc accessDesc,
+			UnifyEnum<AccessDesc> accessDescs,
 			FileSharePermit shareMode,
 			SecurityAttr secAttr,
-			FileAttr fileAttr,
+			UnifyEnum<FileAttr> fileAttrs,
 			FileHandle baseFile
 			) {
 			return createFile(
 				fileName,
 				&createProv,
-				&accessDesc,
+				&accessDescs,
 				&shareMode,
 				&secAttr,
-				&fileAttr,
+				&fileAttrs,
 				baseFile
 				);
 		}
 
 
 		// get file size in byte 
-		inline Int64 getFileSize(FileHandle file) {
+		inline std::int64_t getFileSize(FileHandle file) {
 			::LARGE_INTEGER li;
 
 			if (::GetFileSizeEx(file, &li))
 				throw static_cast<Error>(::GetLastError());
 
-			return static_cast<Int64>(li.QuadPart);
+			return static_cast<std::int64_t>(li.QuadPart);
 		}
 
 		// read text from file and write it buffer
 		inline bool readFile(
 			FileHandle file,
 			Tstring& buf,
-			Uint32 n
+			std::uint32_t n
 			) {
-			Uint32 readSize;
+			::DWORD readSize;
 
 			buf.resize(n + 1);
 
@@ -163,13 +163,13 @@ namespace wawl {
 
 		// write text to file
 		inline bool writeFile(FileHandle file, const Tstring& str) {
-			Uint32 writtenSize;
+			::DWORD writtenSize;
 
 			return
 				::WriteFile(
 					file,
 					str.c_str(),
-					static_cast<Uint32>(str.size() + 1),
+					static_cast<std::uint32_t>(str.size() + 1),
 					&writtenSize,
 					nullptr
 					) != 0;
@@ -196,15 +196,13 @@ namespace wawl {
 			return static_cast<FileType>(::GetFileType(file));
 		}
 
-		inline FileAttr getFileAttr(const Tstring& fileName) {
-			return static_cast<FileAttr>(
-				::GetFileAttributes(fileName.c_str())
-				);
+		inline UnifyEnum<FileAttr> getFileAttrs(const Tstring& fileName) {
+			return UnifyEnum<FileAttr>(::GetFileAttributes(fileName.c_str()));
 		}
 
 		// get full filepath of specified filepath
 		inline Tstring getFileFullPath(const Tstring& fileName) {
-			Uint32 needSize =
+			std::uint32_t needSize =
 				::GetFullPathName(
 					fileName.c_str(), 0, nullptr, nullptr
 					);

@@ -20,6 +20,6 @@ namespace wawl {
 
 	} // ::wawl::wnd
 
-	WAWL_ENABLE_ENUM_COMPOSE(wnd::ImageCopyOption)
+	WAWL_ENABLE_ENUM_OPERATOR(wnd::ImageCopyOption)
 
 } // ::wawl

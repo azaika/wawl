@@ -10,7 +10,7 @@ namespace wawl {
 
 		inline IconHandle loadOEMIcon(
 			Tchar* type,
-			ImageLoadOption loadOption,
+			UnifyEnum<ImageLoadOption> loadOption,
 			Size size = {}
 			) {
 			return
@@ -21,7 +21,7 @@ namespace wawl {
 						IMAGE_ICON,
 						size.x,
 						size.y,
-						unpackEnum(loadOption)
+						loadOption.get()
 						)
 					);
 		}
@@ -29,7 +29,7 @@ namespace wawl {
 		inline IconHandle loadIcon(
 			ModuleHandle module,
 			const Tstring& fileName,
-			ImageLoadOption loadOption,
+			UnifyEnum<ImageLoadOption> loadOption,
 			const Size& size
 			) {
 			return
@@ -40,7 +40,7 @@ namespace wawl {
 						IMAGE_ICON,
 						size.x,
 						size.y,
-						unpackEnum(loadOption) | LR_LOADFROMFILE
+						loadOption.get() | LR_LOADFROMFILE
 						)
 					);
 		}
@@ -48,7 +48,7 @@ namespace wawl {
 		inline IconHandle loadIconFromResource(
 			ModuleHandle module,
 			const Tstring& instName,
-			ImageLoadOption loadOption = ImageLoadOption::DefaultSize,
+			UnifyEnum<ImageLoadOption> loadOption = ImageLoadOption::DefaultSize,
 			const Size& size = {}
 			) {
 			return
@@ -59,7 +59,7 @@ namespace wawl {
 						IMAGE_ICON,
 						size.x,
 						size.y,
-						unpackEnum(loadOption)
+						loadOption.get()
 						)
 					);
 		}

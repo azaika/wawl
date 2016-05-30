@@ -35,7 +35,7 @@ namespace wawl {
 				::ShowCursor(n >= 0);
 		}
 
-		enum class KeyCode : Uint8 {
+		enum class KeyCode : std::uint8_t {
 			MouseL = VK_LBUTTON,
 			MouseR = VK_RBUTTON,
 			Break = VK_CANCEL,
@@ -215,7 +215,7 @@ namespace wawl {
 		
 		using Keyboard = std::array<bool, endOfKey + 1>;
 		bool getAllKeyState(Keyboard& keyboard, bool doGetToggle = false) {
-			static thread_local Uint8 kb[endOfKey + 1];
+			static thread_local std::uint8_t kb[endOfKey + 1];
 			if (::GetKeyboardState(kb) == false)
 				return false;
 

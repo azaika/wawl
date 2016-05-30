@@ -9,7 +9,7 @@ namespace wawl {
 		using FileHandle = Handle;
 
 		// startup option of application
-		enum class StartupOption : Uint32 {
+		enum class StartupOption : std::uint32_t {
 			Fullscreen = STARTF_RUNFULLSCREEN,
 			ForceChangeCursor = STARTF_FORCEONFEEDBACK,
 			ForceImmutCursor = STARTF_FORCEOFFFEEDBACK,
@@ -19,7 +19,7 @@ namespace wawl {
 		};
 
 		// file access descriptor
-		enum class AccessDesc : Uint32 {
+		enum class AccessDesc : std::uint32_t {
 			None = NULL,
 			All = GENERIC_ALL,
 			Execute = GENERIC_EXECUTE,
@@ -38,7 +38,7 @@ namespace wawl {
 		};
 
 		// file share permission
-		enum class FileSharePermit : Uint32 {
+		enum class FileSharePermit : std::uint32_t {
 			None = NULL,
 			Delete = FILE_SHARE_DELETE,
 			Read = FILE_SHARE_READ,
@@ -46,7 +46,7 @@ namespace wawl {
 		};
 
 		// file creation provision
-		enum class FileCreateProv : Uint32 {
+		enum class FileCreateProv : std::uint32_t {
 			New = CREATE_NEW,
 			AlwaysNew = CREATE_ALWAYS,
 			OpenExisting = OPEN_EXISTING,
@@ -55,7 +55,7 @@ namespace wawl {
 		};
 
 		// file attribute
-		enum class FileAttr : Uint32 {
+		enum class FileAttr : std::uint32_t {
 			Archive = FILE_ATTRIBUTE_ARCHIVE,
 			Encrypt = FILE_ATTRIBUTE_ENCRYPTED,
 			Hide = FILE_ATTRIBUTE_HIDDEN,
@@ -87,13 +87,13 @@ namespace wawl {
 		};
 
 		// simple access descriptor
-		enum class SimpleAccessDesc : Uint32 {
+		enum class SimpleAccessDesc : std::uint32_t {
 			Write = GENERIC_WRITE,
 			Read = GENERIC_READ,
 			All = GENERIC_READ | GENERIC_WRITE
 		};
 
-		enum class FileType : Uint32 {
+		enum class FileType : std::uint32_t {
 			Text = FILE_TYPE_CHAR,
 			Disk = FILE_TYPE_DISK,
 			Pipe = FILE_TYPE_PIPE,
@@ -103,8 +103,8 @@ namespace wawl {
 
 	} // ::wawl::fs
 
-	WAWL_ENABLE_ENUM_COMPOSE(fs::StartupOption)
-	WAWL_ENABLE_ENUM_COMPOSE(fs::AccessDesc)
-	WAWL_ENABLE_ENUM_COMPOSE(fs::FileAttr)
+	WAWL_ENABLE_ENUM_OPERATOR(fs::StartupOption)
+	WAWL_ENABLE_ENUM_OPERATOR(fs::AccessDesc)
+	WAWL_ENABLE_ENUM_OPERATOR(fs::FileAttr)
 
 } // ::wawl

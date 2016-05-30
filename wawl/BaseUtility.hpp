@@ -77,33 +77,9 @@ namespace wawl {
 		return static_cast<std::underlying_type_t<EnumType>>(base) & unpacked == unpacked;
 	}
 
-#define WAWL_ENABLE_ENUM_COMPOSE(type) \
-	constexpr type composeEnum(type lhv, type rhv) { \
-		return static_cast<type>(unpackEnum(lhv) | unpackEnum(rhv)); \
-	} \
-	template <typename... Others> \
-	constexpr type composeEnum(type arg1, type arg2, type arg3, Others... others) { \
-		return static_cast<type>(unpackEnum(arg1) | unpackEnum(composeEnum(arg2, arg3, others...))); \
-	} \
-	inline type& mergeEnum(type& lhv, type rhv) { \
-		lhv = static_cast<type>(unpackEnum(lhv) | unpackEnum(rhv)); \
-		return lhv; \
-	} \
-	template <typename... Others> \
-	type& mergeEnum(type& arg1, type arg2, type arg3, Others... others) { \
-		arg1 = static_cast<type>( \
-			unpackEnum(arg1) \
-			| unpackEnum( \
-				composeEnum(arg2, arg3, others...) \
-			) \
-			); \
-		return arg1; \
-	} \
-	constexpr type operator | (type lhv, type rhv) { \
-		return composeEnum(lhv, rhv); \
-	} \
-	inline type& operator |= (type& lhv, type rhv) { \
-		return mergeEnum(lhv, rhv); \
+#define WAWL_ENABLE_ENUM_OPERATOR(type) \
+	constexpr UnifyEnum<type> operator | (type lhv, type rhv) { \
+		return UnifyEnum<type>(unpackEnum(lhv) | unpackEnum(rhv)); \
 	}
 
 } // ::wawl

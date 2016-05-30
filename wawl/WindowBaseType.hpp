@@ -17,9 +17,9 @@ namespace wawl {
 			ShareHandle = LR_SHARED,
 			UseVGA = LR_VGACOLOR
 		};
-
+		
 		// window show mode
-		enum class ShowMode : Uint16 {
+		enum class ShowMode : std::uint16_t {
 			ForceMinimize = SW_FORCEMINIMIZE,
 			Hide = SW_HIDE,
 			Maximize = SW_MAXIMIZE,
@@ -115,7 +115,7 @@ namespace wawl {
 		using Message = ::MSG;
 
 		// window option
-		enum class Option : Uint32 {
+		enum class Option : std::uint32_t {
 			Bordered = WS_BORDER,
 			Caption = WS_CAPTION,
 			Child = WS_CHILD,
@@ -140,7 +140,7 @@ namespace wawl {
 		};
 
 		// extended window option
-		enum class ExtOption : Uint32 {
+		enum class ExtOption : std::uint32_t {
 			EnableFileDD = WS_EX_ACCEPTFILES,
 			ShowToTaskbar = WS_EX_APPWINDOW,
 			UseEdgeFrame = WS_EX_CLIENTEDGE,
@@ -231,10 +231,10 @@ namespace wawl {
 
 	} // ::wawl::wnd
 
-	WAWL_ENABLE_ENUM_COMPOSE(wnd::ImageLoadOption)
-	WAWL_ENABLE_ENUM_COMPOSE(wnd::ShowMode)
-	WAWL_ENABLE_ENUM_COMPOSE(wnd::PropOption)
-	WAWL_ENABLE_ENUM_COMPOSE(wnd::Option)
-	WAWL_ENABLE_ENUM_COMPOSE(wnd::ExtOption)
+	WAWL_ENABLE_ENUM_OPERATOR(wnd::ImageLoadOption)
+	WAWL_ENABLE_ENUM_OPERATOR(wnd::ShowMode)
+	WAWL_ENABLE_ENUM_OPERATOR(wnd::PropOption)
+	WAWL_ENABLE_ENUM_OPERATOR(wnd::Option)
+	WAWL_ENABLE_ENUM_OPERATOR(wnd::ExtOption)
 
 } // ::wawl

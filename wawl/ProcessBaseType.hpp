@@ -10,7 +10,7 @@ namespace wawl {
 		using StartupInfo = ::STARTUPINFO;
 		
 		// process creation provision
-		enum class ProcessCreateProv : Uint32 {
+		enum class ProcessCreateProv : std::uint32_t {
 			NotInheritJob = CREATE_BREAKAWAY_FROM_JOB,
 			NotInheritErrorMode = CREATE_DEFAULT_ERROR_MODE,
 			DosMode = CREATE_FORCEDOS,
@@ -37,6 +37,6 @@ namespace wawl {
 
 	}
 
-	WAWL_ENABLE_ENUM_COMPOSE(fs::ProcessCreateProv)
+	WAWL_ENABLE_ENUM_OPERATOR(fs::ProcessCreateProv)
 
 }

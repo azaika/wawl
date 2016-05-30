@@ -13,12 +13,12 @@ namespace wawl {
 		}
 
 		// activate debugging for the process
-		inline bool activateDebugger(Uint32 procID) {
+		inline bool activateDebugger(std::uint32_t procID) {
 			return ::DebugActiveProcess(procID) != 0;
 		}
 
 		// stop debugging for the process
-		inline bool stopDebugger(Uint32 procID) {
+		inline bool stopDebugger(std::uint32_t procID) {
 			return ::DebugActiveProcessStop(procID) != 0;
 		}
 
@@ -33,13 +33,13 @@ namespace wawl {
 			return ::IsDebuggerPresent() != 0;
 		}
 
-		inline Uint32 readMemory(
+		inline std::uint32_t readMemory(
 			Handle procHandle,
 			const void* begin,
-			Uint8* buffer,
-			Uint32 n
+			std::uint8_t* buffer,
+			std::uint32_t n
 		) {
-			Uint32 readByte;
+			::DWORD readByte;
 
 			return (
 				::ReadProcessMemory(
@@ -53,23 +53,23 @@ namespace wawl {
 				: 0
 				);
 		}
-		inline Uint32 readMemory(
+		inline std::uint32_t readMemory(
 			Handle procHandle,
 			const void* begin,
-			std::vector<Uint8>& buffer,
-			Uint32 n
+			std::vector<std::uint8_t>& buffer,
+			std::uint32_t n
 		) {
 			buffer.resize(n);
 			return
 				readMemory(procHandle, begin, buffer.data(), n);
 		}
 
-		inline Uint32 writeMemory(
+		inline std::uint32_t writeMemory(
 			Handle procHandle,
 			const void* begin,
-			std::vector<Uint8>& buffer
+			std::vector<std::uint8_t>& buffer
 		) {
-			Uint32 writtenSize;
+			::DWORD writtenSize;
 
 			return (
 				::WriteProcessMemory(

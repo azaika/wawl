@@ -14,7 +14,7 @@ namespace wawl {
 			const Tstring& name,
 			MsgProc& procFunc,
 			AppHandle app,
-			PropOption* options,
+			UnifyEnum<PropOption>* options,
 			IconHandle icon,
 			IconHandle smallIcon,
 			CursorHandle cursor,
@@ -28,7 +28,7 @@ namespace wawl {
 			prop.lpszClassName = name.c_str();
 
 			if (options)
-				prop.style = unpackEnum(*options);
+				prop.style = options->get();
 			if (icon)
 				prop.hIcon = icon;
 			if (smallIcon)
@@ -44,7 +44,7 @@ namespace wawl {
 			const Tstring& name,
 			MsgProc& procFunc,
 			AppHandle app,
-			PropOption options,
+			UnifyEnum<PropOption> options,
 			IconHandle icon,
 			IconHandle smallIcon,
 			CursorHandle cursor,
@@ -67,7 +67,7 @@ namespace wawl {
 			const Tstring& name,
 			MsgProc& procFunc,
 			AppHandle app,
-			PropOption options,
+			UnifyEnum<PropOption> options,
 			IconHandle icon,
 			IconHandle smallIcon,
 			CursorHandle cursor,
@@ -79,8 +79,8 @@ namespace wawl {
 					name,
 					procFunc,
 					app,
-					nullptr,
-					nullptr,
+					&options,
+					icon,
 					smallIcon,
 					cursor,
 					&bkgColor,
@@ -88,7 +88,7 @@ namespace wawl {
 					);
 		}
 
-		inline Uint16 registerProperty(const Property& prop) {
+		inline std::uint16_t registerProperty(const Property& prop) {
 			return ::RegisterClassEx(&prop);
 		}
 
@@ -98,17 +98,17 @@ namespace wawl {
 			const Tstring& propName,
 			const Tstring& title,
 			const Rect& wndRect,
-			const Option* options,
-			const ExtOption* extOptions,
+			const UnifyEnum<Option>* options,
+			const UnifyEnum<ExtOption>* extOptions,
 			MenuHandle menu,
 			const CreateStruct* createStruct
 			) {
 			return
 				::CreateWindowEx(
-					(extOptions ? unpackEnum(*extOptions) : 0),
+					(extOptions ? extOptions->get() : 0),
 					propName.c_str(),
 					title.c_str(),
-					(options ? unpackEnum(*options) : 0),
+					(options ? options->get() : 0),
 					wndRect.x,
 					wndRect.y,
 					wndRect.w,
@@ -139,7 +139,7 @@ namespace wawl {
 			const Tstring& propName,
 			const Tstring& title,
 			const Rect& wndRect,
-			Option options
+			UnifyEnum<Option> options
 			) {
 			return
 				createWindow(
@@ -156,8 +156,8 @@ namespace wawl {
 			const Tstring& propName,
 			const Tstring& title,
 			const Rect& wndRect,
-			Option options,
-			ExtOption extOptions,
+			UnifyEnum<Option> options,
+			UnifyEnum<ExtOption> extOptions,
 			MenuHandle menu
 			) {
 			return
@@ -175,8 +175,8 @@ namespace wawl {
 			const Tstring& propName,
 			const Tstring& title,
 			const Rect& wndRect,
-			Option options,
-			ExtOption extOptions,
+			UnifyEnum<Option> options,
+			UnifyEnum<ExtOption> extOptions,
 			MenuHandle menu,
 			const CreateStruct& createStruct
 			) {
@@ -198,16 +198,16 @@ namespace wawl {
 			const Rect& wndRect,
 			WindowHandle parent,
 			ChildID myID,
-			const Option* options,
-			const ExtOption* extOptions,
+			const UnifyEnum<Option>* options,
+			const UnifyEnum<ExtOption>* extOptions,
 			const CreateStruct* createStruct
 			) {
 			return
 				::CreateWindowEx(
-					(extOptions ? unpackEnum(*extOptions) : 0),
+					(extOptions ? extOptions->get() : 0),
 					propName.c_str(),
 					title.c_str(),
-					(options ? unpackEnum(*options) : 0),
+					(options ? options->get() : 0),
 					wndRect.x,
 					wndRect.y,
 					wndRect.w,
@@ -243,8 +243,8 @@ namespace wawl {
 			const Rect& wndRect,
 			WindowHandle parent,
 			ChildID myID,
-			Option options,
-			ExtOption extOptions
+			UnifyEnum<Option> options,
+			UnifyEnum<ExtOption> extOptions
 			) {
 			return
 				createChildWindow(
@@ -264,8 +264,8 @@ namespace wawl {
 			const Rect& wndRect,
 			WindowHandle parent,
 			ChildID myID,
-			Option options,
-			ExtOption extOptions,
+			UnifyEnum<Option> options,
+			UnifyEnum<ExtOption> extOptions,
 			const CreateStruct& createStruct
 			) {
 			return
@@ -338,8 +338,8 @@ namespace wawl {
 			return ::MoveWindow(window, old.x, old.y, newSize.x, newSize.y, doRedraw) != 0;
 		}
 
-		inline bool setShowMode(WindowHandle window, ShowMode mode) {
-			return ::ShowWindow(window, unpackEnum(mode)) != 0;
+		inline bool setShowMode(WindowHandle window, UnifyEnum<ShowMode> modes) {
+			return ::ShowWindow(window, modes.get()) != 0;
 		}
 
 		// set window title
@@ -348,12 +348,12 @@ namespace wawl {
 		}
 
 		// get window style
-		inline Option getStyle(WindowHandle window) {
-			return static_cast<Option>(::GetWindowLong(window, GWL_STYLE));
+		inline UnifyEnum<Option> getStyle(WindowHandle window) {
+			return UnifyEnum<Option>(::GetWindowLong(window, GWL_STYLE));
 		}
 		// get window extend style
-		inline ExtOption getExtStyle(WindowHandle window) {
-			return static_cast<ExtOption>(::GetWindowLong(window, GWL_EXSTYLE));
+		inline UnifyEnum<ExtOption> getExtStyle(WindowHandle window) {
+			return UnifyEnum<ExtOption>(::GetWindowLong(window, GWL_EXSTYLE));
 		}
 
 		// destroy window (add Msg::Destory to message queue)

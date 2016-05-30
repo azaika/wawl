@@ -65,7 +65,7 @@ namespace wawl {
 				Button button,
 				Icon* icon,
 				CtrlRegLevel* ctrlLevel,
-				ShowStyle* style
+				UnifyEnum<ShowStyle>* style
 				) {
 				return static_cast<Result>(
 					::MessageBox(
@@ -75,7 +75,7 @@ namespace wawl {
 						unpackEnum(button)
 						| (icon ? unpackEnum(*icon) : 0)
 						| (ctrlLevel ? unpackEnum(*ctrlLevel) : 0)
-						| (style ? unpackEnum(*style) : 0)
+						| (style ? style->get() : 0)
 						)
 					);
 			}
@@ -85,7 +85,7 @@ namespace wawl {
 				Button button,
 				Icon icon = static_cast<Icon>(0),
 				CtrlRegLevel ctrlLevel = static_cast<CtrlRegLevel>(0),
-				ShowStyle style = static_cast<ShowStyle>(0)
+				UnifyEnum<ShowStyle> style = static_cast<ShowStyle>(0)
 				) {
 				return
 					show(
@@ -101,6 +101,6 @@ namespace wawl {
 		} // ::wawl::wnd::mb
 	} // ::wawl::wnd
 
-	WAWL_ENABLE_ENUM_COMPOSE(wnd::mb::ShowStyle)
+	WAWL_ENABLE_ENUM_OPERATOR(wnd::mb::ShowStyle)
 
 } // ::wawl

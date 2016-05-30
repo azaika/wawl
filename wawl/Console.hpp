@@ -27,16 +27,16 @@ namespace wawl {
 
 			// write to console
 			// return written size
-			inline Uint32 writeConsole(
+			inline std::uint32_t writeConsole(
 				FileHandle consoleOutput,
 				const Tstring& str
 				) {
-				Uint32 writtenSize;
+				::DWORD writtenSize;
 
 				bool isSuccess = ::WriteConsole(
 					consoleOutput,
 					str.c_str(),
-					static_cast<Uint32>(str.size() + 1),
+					static_cast<std::uint32_t>(str.size() + 1),
 					&writtenSize,
 					nullptr
 					) != 0;
@@ -44,12 +44,12 @@ namespace wawl {
 				return (isSuccess ? writtenSize : 0);
 			}
 
-			inline Uint32 readConsole(
+			inline std::uint32_t readConsole(
 				FileHandle consoleInput,
 				Tstring& buffer,
-				Uint32 size
+				std::uint32_t size
 				) {
-				Uint32 readSize;
+				::DWORD readSize;
 
 				buffer.resize(size);
 

@@ -8,7 +8,7 @@ namespace wawl {
 		namespace console {
 
 			// console background color
-			enum class BkgColor : Uint16 {
+			enum class BkgColor : std::uint16_t {
 				Blue = BACKGROUND_BLUE,
 				Green = BACKGROUND_GREEN,
 				Red = BACKGROUND_RED,
@@ -16,7 +16,7 @@ namespace wawl {
 			};
 
 			// console string color
-			enum class StrColor : Uint16 {
+			enum class StrColor : std::uint16_t {
 				Blue = FOREGROUND_BLUE,
 				Green = FOREGROUND_GREEN,
 				Red = FOREGROUND_RED,

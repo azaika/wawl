@@ -28,6 +28,6 @@ namespace wawl {
 
 	} // ::wawl::wnd
 
-	WAWL_ENABLE_ENUM_COMPOSE(wnd::MenuOption)
+	WAWL_ENABLE_ENUM_OPERATOR(wnd::MenuOption)
 
 } // ::wawl

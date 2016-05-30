@@ -3,6 +3,7 @@
 
 #include <string>
 #include <cstdint>
+#include <type_traits>
 
 // WinAPI Header
 #define NOMINMAX
@@ -27,25 +28,8 @@ namespace wawl {
 		// generic string type
 		using Tstring = std::basic_string<Tchar>;
 		
-		// signed 8bit int
-		using Int8 = std::int8_t;
-		// signed 16bit int
-		using Int16 = std::int16_t;
-		// signed 32bit int
-		using Int32 = std::int32_t;
-		// signed 64bit int
-		using Int64 = std::int64_t;
-
 		// unsigned int
 		using Uint = unsigned int;
-		// unsigned 8bit int
-		using Uint8 = ::BYTE;
-		// unsigned 16bit int
-		using Uint16 = ::WORD;
-		// unsigned 32bit int
-		using Uint32 = ::DWORD;
-		// unsigned 64bit int
-		using Uint64 = std::uint64_t;
 
 		// integer which can contain pointer
 		using IntPtr = ::INT_PTR;
@@ -90,6 +74,58 @@ namespace wawl {
 		struct Rect {
 			int x, y;
 			int w, h;
+		};
+
+		template <typename EnumType, std::underlying_type_t<EnumType> = 0>
+		class UnifyEnum {
+		public:
+			using ThisType = UnifyEnum<EnumType>;
+			using UnderlyingType = std::underlying_type_t<EnumType>;
+
+			constexpr UnifyEnum() = default;
+			constexpr UnifyEnum(const UnifyEnum<EnumType>& rhv) :
+				base(rhv.base) {}
+			UnifyEnum<EnumType>& operator = (const UnifyEnum<EnumType>& rhv) {
+				base = rhv.base;
+				return *this;
+			}
+
+			constexpr UnifyEnum(EnumType val) :
+				base(static_cast<UnderlyingType>(val)) {}
+			constexpr UnifyEnum(UnderlyingType val) :
+				base(val) {}
+
+			ThisType& merge(UnderlyingType val) {
+				base |= val;
+				return *this;
+			}
+			constexpr ThisType operator | (UnderlyingType val) const {
+				return ThisType(base | val);
+			}
+			ThisType& operator |= (UnderlyingType val) {
+				base |= val;
+				return *this;
+			}
+
+			ThisType& rid(UnderlyingType val) {
+				base &= (~val);
+				return *this;
+			}
+
+			explicit operator UnderlyingType() const {
+				return base;
+			}
+			constexpr UnderlyingType get() const {
+				return base;
+			}
+
+			constexpr bool hasIncluded(UnderlyingType val) const {
+				return ((base & val) ^ val) == 0;
+			}
+
+		private:
+			UnderlyingType base = 0;
+
 		};
 
 	} // ::wawl::base

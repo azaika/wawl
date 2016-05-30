@@ -29,14 +29,14 @@ namespace wawl {
         // get system temporary directory path
 		inline bool getTempDirPath(Tstring& buf) {
 			buf.resize(MAX_PATH);
-			buf.resize(::GetTempPath(static_cast<Uint32>(buf.size()), &buf[0]));
+			buf.resize(::GetTempPath(static_cast<std::uint32_t>(buf.size()), &buf[0]));
 			return buf.size() != 0;
 		}
         
         // get current directory path of this process
 		inline bool getCurrentDirPath(Tstring& buf) {
 			buf.resize(MAX_PATH);
-			buf.resize(::GetCurrentDirectory(static_cast<Uint32>(buf.size()), &buf[0]));
+			buf.resize(::GetCurrentDirectory(static_cast<std::uint32_t>(buf.size()), &buf[0]));
 			return buf.size() != 0;
 		}
         

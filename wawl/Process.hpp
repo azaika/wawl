@@ -15,8 +15,8 @@ namespace wawl {
 			inline StartupInfo makeStartupInfo(
 				const Position* wndPos,
 				const Size* wndSize,
-				StartupOption* startupOptions,
-				wnd::ShowMode* wndShowModes,
+				UnifyEnum<StartupOption>* startupOptions,
+				UnifyEnum<wnd::ShowMode>* wndShowModes,
 				Tstring* wndTitle,
 				Tstring* desktopName,
 				const Size* consoleBufSize,
@@ -58,11 +58,11 @@ namespace wawl {
 					si.dwFillAttribute = unpackEnum(*consoleBkgColor);
 				// set application startup option
 				if (startupOptions != nullptr)
-					si.dwFlags |= unpackEnum(*startupOptions);
+					si.dwFlags |= startupOptions->get();
 				// set window show modes
 				if (wndShowModes != nullptr)
 					si.dwFlags |= STARTF_USESHOWWINDOW,
-					si.wShowWindow = unpackEnum(*wndShowModes);
+					si.wShowWindow = wndShowModes->get();
 				//標準入力、出力、エラー出力ファイルの設定
 				if (stdInput != nullptr)
 					si.dwFlags |= STARTF_USESTDHANDLES,
@@ -130,8 +130,8 @@ namespace wawl {
 					);
 			}
 			inline StartupInfo makeStartupInfo(
-				StartupOption startupOptions,
-				wnd::ShowMode wndShowModes
+				UnifyEnum<StartupOption> startupOptions,
+				UnifyEnum<wnd::ShowMode> wndShowModes
 				) {
 				return makeStartupInfo(
 					nullptr,
@@ -214,8 +214,8 @@ namespace wawl {
 			inline StartupInfo makeStartupInfo(
 				const Position& wndPos,
 				const Size& wndSize,
-				StartupOption startupOptions,
-				wnd::ShowMode wndShowModes,
+				UnifyEnum<StartupOption> startupOptions,
+				UnifyEnum<wnd::ShowMode> wndShowModes,
 				Tstring& wndTitle,
 				Tstring& desktopName,
 				const Size& consoleBufSize,
@@ -393,12 +393,12 @@ namespace wawl {
 			}
 
 			// represent the process is still runnning
-			constexpr Uint32 StillActive = STILL_ACTIVE;
+			constexpr std::uint32_t StillActive = STILL_ACTIVE;
 
 			// get exit code of process
 			// if the process is still running, return StillActive
-			inline Uint32 getExitCode(const ProcessInfo& proc) {
-				Uint32 exitCode;
+			inline std::uint32_t getExitCode(const ProcessInfo& proc) {
+				::DWORD exitCode;
 
 				::GetExitCodeProcess(proc.hProcess, &exitCode);
 

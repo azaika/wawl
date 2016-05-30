@@ -12,7 +12,7 @@ namespace wawl {
 		inline BitmapHandle loadBitmap(
 			ModuleHandle module,
 			const Tstring& fileName,
-			ImageLoadOption loadOption,
+			UnifyEnum<ImageLoadOption> loadOption,
 			const Size& size
 			) {
 			return
@@ -23,14 +23,14 @@ namespace wawl {
 						IMAGE_BITMAP,
 						size.x,
 						size.y,
-						unpackEnum(loadOption) | LR_LOADFROMFILE
+						loadOption.get() | LR_LOADFROMFILE
 						)
 					);
 		}
 		inline BitmapHandle loadBitmapFromResource(
 			ModuleHandle module,
 			const Tstring& instName,
-			ImageLoadOption loadOption,
+			UnifyEnum<ImageLoadOption> loadOption,
 			const Size& size = {}
 			) {
 			return
@@ -41,7 +41,7 @@ namespace wawl {
 						IMAGE_ICON,
 						size.x,
 						size.y,
-						unpackEnum(loadOption)
+						loadOption.get()
 						)
 					);
 		}

@@ -19,7 +19,7 @@ namespace wawl {
 		}
 
 		// get system time milli second
-		inline Uint32 getTimeMs() {
+		inline std::uint32_t getTimeMs() {
 			return timeGetTime();
 		}
 
@@ -44,7 +44,7 @@ namespace wawl {
 		inline bool shutdown(
 			const Tstring& machineName,
 			const Tstring& msg,
-			Uint32 timeOut = 0,
+			std::uint32_t timeOut = 0,
 			bool force = false,
 			bool doRestart = false
 			) {

@@ -25,7 +25,7 @@ namespace wawl {
 			}
 			inline std::pair<Handle, Handle> createUnnamedPipe(
 				SecurityAttr secAttr,
-				Uint32 bufferSize
+				std::uint32_t bufferSize
 				) {
 				std::pair<Handle, Handle> ret;
 
@@ -51,16 +51,16 @@ namespace wawl {
 				MessageStream = PIPE_READMODE_MESSAGE,
 			};
 
-			constexpr Uint32 UnlimitedInstances = PIPE_UNLIMITED_INSTANCES;
+			constexpr std::uint32_t UnlimitedInstances = PIPE_UNLIMITED_INSTANCES;
 
 			inline FileHandle createNamedPipe(
 				const Tstring& pipeName,
 				AccessMode* accessMode,
 				PipeType* pipeType,
-				Uint32* instanceLimits,
-				Uint32* outBufferSize,
-				Uint32* inBufferSize,
-				Uint32* timeOut,
+				std::uint32_t* instanceLimits,
+				std::uint32_t* outBufferSize,
+				std::uint32_t* inBufferSize,
+				std::uint32_t* timeOut,
 				const SecurityAttr* secAttr
 				) {
 				SecurityAttr sa = (secAttr ? *secAttr : SecurityAttr());
@@ -113,8 +113,8 @@ namespace wawl {
 				const Tstring& pipeName,
 				AccessMode accessMode,
 				PipeType pipeType,
-				Uint32 outBufferSize,
-				Uint32 inBufferSize
+				std::uint32_t outBufferSize,
+				std::uint32_t inBufferSize
 				) {
 				return
 					createNamedPipe(
@@ -132,10 +132,10 @@ namespace wawl {
 				const Tstring& pipeName,
 				AccessMode accessMode,
 				PipeType pipeType,
-				Uint32 outBufferSize,
-				Uint32 inBufferSize,
-				Uint32 instanceLimits,
-				Uint32 timeOut,
+				std::uint32_t outBufferSize,
+				std::uint32_t inBufferSize,
+				std::uint32_t instanceLimits,
+				std::uint32_t timeOut,
 				const SecurityAttr& secAttr
 				) {
 				return

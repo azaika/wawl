@@ -8,7 +8,7 @@ namespace wawl {
 
 	// WinAPI errors
 	// need more
-	enum class Error : Uint32 {
+	enum class Error : std::uint32_t {
 		Success = ERROR_SUCCESS,
 		InvalidFunction = ERROR_INVALID_FUNCTION,
 		FileNotFound = ERROR_FILE_NOT_FOUND,
@@ -197,16 +197,16 @@ namespace wawl {
 		::SetLastError(unpackEnum(error));
 	}
 
-	inline Uint32 errorToStr(Tstring& buf, Error error) {
+	inline std::uint32_t errorToStr(Tstring& buf, Error error) {
 		buf.resize(512);
-		Uint32 writtenSize =
+		std::uint32_t writtenSize =
 			::FormatMessage(
 				FORMAT_MESSAGE_FROM_SYSTEM,
 				nullptr,
 				unpackEnum(error),
 				0,
 				&buf[0],
-				static_cast<Uint32>(buf.size() + 1),
+				static_cast<std::uint32_t>(buf.size() + 1),
 				nullptr
 			);
 		buf.resize(writtenSize);
