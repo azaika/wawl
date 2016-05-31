@@ -11,235 +11,229 @@ namespace wawl {
 	namespace fs {
 		namespace proc {
 
-			// make an initialized StartupInfo
-			inline StartupInfo makeStartupInfo(
-				const Position* wndPos,
-				const Size* wndSize,
-				UnifyEnum<StartupOption>* startupOptions,
-				UnifyEnum<wnd::ShowMode>* wndShowModes,
-				Tstring* wndTitle,
-				Tstring* desktopName,
-				const Size* consoleBufSize,
-				console::StrColor* consoleStrColor,
-				console::BkgColor* consoleBkgColor,
-				FileHandle stdInput,
-				FileHandle stdOutput,
-				FileHandle stdError
-				) {
-				StartupInfo si = {};
+			// information for application startup
+			struct StartupInfo : ::STARTUPINFO {
+				StartupInfo() :
+					StartupInfo(
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr
+					) {}
+				StartupInfo(
+					const Position& wndPos
+				) :
+					StartupInfo(
+						&wndPos,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr
+					) {}
+				StartupInfo(
+					const Position& wndPos,
+					const Size& wndSize
+				) :
+					StartupInfo(
+						&wndPos,
+						&wndSize,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr
+					) {}
+				StartupInfo(
+					UnifyEnum<StartupOption> startupOptions,
+					UnifyEnum<wnd::ShowMode> wndShowModes
+				) :
+					StartupInfo(
+						nullptr,
+						nullptr,
+						&startupOptions,
+						&wndShowModes,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr
+					) {}
+				StartupInfo(
+					const Size& consoleBufSize,
+					console::StrColor consoleStrColor,
+					console::BkgColor consoleBkgColor
+				) :
+					StartupInfo(
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						&consoleBufSize,
+						&consoleStrColor,
+						&consoleBkgColor,
+						nullptr,
+						nullptr,
+						nullptr
+					) {}
+				StartupInfo(
+					FileHandle stdInput,
+					FileHandle stdOutput,
+					FileHandle stdError
+				) :
+					StartupInfo(
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						stdInput,
+						stdOutput,
+						stdError
+					) {}
+				StartupInfo(
+					const Size& consoleBufSize,
+					console::StrColor consoleStrColor,
+					console::BkgColor consoleBkgColor,
+					FileHandle stdInput,
+					FileHandle stdOutput,
+					FileHandle stdError
+				) :
+					StartupInfo(
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						nullptr,
+						&consoleBufSize,
+						&consoleStrColor,
+						&consoleBkgColor,
+						stdInput,
+						stdOutput,
+						stdError
+					) {}
+				StartupInfo(
+					const Position& wndPos,
+					const Size& wndSize,
+					UnifyEnum<StartupOption> startupOptions,
+					UnifyEnum<wnd::ShowMode> wndShowModes,
+					Tstring& wndTitle,
+					Tstring& desktopName,
+					const Size& consoleBufSize,
+					console::StrColor consoleStrColor,
+					console::BkgColor consoleBkgColor,
+					FileHandle stdInput,
+					FileHandle stdOutput,
+					FileHandle stdError
+				) :
+					StartupInfo(
+						&wndPos,
+						&wndSize,
+						&startupOptions,
+						&wndShowModes,
+						&wndTitle,
+						&desktopName,
+						&consoleBufSize,
+						&consoleStrColor,
+						&consoleBkgColor,
+						stdInput,
+						stdOutput,
+						stdError
+					) {}
 
-				si.cb = sizeof(StartupInfo);
-				if (desktopName != nullptr)
-					si.lpDesktop = &(*desktopName)[0];
-				// set window title
-				if (wndTitle != nullptr)
-					si.lpTitle = &(*wndTitle)[0];
-				// set window position
-				if (wndPos != nullptr)
-					si.dwFlags |= STARTF_USEPOSITION,
-					si.dwX = wndPos->x,
-					si.dwY = wndPos->y;
-				// set window size
-				if (wndSize != nullptr)
-					si.dwFlags |= STARTF_USESIZE,
-					si.dwXSize = wndSize->x,
-					si.dwYSize = wndSize->y;
-				// set console buffer width and height
-				if (consoleBufSize != nullptr)
-					si.dwFlags |= STARTF_USECOUNTCHARS,
-					si.dwXCountChars = consoleBufSize->x,
-					si.dwYCountChars = consoleBufSize->y;
-				// set console string's and background's color
-				if (consoleStrColor != nullptr)
-					si.dwFlags |= STARTF_USEFILLATTRIBUTE,
-					si.dwFillAttribute = unpackEnum(*consoleStrColor);
-				if (consoleBkgColor != nullptr)
-					si.dwFlags |= STARTF_USEFILLATTRIBUTE,
-					si.dwFillAttribute = unpackEnum(*consoleBkgColor);
-				// set application startup option
-				if (startupOptions != nullptr)
-					si.dwFlags |= startupOptions->get();
-				// set window show modes
-				if (wndShowModes != nullptr)
-					si.dwFlags |= STARTF_USESHOWWINDOW,
-					si.wShowWindow = wndShowModes->get();
-				//標準入力、出力、エラー出力ファイルの設定
-				if (stdInput != nullptr)
-					si.dwFlags |= STARTF_USESTDHANDLES,
-					si.hStdInput = stdInput;
-				if (stdOutput != nullptr)
-					si.dwFlags |= STARTF_USESTDHANDLES,
-					si.hStdOutput = stdOutput;
-				if (stdError != nullptr)
-					si.dwFlags |= STARTF_USESTDHANDLES,
-					si.hStdError = stdError;
+			private:
+				StartupInfo(
+					const Position* wndPos,
+					const Size* wndSize,
+					UnifyEnum<StartupOption>* startupOptions,
+					UnifyEnum<wnd::ShowMode>* wndShowModes,
+					Tstring* wndTitle,
+					Tstring* desktopName,
+					const Size* consoleBufSize,
+					console::StrColor* consoleStrColor,
+					console::BkgColor* consoleBkgColor,
+					FileHandle stdInput,
+					FileHandle stdOutput,
+					FileHandle stdError
+				) {
+					cb = sizeof(StartupInfo);
 
-				return std::move(si);
-			}
-			inline StartupInfo makeStartupInfo() {
-				return makeStartupInfo(
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr
-					);
-			}
-			inline StartupInfo makeStartupInfo(
-				const Position& wndPos
-				) {
-				return makeStartupInfo(
-					&wndPos,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr
-					);
-			}
-			inline StartupInfo makeStartupInfo(
-				const Position& wndPos,
-				const Size& wndSize
-				) {
-				return makeStartupInfo(
-					&wndPos,
-					&wndSize,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr
-					);
-			}
-			inline StartupInfo makeStartupInfo(
-				UnifyEnum<StartupOption> startupOptions,
-				UnifyEnum<wnd::ShowMode> wndShowModes
-				) {
-				return makeStartupInfo(
-					nullptr,
-					nullptr,
-					&startupOptions,
-					&wndShowModes,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr
-					);
-			}
-			inline StartupInfo makeStartupInfo(
-				const Size& consoleBufSize,
-				console::StrColor consoleStrColor,
-				console::BkgColor consoleBkgColor
-				) {
-				return makeStartupInfo(
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					&consoleBufSize,
-					&consoleStrColor,
-					&consoleBkgColor,
-					nullptr,
-					nullptr,
-					nullptr
-					);
-			}
-			inline StartupInfo makeStartupInfo(
-				FileHandle stdInput,
-				FileHandle stdOutput,
-				FileHandle stdError
-				) {
-				return makeStartupInfo(
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					stdInput,
-					stdOutput,
-					stdError
-					);
-			}
-			inline StartupInfo makeStartupInfo(
-				const Size& consoleBufSize,
-				console::StrColor consoleStrColor,
-				console::BkgColor consoleBkgColor,
-				FileHandle stdInput,
-				FileHandle stdOutput,
-				FileHandle stdError
-				) {
-				return makeStartupInfo(
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					nullptr,
-					&consoleBufSize,
-					&consoleStrColor,
-					&consoleBkgColor,
-					stdInput,
-					stdOutput,
-					stdError
-					);
-			}
-			inline StartupInfo makeStartupInfo(
-				const Position& wndPos,
-				const Size& wndSize,
-				UnifyEnum<StartupOption> startupOptions,
-				UnifyEnum<wnd::ShowMode> wndShowModes,
-				Tstring& wndTitle,
-				Tstring& desktopName,
-				const Size& consoleBufSize,
-				console::StrColor consoleStrColor,
-				console::BkgColor consoleBkgColor,
-				FileHandle stdInput,
-				FileHandle stdOutput,
-				FileHandle stdError
-				) {
-				return makeStartupInfo(
-					&wndPos,
-					&wndSize,
-					&startupOptions,
-					&wndShowModes,
-					&wndTitle,
-					&desktopName,
-					&consoleBufSize,
-					&consoleStrColor,
-					&consoleBkgColor,
-					stdInput,
-					stdOutput,
-					stdError
-					);
-			}
+					if (desktopName != nullptr)
+						lpDesktop = &(*desktopName)[0];
+					// set window title
+					if (wndTitle != nullptr)
+						lpTitle = &(*wndTitle)[0];
+					// set window position
+					if (wndPos != nullptr)
+						dwFlags |= STARTF_USEPOSITION,
+						dwX = wndPos->x,
+						dwY = wndPos->y;
+					// set window size
+					if (wndSize != nullptr)
+						dwFlags |= STARTF_USESIZE,
+						dwXSize = wndSize->x,
+						dwYSize = wndSize->y;
+					// set console buffer width and height
+					if (consoleBufSize != nullptr)
+						dwFlags |= STARTF_USECOUNTCHARS,
+						dwXCountChars = consoleBufSize->x,
+						dwYCountChars = consoleBufSize->y;
+					// set console string's and background's color
+					if (consoleStrColor != nullptr)
+						dwFlags |= STARTF_USEFILLATTRIBUTE,
+						dwFillAttribute = unpackEnum(*consoleStrColor);
+					if (consoleBkgColor != nullptr)
+						dwFlags |= STARTF_USEFILLATTRIBUTE,
+						dwFillAttribute = unpackEnum(*consoleBkgColor);
+					// set application startup option
+					if (startupOptions != nullptr)
+						dwFlags |= startupOptions->get();
+					// set window show modes
+					if (wndShowModes != nullptr)
+						dwFlags |= STARTF_USESHOWWINDOW,
+						wShowWindow = wndShowModes->get();
+					// set standerd IO handle
+					if (stdInput != nullptr)
+						dwFlags |= STARTF_USESTDHANDLES,
+						hStdInput = stdInput;
+					if (stdOutput != nullptr)
+						dwFlags |= STARTF_USESTDHANDLES,
+						hStdOutput = stdOutput;
+					if (stdError != nullptr)
+						dwFlags |= STARTF_USESTDHANDLES,
+						hStdError = stdError;
+				}
+
+			};
 
 			inline StartupInfo getLocalStarupInfo() {
 				StartupInfo si;
@@ -248,7 +242,7 @@ namespace wawl {
 				return si;
 			}
 			
-			// initialize an ProcessInfo
+			// initialize a ProcessInfo
 			inline bool createProcess(
 				ProcessInfo& procInfo,
 				const Tstring* appName,

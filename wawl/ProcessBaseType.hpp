@@ -6,9 +6,6 @@
 namespace wawl {
 	namespace fs {
 
-		// information for application startup
-		using StartupInfo = ::STARTUPINFO;
-		
 		// process creation provision
 		enum class ProcessCreateProv : std::uint32_t {
 			NotInheritJob = CREATE_BREAKAWAY_FROM_JOB,

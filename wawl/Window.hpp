@@ -10,48 +10,18 @@
 namespace wawl {
 	namespace wnd {
 
-		inline Property makeProperty(
-			const Tstring& name,
-			MsgProc& procFunc,
-			AppHandle app,
-			UnifyEnum<PropOption>* options,
-			IconHandle icon,
-			IconHandle smallIcon,
-			CursorHandle cursor,
-			ColorBrush* bkgColor,
-			const Tstring* menuName
-			) {
-			Property prop = {};
-			prop.cbSize = sizeof(Property);
-			prop.lpfnWndProc = procFunc;
-			prop.hInstance = app;
-			prop.lpszClassName = name.c_str();
-
-			if (options)
-				prop.style = options->get();
-			if (icon)
-				prop.hIcon = icon;
-			if (smallIcon)
-				prop.hIconSm = smallIcon;
-			if (bkgColor)
-				prop.hbrBackground = reinterpret_cast<::HBRUSH>(::GetStockObject(unpackEnum(*bkgColor)));
-			if (menuName)
-				prop.lpszMenuName = menuName->c_str();
-
-			return std::move(prop);
-		}
-		inline Property makeProperty(
-			const Tstring& name,
-			MsgProc& procFunc,
-			AppHandle app,
-			UnifyEnum<PropOption> options,
-			IconHandle icon,
-			IconHandle smallIcon,
-			CursorHandle cursor,
-			ColorBrush bkgColor
-			) {
-			return
-				makeProperty(
+		struct Property : ::WNDCLASSEX {
+			Property(
+				const Tstring& name,
+				MsgProc& procFunc,
+				AppHandle app,
+				UnifyEnum<PropOption> options,
+				IconHandle icon,
+				IconHandle smallIcon,
+				CursorHandle cursor,
+				ColorBrush bkgColor
+			) :
+				Property(
 					name,
 					procFunc,
 					app,
@@ -61,21 +31,48 @@ namespace wawl {
 					cursor,
 					&bkgColor,
 					nullptr
-					);
-		}
-		inline Property makeProperty(
-			const Tstring& name,
-			MsgProc& procFunc,
-			AppHandle app,
-			UnifyEnum<PropOption> options,
-			IconHandle icon,
-			IconHandle smallIcon,
-			CursorHandle cursor,
-			ColorBrush bkgColor,
-			const Tstring& menuName
+				) {}
+
+		private:
+			Property(
+				const Tstring& name,
+				MsgProc& procFunc,
+				AppHandle app,
+				UnifyEnum<PropOption>* options,
+				IconHandle icon,
+				IconHandle smallIcon,
+				CursorHandle cursor,
+				ColorBrush* bkgColor,
+				const Tstring* menuName
 			) {
-			return
-				makeProperty(
+				cbSize = sizeof(Property);
+				lpfnWndProc = procFunc;
+				hInstance = app;
+				lpszClassName = name.c_str();
+
+				if (options)
+					style = options->get();
+				if (icon)
+					hIcon = icon;
+				if (smallIcon)
+					hIconSm = smallIcon;
+				if (bkgColor)
+					hbrBackground = reinterpret_cast<::HBRUSH>(::GetStockObject(unpackEnum(*bkgColor)));
+				if (menuName)
+					lpszMenuName = menuName->c_str();
+			}
+			Property(
+				const Tstring& name,
+				MsgProc& procFunc,
+				AppHandle app,
+				UnifyEnum<PropOption> options,
+				IconHandle icon,
+				IconHandle smallIcon,
+				CursorHandle cursor,
+				ColorBrush bkgColor,
+				const Tstring& menuName
+			) :
+				Property(
 					name,
 					procFunc,
 					app,
@@ -85,8 +82,9 @@ namespace wawl {
 					cursor,
 					&bkgColor,
 					&menuName
-					);
-		}
+				) {}
+
+		};
 
 		inline std::uint16_t registerProperty(const Property& prop) {
 			return ::RegisterClassEx(&prop);

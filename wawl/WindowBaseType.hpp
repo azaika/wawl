@@ -7,8 +7,6 @@
 namespace wawl {
 	namespace wnd {
 
-		using Property = ::WNDCLASSEX;
-
 		enum class ImageLoadOption : Uint {
 			DefaultColor = LR_DEFAULTCOLOR,
 			UseDIBSection = LR_CREATEDIBSECTION,

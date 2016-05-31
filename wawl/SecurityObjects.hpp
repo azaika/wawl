@@ -7,39 +7,30 @@ namespace wawl {
 	namespace fs {
 
 		// security descriptor
-		using SecurityDesc = ::SECURITY_DESCRIPTOR;
-		// make an initialized SecurityDesc
-		SecurityDesc makeSecurityDesc() {
-			SecurityDesc sd;
-			::InitializeSecurityDescriptor(
-				&sd,
-				SECURITY_DESCRIPTOR_REVISION
+		struct SecurityDesc : ::SECURITY_DESCRIPTOR {
+			SecurityDesc() {
+				::InitializeSecurityDescriptor(
+					this,
+					SECURITY_DESCRIPTOR_REVISION
 				);
-
-			return sd;
-		}
+			}
+			
+			SecurityDesc(const SecurityDesc&) = default;
+			SecurityDesc& operator = (const SecurityDesc&) = default;
+		};
 
 		// security attributes
-		using SecurityAttr = ::SECURITY_ATTRIBUTES;
-		// make an initialized SecurityAttr
-		SecurityAttr makeSecurityAttr(bool doInheritHandle) {
-			SecurityAttr sa;
+		struct SecurityAttr : ::SECURITY_ATTRIBUTES {
+			SecurityAttr(bool doInteritHandle = false) {
+				nLength = sizeof(SecurityAttr);
+				bInheritHandle = doInteritHandle;
+			}
 
-			sa.nLength = sizeof(SecurityAttr);
-			sa.bInheritHandle = doInheritHandle;
-			sa.lpSecurityDescriptor = nullptr;
-
-			return sa;
-		}
-		SecurityAttr makeSecurityAttr(bool doInheritHandle, SecurityDesc& secDesc) {
-			SecurityAttr sa;
-
-			sa.nLength = sizeof(SecurityAttr);
-			sa.bInheritHandle = doInheritHandle;
-			sa.lpSecurityDescriptor = &secDesc;
-
-			return sa;
-		}
+			SecurityAttr(bool doInheritHandle, SecurityDesc& secDesc) :
+				SecurityAttr(doInheritHandle) {
+				lpSecurityDescriptor = &secDesc;
+			}
+		};
 
 	} // ::wawl::fs
 } // ::wawl
