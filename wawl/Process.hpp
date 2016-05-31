@@ -185,6 +185,7 @@ namespace wawl {
 					FileHandle stdOutput,
 					FileHandle stdError
 				) {
+					ZeroMemory(this, sizeof(*this));
 					cb = sizeof(StartupInfo);
 
 					if (desktopName != nullptr)

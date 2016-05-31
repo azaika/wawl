@@ -35,7 +35,7 @@ int WawlMain(
 ) {
 	const Tstring propName = L"WndClass";
 
-	auto prop = wnd::makeProperty(
+	wnd::Property prop(
 		propName,
 		MsgProc,
 		appInst,

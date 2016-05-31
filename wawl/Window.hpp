@@ -32,35 +32,6 @@ namespace wawl {
 					&bkgColor,
 					nullptr
 				) {}
-
-		private:
-			Property(
-				const Tstring& name,
-				MsgProc& procFunc,
-				AppHandle app,
-				UnifyEnum<PropOption>* options,
-				IconHandle icon,
-				IconHandle smallIcon,
-				CursorHandle cursor,
-				ColorBrush* bkgColor,
-				const Tstring* menuName
-			) {
-				cbSize = sizeof(Property);
-				lpfnWndProc = procFunc;
-				hInstance = app;
-				lpszClassName = name.c_str();
-
-				if (options)
-					style = options->get();
-				if (icon)
-					hIcon = icon;
-				if (smallIcon)
-					hIconSm = smallIcon;
-				if (bkgColor)
-					hbrBackground = reinterpret_cast<::HBRUSH>(::GetStockObject(unpackEnum(*bkgColor)));
-				if (menuName)
-					lpszMenuName = menuName->c_str();
-			}
 			Property(
 				const Tstring& name,
 				MsgProc& procFunc,
@@ -84,6 +55,38 @@ namespace wawl {
 					&menuName
 				) {}
 
+		private:
+			Property(
+				const Tstring& name,
+				MsgProc& procFunc,
+				AppHandle app,
+				UnifyEnum<PropOption>* options,
+				IconHandle icon,
+				IconHandle smallIcon,
+				CursorHandle cursor,
+				ColorBrush* bkgColor,
+				const Tstring* menuName
+			) {
+				::ZeroMemory(this, sizeof(*this));
+				cbSize = sizeof(Property);
+				lpfnWndProc = procFunc;
+				hInstance = app;
+				lpszClassName = name.c_str();
+
+				if (options)
+					style = options->get();
+				if (icon)
+					hIcon = icon;
+				if (smallIcon)
+					hIconSm = smallIcon;
+				if (cursor)
+					hCursor = cursor;
+				if (bkgColor)
+					hbrBackground = reinterpret_cast<::HBRUSH>(::GetStockObject(unpackEnum(*bkgColor)));
+				if (menuName)
+					lpszMenuName = menuName->c_str();
+			}
+			
 		};
 
 		inline std::uint16_t registerProperty(const Property& prop) {

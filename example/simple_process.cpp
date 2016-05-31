@@ -14,7 +14,7 @@ LongPtr CALLBACK MsgProc(
 
 	switch (static_cast<Msg>(msg)) {
 	case Msg::MouseLClick:
-		if(!procInfo.hProcess)
+		if (!procInfo.hProcess)
 			fs::proc::createProcess(procInfo, L"notepad.exe");
 		break;
 	case Msg::MouseRClick:
@@ -36,7 +36,7 @@ int WawlMain(
 ) {
 	const Tstring propName = L"WndClass";
 
-	auto prop = wnd::makeProperty(
+	wnd::Property prop(
 		propName,
 		MsgProc,
 		appInst,
@@ -57,7 +57,7 @@ int WawlMain(
 		wnd::createWindow(
 			propName,
 			L"wawl test",
-			{wnd::DefaultWindowPos.x, wnd::DefaultWindowPos.y, 640, 480},
+			{ wnd::DefaultWindowPos.x, wnd::DefaultWindowPos.y, 640, 480 },
 			wnd::Option::SysMenu | wnd::Option::EnableSizeChange
 		);
 	if (!window)
@@ -66,7 +66,7 @@ int WawlMain(
 	wnd::update(window);
 	wnd::setShowMode(window, static_cast<wnd::ShowMode>(cmdShow));
 
-	wnd::Message msg;
+	wnd::Message msg = {};
 	while (wnd::getMessage(msg, window)) {
 		wnd::translateMessage(msg);
 		wnd::dispatchMessage(msg);
