@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_ICON
+#define WAWL_ICON_HPP
 
 #include "IconBaseType.hpp"
 #include "WindowBaseType.hpp"
@@ -10,7 +10,7 @@ namespace wawl {
 
 		inline IconHandle loadOEMIcon(
 			Tchar* type,
-			UnifyEnum<ImageLoadOption> loadOption,
+			Flags<ImageLoadOption> loadOption,
 			Size size = {}
 			) {
 			return
@@ -29,7 +29,7 @@ namespace wawl {
 		inline IconHandle loadIcon(
 			ModuleHandle module,
 			const Tstring& fileName,
-			UnifyEnum<ImageLoadOption> loadOption,
+			Flags<ImageLoadOption> loadOption,
 			const Size& size
 			) {
 			return
@@ -48,7 +48,7 @@ namespace wawl {
 		inline IconHandle loadIconFromResource(
 			ModuleHandle module,
 			const Tstring& instName,
-			UnifyEnum<ImageLoadOption> loadOption = ImageLoadOption::DefaultSize,
+			Flags<ImageLoadOption> loadOption = ImageLoadOption::DefaultSize,
 			const Size& size = {}
 			) {
 			return

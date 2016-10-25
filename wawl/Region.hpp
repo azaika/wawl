@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_REGION
+#define WAWL_REGION_HPP
 
 #include <array>
 #include <vector>

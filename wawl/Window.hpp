@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_WINDOW
+#define WAWL_WINDOW_HPP
 
 #include "WindowBaseType.hpp"
 #include "Cursor.hpp"
@@ -15,7 +15,7 @@ namespace wawl {
 				const Tstring& name,
 				MsgProc& procFunc,
 				AppHandle app,
-				UnifyEnum<PropOption> options,
+				Flags<PropOption> options,
 				IconHandle icon,
 				IconHandle smallIcon,
 				CursorHandle cursor,
@@ -36,7 +36,7 @@ namespace wawl {
 				const Tstring& name,
 				MsgProc& procFunc,
 				AppHandle app,
-				UnifyEnum<PropOption> options,
+				Flags<PropOption> options,
 				IconHandle icon,
 				IconHandle smallIcon,
 				CursorHandle cursor,
@@ -60,7 +60,7 @@ namespace wawl {
 				const Tstring& name,
 				MsgProc& procFunc,
 				AppHandle app,
-				UnifyEnum<PropOption>* options,
+				Flags<PropOption>* options,
 				IconHandle icon,
 				IconHandle smallIcon,
 				CursorHandle cursor,
@@ -99,8 +99,8 @@ namespace wawl {
 			const Tstring& propName,
 			const Tstring& title,
 			const Rect& wndRect,
-			const UnifyEnum<Option>* options,
-			const UnifyEnum<ExtOption>* extOptions,
+			const Flags<Option>* options,
+			const Flags<ExtOption>* extOptions,
 			MenuHandle menu,
 			const CreateStruct* createStruct
 			) {
@@ -140,7 +140,7 @@ namespace wawl {
 			const Tstring& propName,
 			const Tstring& title,
 			const Rect& wndRect,
-			UnifyEnum<Option> options
+			Flags<Option> options
 			) {
 			return
 				createWindow(
@@ -157,8 +157,8 @@ namespace wawl {
 			const Tstring& propName,
 			const Tstring& title,
 			const Rect& wndRect,
-			UnifyEnum<Option> options,
-			UnifyEnum<ExtOption> extOptions,
+			Flags<Option> options,
+			Flags<ExtOption> extOptions,
 			MenuHandle menu
 			) {
 			return
@@ -176,8 +176,8 @@ namespace wawl {
 			const Tstring& propName,
 			const Tstring& title,
 			const Rect& wndRect,
-			UnifyEnum<Option> options,
-			UnifyEnum<ExtOption> extOptions,
+			Flags<Option> options,
+			Flags<ExtOption> extOptions,
 			MenuHandle menu,
 			const CreateStruct& createStruct
 			) {
@@ -199,8 +199,8 @@ namespace wawl {
 			const Rect& wndRect,
 			WindowHandle parent,
 			ChildID myID,
-			const UnifyEnum<Option>* options,
-			const UnifyEnum<ExtOption>* extOptions,
+			const Flags<Option>* options,
+			const Flags<ExtOption>* extOptions,
 			const CreateStruct* createStruct
 			) {
 			return
@@ -244,8 +244,8 @@ namespace wawl {
 			const Rect& wndRect,
 			WindowHandle parent,
 			ChildID myID,
-			UnifyEnum<Option> options,
-			UnifyEnum<ExtOption> extOptions
+			Flags<Option> options,
+			Flags<ExtOption> extOptions
 			) {
 			return
 				createChildWindow(
@@ -265,8 +265,8 @@ namespace wawl {
 			const Rect& wndRect,
 			WindowHandle parent,
 			ChildID myID,
-			UnifyEnum<Option> options,
-			UnifyEnum<ExtOption> extOptions,
+			Flags<Option> options,
+			Flags<ExtOption> extOptions,
 			const CreateStruct& createStruct
 			) {
 			return
@@ -339,7 +339,7 @@ namespace wawl {
 			return ::MoveWindow(window, old.x, old.y, newSize.x, newSize.y, doRedraw) != 0;
 		}
 
-		inline bool setShowMode(WindowHandle window, UnifyEnum<ShowMode> modes) {
+		inline bool setShowMode(WindowHandle window, Flags<ShowMode> modes) {
 			return ::ShowWindow(window, modes.get()) != 0;
 		}
 
@@ -349,12 +349,12 @@ namespace wawl {
 		}
 
 		// get window style
-		inline UnifyEnum<Option> getStyle(WindowHandle window) {
-			return UnifyEnum<Option>(::GetWindowLong(window, GWL_STYLE));
+		inline Flags<Option> getStyle(WindowHandle window) {
+			return Flags<Option>(::GetWindowLong(window, GWL_STYLE));
 		}
 		// get window extend style
-		inline UnifyEnum<ExtOption> getExtStyle(WindowHandle window) {
-			return UnifyEnum<ExtOption>(::GetWindowLong(window, GWL_EXSTYLE));
+		inline Flags<ExtOption> getExtStyle(WindowHandle window) {
+			return Flags<ExtOption>(::GetWindowLong(window, GWL_EXSTYLE));
 		}
 
 		// destroy window (add Msg::Destory to message queue)

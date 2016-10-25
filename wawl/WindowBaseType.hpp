@@ -1,7 +1,8 @@
 ﻿#pragma once
-#define ENABLE_WAWL_WINDOWBASETYPE
+#define WAWL_WINDOW_BASE_TYPE_HPP
 
 #include "BaseType.hpp"
+#include "Detail.hpp"
 #include "MenuBaseType.hpp"
 
 namespace wawl {
@@ -229,10 +230,10 @@ namespace wawl {
 
 	} // ::wawl::wnd
 
-	WAWL_ENABLE_ENUM_OPERATOR(wnd::ImageLoadOption)
-	WAWL_ENABLE_ENUM_OPERATOR(wnd::ShowMode)
-	WAWL_ENABLE_ENUM_OPERATOR(wnd::PropOption)
-	WAWL_ENABLE_ENUM_OPERATOR(wnd::Option)
-	WAWL_ENABLE_ENUM_OPERATOR(wnd::ExtOption)
+	WAWL_DETAIL_ENABLE_FLAG(wnd::ImageLoadOption)
+	WAWL_DETAIL_ENABLE_FLAG(wnd::ShowMode)
+	WAWL_DETAIL_ENABLE_FLAG(wnd::PropOption)
+	WAWL_DETAIL_ENABLE_FLAG(wnd::Option)
+	WAWL_DETAIL_ENABLE_FLAG(wnd::ExtOption)
 
 } // ::wawl

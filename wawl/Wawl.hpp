@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_ALL
+#define WAWL_HPP
 
 #include "WawlBase.hpp"
 #include "Input.hpp"

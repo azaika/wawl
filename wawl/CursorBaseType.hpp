@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_CURSORBASETYPE
+#define WAWL_CURSOR_BASE_TYPE_HPP
 
 #include "BaseType.hpp"
 

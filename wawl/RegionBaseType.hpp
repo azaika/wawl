@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_REGIONBASETYPE
+#define WAWL_REGION_BASE_TYPE_HPP
 
 #include "BaseType.hpp"
 
@@ -10,7 +10,7 @@ namespace wawl {
 		enum class CombineMode : int {
 			And = RGN_AND,
 			Copy = RGN_COPY,
-			Dif = RGN_DIFF,
+			Diff = RGN_DIFF,
 			Error = RGN_ERROR,
 			Max = RGN_MAX,
 			Min = RGN_MIN,
@@ -34,5 +34,5 @@ namespace wawl {
 
 		using RegionHandle = ::HRGN;
 
-	}
-}
+	} // ::wawl::wnd
+} // ::wawl

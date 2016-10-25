@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_CONSOLE
+#define WAWL_CONSOLE_HPP
 
 #include "ConsoleBaseType.hpp"
 #include "BaseUtility.hpp"

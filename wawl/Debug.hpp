@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_DEBUG
+#define WAWL_DEBUG_HPP
 
 #include "BaseType.hpp"
 #include <vector>
@@ -7,17 +7,17 @@
 namespace wawl {
 	namespace debug {
 
-		// print a degug string to debug console
+		// print a string to debug console
 		inline void print(const Tstring& str) {
 			::OutputDebugString(str.c_str());
 		}
 
-		// activate debugging for the process
+		// activate debugging of the process
 		inline bool activateDebugger(std::uint32_t procID) {
 			return ::DebugActiveProcess(procID) != 0;
 		}
 
-		// stop debugging for the process
+		// stop debugging of the process
 		inline bool stopDebugger(std::uint32_t procID) {
 			return ::DebugActiveProcessStop(procID) != 0;
 		}

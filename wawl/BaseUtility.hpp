@@ -1,10 +1,11 @@
 ﻿#pragma once
 
-#define ENABLE_WAWL_BASEUTILITY
+#define WAWL_BASE_UTILITY_HPP
 
 #include <type_traits>
 
 #include "BaseType.hpp"
+#include "Detail.hpp"
 
 namespace wawl {
 
@@ -77,9 +78,11 @@ namespace wawl {
 		return static_cast<std::underlying_type_t<EnumType>>(base) & unpacked == unpacked;
 	}
 
-#define WAWL_ENABLE_ENUM_OPERATOR(type) \
-	constexpr UnifyEnum<type> operator | (type lhv, type rhv) { \
-		return UnifyEnum<type>(unpackEnum(lhv) | unpackEnum(rhv)); \
+	template <
+		typename T,
+		detail::FlagEnablerType<T> = nullptr >
+	constexpr Flags<T> operator | (T lhv, T rhv) {
+		return Flags<T>(unpackEnum(lhv) | unpackEnum(rhv));
 	}
 
 } // ::wawl

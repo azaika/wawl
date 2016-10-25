@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_PIPE
+#define WAWL_PIPE_HPP
 
 #include <utility>
 
@@ -53,35 +53,40 @@ namespace wawl {
 
 			constexpr std::uint32_t UnlimitedInstances = PIPE_UNLIMITED_INSTANCES;
 
-			inline FileHandle createNamedPipe(
-				const Tstring& pipeName,
-				AccessMode* accessMode,
-				PipeType* pipeType,
-				std::uint32_t* instanceLimits,
-				std::uint32_t* outBufferSize,
-				std::uint32_t* inBufferSize,
-				std::uint32_t* timeOut,
-				const SecurityAttr* secAttr
-				) {
-				SecurityAttr sa = (secAttr ? *secAttr : SecurityAttr());
+			namespace detail {
 
-				return
-					::CreateNamedPipe(
-						pipeName.c_str(),
-						(accessMode ? unpackEnum(*accessMode) : PIPE_ACCESS_DUPLEX),
-						(pipeType ? unpackEnum(*pipeType) : PIPE_TYPE_BYTE),
-						(instanceLimits ? *instanceLimits : UnlimitedInstances),
-						(outBufferSize ? *outBufferSize : 256),
-						(inBufferSize ? *inBufferSize : 256),
-						(timeOut ? *timeOut : 1000),
-						&sa
+				inline FileHandle createNamedPipe(
+					const Tstring& pipeName,
+					AccessMode* accessMode,
+					PipeType* pipeType,
+					std::uint32_t* instanceLimits,
+					std::uint32_t* outBufferSize,
+					std::uint32_t* inBufferSize,
+					std::uint32_t* timeOut,
+					const SecurityAttr* secAttr
+				) {
+					SecurityAttr sa = (secAttr ? *secAttr : SecurityAttr());
+
+					return
+						::CreateNamedPipe(
+							pipeName.c_str(),
+							(accessMode ? unpackEnum(*accessMode) : PIPE_ACCESS_DUPLEX),
+							(pipeType ? unpackEnum(*pipeType) : PIPE_TYPE_BYTE),
+							(instanceLimits ? *instanceLimits : UnlimitedInstances),
+							(outBufferSize ? *outBufferSize : 256),
+							(inBufferSize ? *inBufferSize : 256),
+							(timeOut ? *timeOut : 1000),
+							&sa
 						);
-			}
+				}
+
+			} // ::wawl::fs::pipe::detail
+
 			inline FileHandle createNamedPipe(
 				const Tstring& pipeName
 				) {
 				return
-					createNamedPipe(
+					detail::createNamedPipe(
 						pipeName,
 						nullptr,
 						nullptr,
@@ -98,7 +103,7 @@ namespace wawl {
 				PipeType pipeType
 				) {
 				return
-					createNamedPipe(
+					detail::createNamedPipe(
 						pipeName,
 						&accessMode,
 						&pipeType,
@@ -117,7 +122,7 @@ namespace wawl {
 				std::uint32_t inBufferSize
 				) {
 				return
-					createNamedPipe(
+					detail::createNamedPipe(
 						pipeName,
 						&accessMode,
 						&pipeType,
@@ -139,7 +144,7 @@ namespace wawl {
 				const SecurityAttr& secAttr
 				) {
 				return
-					createNamedPipe(
+					detail::createNamedPipe(
 						pipeName,
 						&accessMode,
 						&pipeType,
@@ -151,7 +156,6 @@ namespace wawl {
 						);
 			}
 
-			// open named pipe
 			inline FileHandle openNamedPipe(
 				const Tstring& pipeName,
 				SimpleAccessDesc accessMode

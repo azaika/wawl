@@ -1,10 +1,11 @@
 ﻿#pragma once
-#define ENABLE_WAWL_ICONBASETYPE
+#define WAWL_ICON_BASE_TYPE_HPP
 
 #include "BaseType.hpp"
 
 namespace wawl {
 	namespace wnd {
+
 		using IconHandle = ::HICON;
 
 		// default window icon
@@ -16,5 +17,6 @@ namespace wawl {
 			static constexpr Tchar* Warning = IDI_WARNING;
 			static constexpr Tchar* WinLogo = IDI_WINLOGO;
 		};
-	}
-}
+
+	} // ::wawl::wnd
+} // ::wawl

@@ -121,6 +121,7 @@
     <ClInclude Include="BaseUtility.hpp" />
     <ClInclude Include="Bitmap.hpp" />
     <ClInclude Include="BitmapBaseType.hpp" />
+    <ClInclude Include="Detail.hpp" />
     <ClInclude Include="Console.hpp" />
     <ClInclude Include="ConsoleBaseType.hpp" />
     <ClInclude Include="Cursor.hpp" />

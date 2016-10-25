@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_PROCESS
+#define WAWL_PROCESS_HPP
 
 #include "WawlBase.hpp"
 #include "ConsoleBaseType.hpp"
@@ -64,8 +64,8 @@ namespace wawl {
 						nullptr
 					) {}
 				StartupInfo(
-					UnifyEnum<StartupOption> startupOptions,
-					UnifyEnum<wnd::ShowMode> wndShowModes
+					Flags<StartupOption> startupOptions,
+					Flags<wnd::ShowMode> wndShowModes
 				) :
 					StartupInfo(
 						nullptr,
@@ -144,8 +144,8 @@ namespace wawl {
 				StartupInfo(
 					const Position& wndPos,
 					const Size& wndSize,
-					UnifyEnum<StartupOption> startupOptions,
-					UnifyEnum<wnd::ShowMode> wndShowModes,
+					Flags<StartupOption> startupOptions,
+					Flags<wnd::ShowMode> wndShowModes,
 					Tstring& wndTitle,
 					Tstring& desktopName,
 					const Size& consoleBufSize,
@@ -174,8 +174,8 @@ namespace wawl {
 				StartupInfo(
 					const Position* wndPos,
 					const Size* wndSize,
-					UnifyEnum<StartupOption>* startupOptions,
-					UnifyEnum<wnd::ShowMode>* wndShowModes,
+					Flags<StartupOption>* startupOptions,
+					Flags<wnd::ShowMode>* wndShowModes,
 					Tstring* wndTitle,
 					Tstring* desktopName,
 					const Size* consoleBufSize,
@@ -240,46 +240,50 @@ namespace wawl {
 				StartupInfo si;
 				::GetStartupInfo(&si);
 
-				return si;
+				return std::move(si);
 			}
 			
-			// initialize a ProcessInfo
-			inline bool createProcess(
-				ProcessInfo& procInfo,
-				const Tstring* appName,
-				const Tstring* cmdLineArgs,
-				const SecurityAttr* procAttr,
-				const SecurityAttr* threadAttr,
-				bool doInheritHandle,
-				ProcessCreateProv* createProv,
-				const Tstring* envVars,
-				const Tstring* currentDir,
-				const StartupInfo* startupInfo
-				) {
-				StartupInfo si = (startupInfo ? *startupInfo : StartupInfo{});
-				SecurityAttr psa = (procAttr ? *procAttr : SecurityAttr{});
-				SecurityAttr tsa = (threadAttr ? *threadAttr : SecurityAttr{});
+			namespace detail {
 
-				return
-					::CreateProcess(
+				inline bool createProcess(
+					ProcessInfo& procInfo,
+					const Tstring* appName,
+					const Tstring* cmdLineArgs,
+					const SecurityAttr* procAttr,
+					const SecurityAttr* threadAttr,
+					bool doInheritHandle,
+					ProcessCreateProv* createProv,
+					const Tstring* envVars,
+					const Tstring* currentDir,
+					const StartupInfo* startupInfo
+				) {
+					StartupInfo si = (startupInfo ? *startupInfo : StartupInfo{});
+					SecurityAttr psa = (procAttr ? *procAttr : SecurityAttr{});
+					SecurityAttr tsa = (threadAttr ? *threadAttr : SecurityAttr{});
+
+					return
+						::CreateProcess(
 						(appName ? appName->c_str() : nullptr),
-						(cmdLineArgs ? const_cast<Tchar*>(cmdLineArgs->c_str()) : nullptr),
-						(procAttr ? &psa : nullptr),
-						(threadAttr ? &tsa : nullptr),
-						doInheritHandle,
-						(createProv ? unpackEnum(*createProv) : NORMAL_PRIORITY_CLASS),
-						(envVars ? const_cast<Tchar*>(envVars->c_str()) : nullptr),
-						(currentDir ? currentDir->c_str() : nullptr),
-						&si,
-						&procInfo
+							(cmdLineArgs ? const_cast<Tchar*>(cmdLineArgs->c_str()) : nullptr),
+							(procAttr ? &psa : nullptr),
+							(threadAttr ? &tsa : nullptr),
+							doInheritHandle,
+							(createProv ? unpackEnum(*createProv) : NORMAL_PRIORITY_CLASS),
+							(envVars ? const_cast<Tchar*>(envVars->c_str()) : nullptr),
+							(currentDir ? currentDir->c_str() : nullptr),
+							&si,
+							&procInfo
 						) != 0;
-			}
+				}
+
+			} // ::wawl::fs::proc::detail
+			
 			inline bool createProcess(
 				ProcessInfo& procInfo,
 				const Tstring& cmdLine
 				) {
 				return
-					createProcess(
+					detail::createProcess(
 						procInfo,
 						nullptr,
 						&cmdLine,
@@ -298,7 +302,7 @@ namespace wawl {
 				const StartupInfo& startupInfo
 				) {
 				return
-					createProcess(
+					detail::createProcess(
 						procInfo,
 						nullptr,
 						&cmdLine,
@@ -318,7 +322,7 @@ namespace wawl {
 				ProcessCreateProv createProv
 				) {
 				return
-					createProcess(
+					detail::createProcess(
 						procInfo,
 						nullptr,
 						&cmdLine,
@@ -339,7 +343,7 @@ namespace wawl {
 				const Tstring& currentDir
 				) {
 				return
-					createProcess(
+					detail::createProcess(
 						procInfo,
 						nullptr,
 						&cmdLine,
@@ -365,7 +369,7 @@ namespace wawl {
 				const StartupInfo& startupInfo
 				) {
 				return
-					createProcess(
+					detail::createProcess(
 						procInfo,
 						&appName,
 						&cmdLineArgs,

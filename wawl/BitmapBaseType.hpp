@@ -1,7 +1,8 @@
 ﻿#pragma once
-#define ENABLE_WAWL_BITMAPBASETYPE
+#define WAWL_BITMAP_BASE_TYPE_HPP
 
 #include "BaseType.hpp"
+#include "Detail.hpp"
 
 namespace wawl {
 	namespace wnd {
@@ -20,6 +21,6 @@ namespace wawl {
 
 	} // ::wawl::wnd
 
-	WAWL_ENABLE_ENUM_OPERATOR(wnd::ImageCopyOption)
+	WAWL_DETAIL_ENABLE_FLAG(wnd::ImageCopyOption)
 
 } // ::wawl

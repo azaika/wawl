@@ -1,7 +1,8 @@
 ﻿#pragma once
-#define ENABLE_WAWL_PROCESSBASETYPE
+#define WAWL_PROCESS_BASE_TYPE
 
 #include "BaseType.hpp"
+#include "Detail.hpp"
 
 namespace wawl {
 	namespace fs {
@@ -34,6 +35,6 @@ namespace wawl {
 
 	}
 
-	WAWL_ENABLE_ENUM_OPERATOR(fs::ProcessCreateProv)
+	WAWL_DETAIL_ENABLE_FLAG(fs::ProcessCreateProv)
 
 }

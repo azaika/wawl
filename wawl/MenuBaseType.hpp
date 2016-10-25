@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_MENUBASETYPE
+#define WAWL_MENU_BASE_TYPE_HPP
 
 #include "BaseType.hpp"
 
@@ -28,6 +28,6 @@ namespace wawl {
 
 	} // ::wawl::wnd
 
-	WAWL_ENABLE_ENUM_OPERATOR(wnd::MenuOption)
+	WAWL_DETAIL_ENABLE_FLAG(wnd::MenuOption)
 
 } // ::wawl

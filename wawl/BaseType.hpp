@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_BASETYPE
+#define WAWL_BASE_TYPE_HPP
 
 #include <string>
 #include <cstdint>
@@ -77,22 +77,21 @@ namespace wawl {
 		};
 
 		template <typename EnumType, std::underlying_type_t<EnumType> = 0>
-		class UnifyEnum {
+		class Flags {
 		public:
-			using ThisType = UnifyEnum<EnumType>;
+			using ThisType = Flags<EnumType>;
 			using UnderlyingType = std::underlying_type_t<EnumType>;
 
-			constexpr UnifyEnum() = default;
-			constexpr UnifyEnum(const UnifyEnum<EnumType>& rhv) :
-				base(rhv.base) {}
-			UnifyEnum<EnumType>& operator = (const UnifyEnum<EnumType>& rhv) {
+			constexpr Flags() = default;
+			constexpr Flags(const Flags<EnumType>& rhv) = default;
+			Flags<EnumType>& operator = (const Flags<EnumType>& rhv) {
 				base = rhv.base;
 				return *this;
 			}
 
-			constexpr UnifyEnum(EnumType val) :
+			constexpr Flags(EnumType val) :
 				base(static_cast<UnderlyingType>(val)) {}
-			constexpr UnifyEnum(UnderlyingType val) :
+			constexpr Flags(UnderlyingType val) :
 				base(val) {}
 
 			ThisType& merge(UnderlyingType val) {
@@ -119,7 +118,7 @@ namespace wawl {
 				return base;
 			}
 
-			constexpr bool hasIncluded(UnderlyingType val) const {
+			constexpr bool has(UnderlyingType val) const {
 				return ((base & val) ^ val) == 0;
 			}
 

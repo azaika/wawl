@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_MENU
+#define WAWL_MENU_HPP
 
 #include "BaseType.hpp"
 #include "BaseUtility.hpp"

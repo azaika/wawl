@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_BASE
+#define WAWL_BASE_HPP
 
 #include "BaseType.hpp"
 #include "BaseUtility.hpp"

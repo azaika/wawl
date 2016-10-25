@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_BITMAP
+#define WAWL_BITMAP_HPP
 
 #include "BaseType.hpp"
 #include "BaseUtility.hpp"
@@ -12,7 +12,7 @@ namespace wawl {
 		inline BitmapHandle loadBitmap(
 			ModuleHandle module,
 			const Tstring& fileName,
-			UnifyEnum<ImageLoadOption> loadOption,
+			Flags<ImageLoadOption> loadOption,
 			const Size& size
 			) {
 			return
@@ -30,7 +30,7 @@ namespace wawl {
 		inline BitmapHandle loadBitmapFromResource(
 			ModuleHandle module,
 			const Tstring& instName,
-			UnifyEnum<ImageLoadOption> loadOption,
+			Flags<ImageLoadOption> loadOption,
 			const Size& size = {}
 			) {
 			return

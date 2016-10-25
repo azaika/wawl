@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_SYSTEM
+#define WAWL_SYSTEM_HPP
 
 #include "WawlBase.hpp"
 
@@ -13,12 +13,12 @@ namespace wawl {
 			return static_cast<AppHandle>(::GetModuleHandle(0));
 		}
 
-		// get full cmd Line args, which includes this exe name
+		// get full cmd Line args, which includes exe filename
 		inline Tstring getFullCmdArgs() {
 			return ::GetCommandLine();
 		}
 
-		// get system time milli second
+		// get system time by milli second
 		inline std::uint32_t getTimeMs() {
 			return timeGetTime();
 		}
@@ -57,7 +57,7 @@ namespace wawl {
 				) != 0;
 		}
 
-		// if shutDown function has called and it is still waiting for timeOut, cancel it.
+		// if shutDown function has called and Windows is still waiting for timeout, cancel it.
 		inline bool abortShutdown(const Tstring& machineName) {
 			return ::AbortSystemShutdown(const_cast<Tchar*>(machineName.c_str())) != 0;
 		}
@@ -71,7 +71,7 @@ namespace wawl {
 			return ::timeEndPeriod(res) == TIMERR_NOERROR;
 		}
 
-		// type of system constant which is used in getSystemConstant
+		// type of system constant used in getSystemConstant
 		enum class SystemConstant : int {
 			Arrange = SM_ARRANGE,
 			BootMode = SM_CLEANBOOT,

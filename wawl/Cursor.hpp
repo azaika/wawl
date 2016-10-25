@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_CURSOR
+#define WAWL_CURSOR_HPP
 
 #include "CursorBaseType.hpp"
 #include "WindowBaseType.hpp"
@@ -10,7 +10,7 @@ namespace wawl {
 
 		inline CursorHandle loadOEMCursor(
 			Tchar* type,
-			UnifyEnum<ImageLoadOption> loadOption,
+			Flags<ImageLoadOption> loadOption,
 			Size size = {}
 			) {
 			return
@@ -29,7 +29,7 @@ namespace wawl {
 		inline CursorHandle loadCursor(
 			ModuleHandle module,
 			const Tstring& fileName,
-			UnifyEnum<ImageLoadOption> loadOption,
+			Flags<ImageLoadOption> loadOption,
 			const Size& size
 			) {
 			return
@@ -48,7 +48,7 @@ namespace wawl {
 		inline CursorHandle loadCursorFromResource(
 			ModuleHandle module,
 			const Tstring& instName,
-			UnifyEnum<ImageLoadOption> loadOption,
+			Flags<ImageLoadOption> loadOption,
 			const Size& size = {}
 			) {
 			return

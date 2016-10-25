@@ -1,7 +1,8 @@
 ﻿#pragma once
-#define ENABLE_WAWL_FILEBASETYPE
+#define WAWL_FILE_BASE_TYPE_HPP
 
 #include "BaseType.hpp"
+#include "Detail.hpp"
 
 namespace wawl {
 	namespace fs {
@@ -103,8 +104,8 @@ namespace wawl {
 
 	} // ::wawl::fs
 
-	WAWL_ENABLE_ENUM_OPERATOR(fs::StartupOption)
-	WAWL_ENABLE_ENUM_OPERATOR(fs::AccessDesc)
-	WAWL_ENABLE_ENUM_OPERATOR(fs::FileAttr)
+	WAWL_DETAIL_ENABLE_FLAG(fs::StartupOption)
+	WAWL_DETAIL_ENABLE_FLAG(fs::AccessDesc)
+	WAWL_DETAIL_ENABLE_FLAG(fs::FileAttr)
 
 } // ::wawl

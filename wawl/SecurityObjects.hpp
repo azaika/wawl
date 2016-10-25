@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_SECURITYOBJECTS
+#define WAWL_SECURITY_OBJECTS_HPP
 
 #include "BaseType.hpp"
 

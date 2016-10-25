@@ -91,6 +91,9 @@
     <ClInclude Include="Debug.hpp">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Detail.hpp">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\license">

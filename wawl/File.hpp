@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_FILE
+#define WAWL_FILE_HPP
 
 #include "WawlBase.hpp"
 #include "FileBaseType.hpp"
@@ -8,32 +8,36 @@
 namespace wawl {
 	namespace fs {
 
-		// init file handle
-		inline FileHandle createFile(
-			const Tstring fileName,
-			FileCreateProv* createProv,
-			UnifyEnum<AccessDesc>* accessDescs,
-			FileSharePermit* shareMode,
-			SecurityAttr* secAttr,
-			UnifyEnum<FileAttr>* fileAttrs,
-			FileHandle baseFile
-			) {
-			SecurityAttr sa = (secAttr ? *secAttr : SecurityAttr());
+		namespace detail {
 
-			return ::CreateFile(
-				fileName.c_str(),
-				(accessDescs ? accessDescs->get() : GENERIC_ALL),
-				(shareMode ? unpackEnum(*shareMode) : 0),
-				&sa,
-				(createProv ? unpackEnum(*createProv) : CREATE_ALWAYS),
-				(fileAttrs ? fileAttrs->get() : FILE_ATTRIBUTE_NORMAL),
-				baseFile
+			inline FileHandle createFile(
+				const Tstring fileName,
+				FileCreateProv* createProv,
+				Flags<AccessDesc>* accessDescs,
+				FileSharePermit* shareMode,
+				SecurityAttr* secAttr,
+				Flags<FileAttr>* fileAttrs,
+				FileHandle baseFile
+			) {
+				SecurityAttr sa = (secAttr ? *secAttr : SecurityAttr());
+
+				return ::CreateFile(
+					fileName.c_str(),
+					(accessDescs ? accessDescs->get() : GENERIC_ALL),
+					(shareMode ? unpackEnum(*shareMode) : 0),
+					&sa,
+					(createProv ? unpackEnum(*createProv) : CREATE_ALWAYS),
+					(fileAttrs ? fileAttrs->get() : FILE_ATTRIBUTE_NORMAL),
+					baseFile
 				);
-		}
+			}
+
+		} // ::wawl::fs::detail
+
 		inline FileHandle createFile(
 			const Tstring fileName
 			) {
-			return createFile(
+			return detail::createFile(
 				fileName,
 				nullptr,
 				nullptr,
@@ -47,7 +51,7 @@ namespace wawl {
 			const Tstring fileName,
 			FileCreateProv createProv
 			) {
-			return createFile(
+			return detail::createFile(
 				fileName,
 				&createProv,
 				nullptr,
@@ -62,7 +66,7 @@ namespace wawl {
 			FileCreateProv createProv,
 			FileHandle baseFile
 			) {
-			return createFile(
+			return detail::createFile(
 				fileName,
 				&createProv,
 				nullptr,
@@ -75,10 +79,10 @@ namespace wawl {
 		inline FileHandle createFile(
 			const Tstring fileName,
 			FileCreateProv createProv,
-			UnifyEnum<AccessDesc> accessDescs,
+			Flags<AccessDesc> accessDescs,
 			FileSharePermit shareMode
 			) {
-			return createFile(
+			return detail::createFile(
 				fileName,
 				&createProv,
 				&accessDescs,
@@ -91,12 +95,12 @@ namespace wawl {
 		inline FileHandle createFile(
 			const Tstring fileName,
 			FileCreateProv createProv,
-			UnifyEnum<AccessDesc> accessDescs,
+			Flags<AccessDesc> accessDescs,
 			FileSharePermit shareMode,
 			SecurityAttr secAttr,
-			UnifyEnum<FileAttr> fileAttrs
+			Flags<FileAttr> fileAttrs
 			) {
-			return createFile(
+			return detail::createFile(
 				fileName,
 				&createProv,
 				&accessDescs,
@@ -109,13 +113,13 @@ namespace wawl {
 		inline FileHandle createFile(
 			const Tstring fileName,
 			FileCreateProv createProv,
-			UnifyEnum<AccessDesc> accessDescs,
+			Flags<AccessDesc> accessDescs,
 			FileSharePermit shareMode,
 			SecurityAttr secAttr,
-			UnifyEnum<FileAttr> fileAttrs,
+			Flags<FileAttr> fileAttrs,
 			FileHandle baseFile
 			) {
-			return createFile(
+			return detail::createFile(
 				fileName,
 				&createProv,
 				&accessDescs,
@@ -196,8 +200,8 @@ namespace wawl {
 			return static_cast<FileType>(::GetFileType(file));
 		}
 
-		inline UnifyEnum<FileAttr> getFileAttrs(const Tstring& fileName) {
-			return UnifyEnum<FileAttr>(::GetFileAttributes(fileName.c_str()));
+		inline Flags<FileAttr> getFileAttrs(const Tstring& fileName) {
+			return Flags<FileAttr>(::GetFileAttributes(fileName.c_str()));
 		}
 
 		// get full filepath of specified filepath

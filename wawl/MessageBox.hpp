@@ -1,5 +1,5 @@
 ﻿#pragma once
-#define ENABLE_WAWL_MESSAGEBOX
+#define WAWL_MESSAGE_BOX_HPP
 
 #include "BaseType.hpp"
 #include "BaseUtility.hpp"
@@ -65,7 +65,7 @@ namespace wawl {
 				Button button,
 				Icon* icon,
 				CtrlRegLevel* ctrlLevel,
-				UnifyEnum<ShowStyle>* style
+				Flags<ShowStyle>* style
 				) {
 				return static_cast<Result>(
 					::MessageBox(
@@ -85,7 +85,7 @@ namespace wawl {
 				Button button,
 				Icon icon = static_cast<Icon>(0),
 				CtrlRegLevel ctrlLevel = static_cast<CtrlRegLevel>(0),
-				UnifyEnum<ShowStyle> style = static_cast<ShowStyle>(0)
+				Flags<ShowStyle> style = static_cast<ShowStyle>(0)
 				) {
 				return
 					show(
@@ -101,6 +101,6 @@ namespace wawl {
 		} // ::wawl::wnd::mb
 	} // ::wawl::wnd
 
-	WAWL_ENABLE_ENUM_OPERATOR(wnd::mb::ShowStyle)
+	WAWL_DETAIL_ENABLE_FLAG(wnd::mb::ShowStyle)
 
 } // ::wawl
