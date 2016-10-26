@@ -50,7 +50,16 @@ namespace wawl {
 		using ModuleHandle = ::HINSTANCE;
 
 		struct Position {
-			int x, y;
+			long x = 0, y = 0;
+
+			constexpr Position() = default;
+			constexpr Position(const Position&) = default;
+			Position& operator = (const Position&) = default;
+
+			constexpr Position(long _x, long _y) :
+				x(_x), y(_y) {}
+			constexpr Position(const ::POINT& p) :
+				x(p.x), y(p.y) {}
 
 			Position operator + (const Position& p) {
 				return Position{ x + p.x, y + p.y };
@@ -67,6 +76,13 @@ namespace wawl {
 				x -= p.x;
 				y -= p.y;
 				return *this;
+			}
+
+			operator const ::POINT& () {
+				return *reinterpret_cast<::POINT*>(this);
+			}
+			constexpr operator const ::POINT& () const {
+				return *reinterpret_cast<const ::POINT*>(this);
 			}
 		};
 		using Size = Position;

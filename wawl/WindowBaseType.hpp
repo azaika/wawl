@@ -111,8 +111,6 @@ namespace wawl {
 			// and more...
 		};
 
-		using Message = ::MSG;
-
 		// window option
 		enum class Option : std::uint32_t {
 			Bordered = WS_BORDER,
@@ -165,6 +163,8 @@ namespace wawl {
 
 		// window procedure function
 		using MsgProc = std::remove_pointer_t<::WNDPROC>;
+
+		using MsgProcResult = ::MSG;
 
 		// timer procedure function
 		using TimerProc = std::remove_pointer_t<::TIMERPROC>;

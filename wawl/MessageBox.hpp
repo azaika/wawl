@@ -85,7 +85,7 @@ namespace wawl {
 				Button button,
 				Icon icon = static_cast<Icon>(0),
 				CtrlRegLevel ctrlLevel = static_cast<CtrlRegLevel>(0),
-				Flags<ShowStyle> style = static_cast<ShowStyle>(0)
+				Flags<ShowStyle> style = Flags<ShowStyle>()
 				) {
 				return
 					show(

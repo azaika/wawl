@@ -95,38 +95,68 @@ namespace wawl {
 
 		static constexpr Position DefaultWindowPos = { CW_USEDEFAULT, CW_USEDEFAULT };
 
-		inline WindowHandle createWindow(
-			const Tstring& propName,
-			const Tstring& title,
-			const Rect& wndRect,
-			const Flags<Option>* options,
-			const Flags<ExtOption>* extOptions,
-			MenuHandle menu,
-			const CreateStruct* createStruct
+		namespace detail {
+			inline WindowHandle createWindow(
+				const Tstring& propName,
+				const Tstring& title,
+				const Rect& wndRect,
+				const Flags<Option>* options,
+				const Flags<ExtOption>* extOptions,
+				MenuHandle menu,
+				const CreateStruct* createStruct
 			) {
-			return
-				::CreateWindowEx(
+				return
+					::CreateWindowEx(
 					(extOptions ? extOptions->get() : 0),
-					propName.c_str(),
-					title.c_str(),
-					(options ? options->get() : 0),
-					wndRect.x,
-					wndRect.y,
-					wndRect.w,
-					wndRect.h,
-					nullptr,
-					menu,
-					nullptr,
-					(createStruct ? const_cast<CreateStruct*>(createStruct) : nullptr)
+						propName.c_str(),
+						title.c_str(),
+						(options ? options->get() : 0),
+						wndRect.x,
+						wndRect.y,
+						wndRect.w,
+						wndRect.h,
+						nullptr,
+						menu,
+						nullptr,
+						(createStruct ? const_cast<CreateStruct*>(createStruct) : nullptr)
 					);
-		}
+			}
+
+			inline WindowHandle createChildWindow(
+				const Tstring& propName,
+				const Tstring& title,
+				const Rect& wndRect,
+				WindowHandle parent,
+				ChildID myID,
+				const Flags<Option>* options,
+				const Flags<ExtOption>* extOptions,
+				const CreateStruct* createStruct
+			) {
+				return
+					::CreateWindowEx(
+					(extOptions ? extOptions->get() : 0),
+						propName.c_str(),
+						title.c_str(),
+						(options ? options->get() : 0),
+						wndRect.x,
+						wndRect.y,
+						wndRect.w,
+						wndRect.h,
+						parent,
+						myID,
+						nullptr,
+						(createStruct ? const_cast<CreateStruct*>(createStruct) : nullptr)
+					);
+			}
+		} // ::wawl::wnd::detail
+
 		inline WindowHandle createWindow(
 			const Tstring& propName,
 			const Tstring& title,
 			const Rect& wndRect
 			) {
 			return
-				createWindow(
+				detail::createWindow(
 					propName,
 					title,
 					wndRect,
@@ -143,7 +173,7 @@ namespace wawl {
 			Flags<Option> options
 			) {
 			return
-				createWindow(
+				detail::createWindow(
 					propName,
 					title,
 					wndRect,
@@ -162,7 +192,7 @@ namespace wawl {
 			MenuHandle menu
 			) {
 			return
-				createWindow(
+				detail::createWindow(
 					propName,
 					title,
 					wndRect,
@@ -182,7 +212,7 @@ namespace wawl {
 			const CreateStruct& createStruct
 			) {
 			return
-				createWindow(
+				detail::createWindow(
 					propName,
 					title,
 					wndRect,
@@ -198,36 +228,10 @@ namespace wawl {
 			const Tstring& title,
 			const Rect& wndRect,
 			WindowHandle parent,
-			ChildID myID,
-			const Flags<Option>* options,
-			const Flags<ExtOption>* extOptions,
-			const CreateStruct* createStruct
-			) {
-			return
-				::CreateWindowEx(
-					(extOptions ? extOptions->get() : 0),
-					propName.c_str(),
-					title.c_str(),
-					(options ? options->get() : 0),
-					wndRect.x,
-					wndRect.y,
-					wndRect.w,
-					wndRect.h,
-					parent,
-					myID,
-					nullptr,
-					(createStruct ? const_cast<CreateStruct*>(createStruct) : nullptr)
-					);
-		}
-		inline WindowHandle createChildWindow(
-			const Tstring& propName,
-			const Tstring& title,
-			const Rect& wndRect,
-			WindowHandle parent,
 			ChildID myID
 			) {
 			return
-				createChildWindow(
+				detail::createChildWindow(
 					propName,
 					title,
 					wndRect,
@@ -248,7 +252,7 @@ namespace wawl {
 			Flags<ExtOption> extOptions
 			) {
 			return
-				createChildWindow(
+				detail::createChildWindow(
 					propName,
 					title,
 					wndRect,
@@ -270,7 +274,7 @@ namespace wawl {
 			const CreateStruct& createStruct
 			) {
 			return
-				createChildWindow(
+				detail::createChildWindow(
 					propName,
 					title,
 					wndRect,
@@ -283,7 +287,7 @@ namespace wawl {
 		}
 
 		inline Rect getWindowRect(WindowHandle window) {
-			::RECT rect = {};
+			::RECT rect;
 
 			bool res =
 				::GetWindowRect(
@@ -294,7 +298,7 @@ namespace wawl {
 			return{ rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top };
 		}
 		inline Rect getClientRect(WindowHandle window) {
-			::RECT rect = {};
+			::RECT rect;
 
 			bool res =
 				::GetClientRect(
@@ -370,7 +374,7 @@ namespace wawl {
 
 			::ClientToScreen(window, posBuf);
 
-			return{ posBuf->x, posBuf->y };
+			return *posBuf;
 		}
 		// convert screen coordinate to client coordinate
 		inline Position toClientPos(WindowHandle window, const Position& screenPos) {
@@ -380,7 +384,7 @@ namespace wawl {
 
 			::ScreenToClient(window, posBuf);
 
-			return{ posBuf->x, posBuf->y };
+			return *posBuf;
 		}
 
 		// get top most window
@@ -394,12 +398,12 @@ namespace wawl {
 
 		// get message
 		// if message queue is empty, this function wait for new message with blocking
-		inline bool getMessage(Message& msg, WindowHandle window, Uint filterMin = 0, Uint filterMax = 0) {
+		inline bool getMessage(MsgProcResult& msg, WindowHandle window, Uint filterMin = 0, Uint filterMax = 0) {
 			return ::GetMessage(&msg, window, filterMin, filterMax) > 0;
 		}
 		// check message
 		// if message queue is empty, this function return false
-		inline bool checkMessage(Message& msg, WindowHandle window, bool doPopMsg, Uint filterMin = 0, Uint filterMax = 0) {
+		inline bool checkMessage(MsgProcResult& msg, WindowHandle window, bool doPopMsg, Uint filterMin = 0, Uint filterMax = 0) {
 			return
 				::PeekMessage(
 					&msg,
@@ -410,11 +414,11 @@ namespace wawl {
 				) != 0;
 		}
 
-		inline bool translateMessage(const Message& msg) {
+		inline bool translateMessage(const MsgProcResult& msg) {
 			return ::TranslateMessage(&msg) != 0;
 		}
 
-		inline LongPtr dispatchMessage(const Message& msg) {
+		inline LongPtr dispatchMessage(const MsgProcResult& msg) {
 			return ::DispatchMessage(&msg);
 		}
 
@@ -429,15 +433,15 @@ namespace wawl {
 
 		static auto& quitAll = ::PostQuitMessage;
 
-		// set the timer to add Msg::Timer to message queue regularly
-		inline UintPtr setTImerEvent(Uint elapse, TimerProc proc) {
+		// set a timer which calls 'proc' function regularly
+		inline UintPtr setTimerEvent(TimerProc proc, Uint elapse) {
 			return ::SetTimer(nullptr, 0, elapse, proc);
 		}
-		// set the timer to add Msg::Timer to message queue regularly
+		// set a timer which sends Msg::Timer message regularly
 		inline UintPtr setTimerEvent(WindowHandle window, Uint eventId, Uint elapse) {
 			return ::SetTimer(window, eventId, elapse, nullptr);
 		}
-		// set the timer to add Msg::Timer to message queue regularly
+		// set a timer which sends Msg::Timer message regularly
 		inline UintPtr setTimerEvent(WindowHandle window, Uint eventId, Uint elapse, TimerProc proc) {
 			return ::SetTimer(window, eventId, elapse, proc);
 		}
