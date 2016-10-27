@@ -6,87 +6,42 @@
 #include "Icon.hpp"
 #include "Menu.hpp"
 #include "BaseUtility.hpp"
+#include "Detail.hpp"
 
 namespace wawl {
 	namespace wnd {
 
 		struct Property : ::WNDCLASSEX {
-			Property(
-				const Tstring& name,
-				MsgProc& procFunc,
-				AppHandle app,
-				Flags<PropOption> options,
-				IconHandle icon,
-				IconHandle smallIcon,
-				CursorHandle cursor,
-				ColorBrush bkgColor
-			) :
-				Property(
-					name,
-					procFunc,
-					app,
-					&options,
-					icon,
-					smallIcon,
-					cursor,
-					&bkgColor,
-					nullptr
-				) {}
-			Property(
-				const Tstring& name,
-				MsgProc& procFunc,
-				AppHandle app,
-				Flags<PropOption> options,
-				IconHandle icon,
-				IconHandle smallIcon,
-				CursorHandle cursor,
-				ColorBrush bkgColor,
-				const Tstring& menuName
-			) :
-				Property(
-					name,
-					procFunc,
-					app,
-					&options,
-					icon,
-					smallIcon,
-					cursor,
-					&bkgColor,
-					&menuName
-				) {}
-
-		private:
-			Property(
-				const Tstring& name,
-				MsgProc& procFunc,
-				AppHandle app,
-				Flags<PropOption>* options,
-				IconHandle icon,
-				IconHandle smallIcon,
-				CursorHandle cursor,
-				ColorBrush* bkgColor,
-				const Tstring* menuName
-			) {
-				::ZeroMemory(this, sizeof(*this));
-				cbSize = sizeof(Property);
-				lpfnWndProc = procFunc;
-				hInstance = app;
-				lpszClassName = name.c_str();
-
-				if (options)
-					style = options->get();
-				if (icon)
-					hIcon = icon;
-				if (smallIcon)
-					hIconSm = smallIcon;
-				if (cursor)
-					hCursor = cursor;
-				if (bkgColor)
-					hbrBackground = reinterpret_cast<::HBRUSH>(::GetStockObject(unpackEnum(*bkgColor)));
-				if (menuName)
-					lpszMenuName = menuName->c_str();
+			Property() {
+				*this = {};
+				cbSize = sizeof(*this);
 			}
-			
+			Property(const Property&) = default;
+			Property& operator = (const Property&) = default;
+
+			auto& name(const Tstring& v) {
+				lpszClassName = v.c_str();
+				return *this;
+			}
+			auto& option(Flags<PropOption> v) {
+				style = v.get();
+				return *this;
+			}
+			auto& background(ColorBrush v) {
+				hbrBackground = reinterpret_cast<::HBRUSH>(::GetStockObject(unpackEnum(v)));
+				return *this;
+			}
+			auto& menuName(const Tstring& v) {
+				lpszMenuName = v.c_str();
+				return *this;
+			}
+
+			WAWL_DETAIL_DEFINE_SETTER(proc, MsgProc&, lpfnWndProc)
+			WAWL_DETAIL_DEFINE_SETTER(appHandle, AppHandle, hInstance)
+			WAWL_DETAIL_DEFINE_SETTER(icon, IconHandle, hIcon)
+			WAWL_DETAIL_DEFINE_SETTER(smallIcon, IconHandle, hIconSm)
+			WAWL_DETAIL_DEFINE_SETTER(cursor, CursorHandle, hCursor)
+
 		};
 
 		inline std::uint16_t registerProperty(const Property& prop) {
@@ -330,39 +285,37 @@ namespace wawl {
 		}
 		
 		// set window position
-		inline bool setPos(WindowHandle window, const Position& newPos, bool doRedraw = false) {
+		inline bool setWindowPos(WindowHandle window, const Position& newPos, bool doRedraw = false) {
 			Rect&& old = getWindowRect(window);
 
 			return ::MoveWindow(window, newPos.x, newPos.y, old.h, old.w, doRedraw) != 0;
 		}
 
-		// resize window
-		inline bool resize(WindowHandle window, const Size& newSize, bool doRedraw = true) {
+		inline bool resizeWindow(WindowHandle window, const Size& newSize, bool doRedraw = true) {
 			Rect&& old = getWindowRect(window);
 
 			return ::MoveWindow(window, old.x, old.y, newSize.x, newSize.y, doRedraw) != 0;
 		}
 
-		inline bool setShowMode(WindowHandle window, Flags<ShowMode> modes) {
+		inline bool setWindowShowMode(WindowHandle window, Flags<ShowMode> modes) {
 			return ::ShowWindow(window, modes.get()) != 0;
 		}
 
-		// set window title
-		inline bool setTitle(WindowHandle window, const Tstring& newTitle) {
+		inline bool setWindowTitle(WindowHandle window, const Tstring& newTitle) {
 			return ::SetWindowText(window, newTitle.c_str()) != 0;
 		}
 
 		// get window style
-		inline Flags<Option> getStyle(WindowHandle window) {
+		inline Flags<Option> getWindowStyle(WindowHandle window) {
 			return Flags<Option>(::GetWindowLong(window, GWL_STYLE));
 		}
 		// get window extend style
-		inline Flags<ExtOption> getExtStyle(WindowHandle window) {
+		inline Flags<ExtOption> getWindowExtStyle(WindowHandle window) {
 			return Flags<ExtOption>(::GetWindowLong(window, GWL_EXSTYLE));
 		}
 
 		// destroy window (add Msg::Destory to message queue)
-		inline bool destroy(WindowHandle window) {
+		inline bool destroyWindow(WindowHandle window) {
 			return ::DestroyWindow(window) != 0;
 		}
 
@@ -423,7 +376,7 @@ namespace wawl {
 		}
 
 		// call window message procedure
-		inline bool update(WindowHandle window) {
+		inline bool updateWindow(WindowHandle window) {
 			return ::UpdateWindow(window) != 0;
 		}
 
@@ -431,7 +384,7 @@ namespace wawl {
 			return ::DefWindowProc(window, unpackEnum(msg), wp, lp);
 		}
 
-		static auto& quitAll = ::PostQuitMessage;
+		static auto& postQuitMsg = ::PostQuitMessage;
 
 		// set a timer which calls 'proc' function regularly
 		inline UintPtr setTimerEvent(TimerProc proc, Uint elapse) {

@@ -117,7 +117,7 @@ namespace wawl {
 			Caption = WS_CAPTION,
 			Child = WS_CHILD,
 			NotDrawChildrenRegion = WS_CLIPCHILDREN,
-			NotDrawBroserRegion = WS_CLIPSIBLINGS,
+			NotDrawBrotherRegion = WS_CLIPSIBLINGS,
 			Disabled = WS_DISABLED,
 			ControlGroup = WS_GROUP,
 			UseHorizontalScroll = WS_HSCROLL,
