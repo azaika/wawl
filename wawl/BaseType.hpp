@@ -88,8 +88,30 @@ namespace wawl {
 		using Size = Position;
 
 		struct Rect {
-			int x, y;
-			int w, h;
+			long x = 0, y = 0;
+			long w = 0, h = 0;
+
+			constexpr Rect() = default;
+			constexpr Rect(const Rect&) = default;
+
+			constexpr Rect(long _x, long _y, long _w, long _h) :
+				x(_x), y(_y), w(_w), h(_h) {}
+			constexpr Rect(const Position& p, long _w, long _h) :
+				x(p.x), y(p.y), w(_w), h(_h) {}
+			constexpr Rect(long _x, long _y, const Size& size) :
+				x(_x), y(_y), w(size.x), h(size.y) {}
+			constexpr Rect(const Position& p, const Size& size) :
+				x(p.x), y(p.y), w(size.x), h(size.y) {}
+
+			constexpr Rect(const ::RECT& rect) :
+				x(rect.left),
+				y(rect.top),
+				w(rect.right - rect.left),
+				h(rect.bottom - rect.top) {}
+
+			constexpr operator ::RECT() const {
+				return{ x, y, x + w, y + h };
+			}
 		};
 
 		template <typename EnumType, std::underlying_type_t<EnumType> = 0>
@@ -99,7 +121,7 @@ namespace wawl {
 			using UnderlyingType = std::underlying_type_t<EnumType>;
 
 			constexpr Flags() = default;
-			constexpr Flags(const Flags<EnumType>& rhv) = default;
+			constexpr Flags(const Flags&) = default;
 			Flags<EnumType>& operator = (const Flags<EnumType>& rhv) {
 				base = rhv.base;
 				return *this;

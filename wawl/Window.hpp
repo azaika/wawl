@@ -13,7 +13,7 @@ namespace wawl {
 
 		struct Property : ::WNDCLASSEX {
 			Property() {
-				*this = {};
+				::ZeroMemory(this, sizeof(*this));
 				cbSize = sizeof(*this);
 			}
 			Property(const Property&) = default;
@@ -62,7 +62,7 @@ namespace wawl {
 			) {
 				return
 					::CreateWindowEx(
-					(extOptions ? extOptions->get() : 0),
+						(extOptions ? extOptions->get() : 0),
 						propName.c_str(),
 						title.c_str(),
 						(options ? options->get() : 0),
@@ -250,7 +250,7 @@ namespace wawl {
 					&rect
 				) != 0;
 
-			return{ rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top };
+			return Rect(rect);
 		}
 		inline Rect getClientRect(WindowHandle window) {
 			::RECT rect;
@@ -261,7 +261,7 @@ namespace wawl {
 					&rect
 				) != 0;
 
-			return{ rect.left, rect.top, rect.right - rect.left, rect.bottom - rect.top };
+			return Rect(rect);
 		}
 
 		// set window potision and size

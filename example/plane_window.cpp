@@ -19,37 +19,38 @@ int WawlMain(
 ) {
 	const Tstring propName = L"WndClass";
 
-	wnd::Property prop(
-		propName,
-		MsgProc,
-		appInst,
-		wnd::PropOption::HRedraw | wnd::PropOption::VRedraw,
-		wnd::loadIconFromResource(appInst, L"ico"),
-		wnd::loadIconFromResource(appInst, L"ico"),
-		wnd::loadOEMCursor(
-			wnd::OEMCursor::Arrow,
-			wnd::ImageLoadOption::DefaultSize
-			| wnd::ImageLoadOption::ShareHandle
-		),
-		wnd::ColorBrush::White
-	);
-	if (!wnd::registerProperty(prop))
+	if (
+		!wnd::registerProperty(
+			wnd::Property()
+			.name(propName)
+			.proc(MsgProc)
+			.appHandle(appInst)
+			.option(wnd::PropOption::HRedraw | wnd::PropOption::VRedraw)
+			.cursor(
+				wnd::loadOEMCursor(
+					wnd::OEMCursor::Arrow,
+					wnd::ImageLoadOption::DefaultSize
+					| wnd::ImageLoadOption::ShareHandle
+				)
+			)
+			.background(wnd::ColorBrush::White)
+		))
 		return 0;
 
 	wnd::WindowHandle window =
 		wnd::createWindow(
 			propName,
 			L"wawl test",
-			{ wnd::DefaultWindowPos.x, wnd::DefaultWindowPos.y, 640, 480 },
+			{ wnd::DefaultWindowPos, 640, 480 },
 			wnd::Option::SysMenu | wnd::Option::EnableSizeChange
 		);
 	if (!window)
 		return 0;
 
-	wnd::update(window);
-	wnd::setShowMode(window, static_cast<wnd::ShowMode>(cmdShow));
+	wnd::updateWindow(window);
+	wnd::setWindowShowMode(window, static_cast<wnd::ShowMode>(cmdShow));
 
-	wnd::Message msg;
+	wnd::MsgProcResult msg;
 	while (wnd::getMessage(msg, window)) {
 		wnd::translateMessage(msg);
 		wnd::dispatchMessage(msg);

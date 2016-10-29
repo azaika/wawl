@@ -2,8 +2,6 @@
 
 using namespace wawl;
 
-fs::ProcessInfo procInfo = {};
-
 LongPtr CALLBACK MsgProc(
 	wnd::WindowHandle window,
 	Uint msg,
@@ -14,14 +12,14 @@ LongPtr CALLBACK MsgProc(
 	static auto region = wnd::createRoundRectRegion({ 0, 0, 640, 480 }, { 200, 200 });
 
 	switch (static_cast<Msg>(msg)) {
-	case Msg::Create:
-		wnd::setRegion(window, region);
-		break;
-	case Msg::MouseLClick:
-		wnd::quitAll(0);
-		break;
-	default:
-		return wnd::defaultProc(window, static_cast<wnd::Msg>(msg), wParam, lParam);
+		case Msg::Create:
+			wnd::setRegion(window, region);
+			break;
+		case Msg::MouseLClick:
+			wnd::postQuitMsg(0);
+			break;
+		default:
+			return wnd::defaultProc(window, static_cast<wnd::Msg>(msg), wParam, lParam);
 	}
 
 	return 0;
@@ -34,22 +32,23 @@ int WawlMain(
 	int cmdShow
 ) {
 	const Tstring propName = L"WndClass";
-
-	wnd::Property prop(
-		propName,
-		MsgProc,
-		appInst,
-		wnd::PropOption::HRedraw | wnd::PropOption::VRedraw,
-		wnd::loadIconFromResource(appInst, L"ico"),
-		wnd::loadIconFromResource(appInst, L"ico"),
-		wnd::loadOEMCursor(
-			wnd::OEMCursor::Arrow,
-			wnd::ImageLoadOption::DefaultSize
-			| wnd::ImageLoadOption::ShareHandle
-		),
-		wnd::ColorBrush::White
-	);
-	if (!wnd::registerProperty(prop))
+	
+	if (
+		!wnd::registerProperty(
+			wnd::Property()
+			.name(propName)
+			.proc(MsgProc)
+			.appHandle(appInst)
+			.option(wnd::PropOption::HRedraw | wnd::PropOption::VRedraw)
+			.cursor(
+				wnd::loadOEMCursor(
+					wnd::OEMCursor::Arrow,
+					wnd::ImageLoadOption::DefaultSize
+					| wnd::ImageLoadOption::ShareHandle
+				)
+			)
+			.background(wnd::ColorBrush::White)
+		))
 		return 0;
 
 	wnd::WindowHandle window =
@@ -62,10 +61,10 @@ int WawlMain(
 	if (!window)
 		return 0;
 
-	wnd::update(window);
-	wnd::setShowMode(window, static_cast<wnd::ShowMode>(cmdShow));
+	wnd::updateWindow(window);
+	wnd::setWindowShowMode(window, static_cast<wnd::ShowMode>(cmdShow));
 
-	wnd::Message msg;
+	wnd::MsgProcResult msg;
 	while (wnd::getMessage(msg, window)) {
 		wnd::translateMessage(msg);
 		wnd::dispatchMessage(msg);
