@@ -72,7 +72,7 @@ namespace wawl {
 		return static_cast<std::underlying_type_t<EnumType>>(val);
 	}
 
-	template <typename EnumType, std::underlying_type_t<EnumType>  = 0>
+	template <typename EnumType, std::underlying_type_t<EnumType> = 0>
 	constexpr bool hasIncluded(EnumType base, EnumType val) {
 		auto unpacked = unpackEnum(val);
 		return static_cast<std::underlying_type_t<EnumType>>(base) & unpacked == unpacked;

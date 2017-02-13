@@ -19,12 +19,12 @@ int WawlMain(
 ) {
 	const Tstring propName = L"WndClass";
 
+	// create window property and register it
 	if (
 		!wnd::registerProperty(
 			wnd::Property()
 			.name(propName)
 			.proc(MsgProc)
-			.appHandle(appInst)
 			.option(wnd::PropOption::HRedraw | wnd::PropOption::VRedraw)
 			.cursor(
 				wnd::loadOEMCursor(
@@ -37,24 +37,26 @@ int WawlMain(
 		))
 		return 0;
 
-	wnd::WindowHandle window =
+	auto window =
 		wnd::createWindow(
 			propName,
 			L"wawl test",
 			{ wnd::DefaultWindowPos, 640, 480 },
-			wnd::Option::SysMenu | wnd::Option::EnableSizeChange
+			wnd::Option::Popup
 		);
 	if (!window)
 		return 0;
 
+	// update and show window
 	wnd::updateWindow(window);
 	wnd::setWindowShowMode(window, static_cast<wnd::ShowMode>(cmdShow));
 
-	wnd::MsgProcResult msg;
-	while (wnd::getMessage(msg, window)) {
-		wnd::translateMessage(msg);
-		wnd::dispatchMessage(msg);
+	// check message queue and process it
+	wnd::MsgProcResult msgRes = {};
+	while (wnd::getMessage(msgRes, window)) {
+		wnd::translateMessage(msgRes);
+		wnd::dispatchMessage(msgRes);
 	}
 
-	return static_cast<int>(msg.wParam);
+	return static_cast<int>(msgRes.wParam);
 }

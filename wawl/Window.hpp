@@ -1,12 +1,13 @@
 ﻿#pragma once
 #define WAWL_WINDOW_HPP
 
+#include "BaseUtility.hpp"
+#include "Detail.hpp"
+#include "System.hpp"
 #include "WindowBaseType.hpp"
 #include "Cursor.hpp"
 #include "Icon.hpp"
 #include "Menu.hpp"
-#include "BaseUtility.hpp"
-#include "Detail.hpp"
 
 namespace wawl {
 	namespace wnd {
@@ -15,6 +16,7 @@ namespace wawl {
 			Property() {
 				::ZeroMemory(this, sizeof(*this));
 				cbSize = sizeof(*this);
+				hInstance = sys::getLocalAppHandle();
 			}
 			Property(const Property&) = default;
 			Property& operator = (const Property&) = default;
@@ -384,7 +386,9 @@ namespace wawl {
 			return ::DefWindowProc(window, unpackEnum(msg), wp, lp);
 		}
 
-		static auto& postQuitMsg = ::PostQuitMessage;
+		inline void postQuitMsg(int exitCode = 0) {
+			::PostQuitMessage(exitCode);
+		}
 
 		// set a timer which calls 'proc' function regularly
 		inline UintPtr setTimerEvent(TimerProc proc, Uint elapse) {

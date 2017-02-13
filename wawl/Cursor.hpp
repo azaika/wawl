@@ -9,7 +9,7 @@ namespace wawl {
 	namespace wnd {
 
 		inline CursorHandle loadOEMCursor(
-			Tchar* type,
+			OEMCursorType type,
 			Flags<ImageLoadOption> loadOption,
 			Size size = {}
 			) {

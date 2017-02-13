@@ -15,3 +15,5 @@ x64
 .*
 *.TMP
 *.tmp
+
+wawl/Source.cpp
