@@ -11,7 +11,7 @@ namespace wawl {
 		enum class ImageLoadOption : Uint {
 			DefaultColor = LR_DEFAULTCOLOR,
 			UseDIBSection = LR_CREATEDIBSECTION,
-			DefaultSize = LR_DEFAULTSIZE,
+			SystemSize = LR_DEFAULTSIZE,
 			Monochrome = LR_MONOCHROME,
 			ShareHandle = LR_SHARED,
 			UseVGA = LR_VGACOLOR
