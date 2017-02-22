@@ -28,8 +28,12 @@ namespace wawl {
 			static constexpr BitmapHandle System = HBMMENU_SYSTEM;
 		};
 
-		static auto& createMenu = ::CreateMenu;
-		static auto& createPopupMenu = ::CreatePopupMenu;
+		inline MenuHandle createMenu() {
+			return ::CreateMenu();
+		}
+		inline MenuHandle createPopupMenu() {
+			return ::CreatePopupMenu();
+		}
 
 		inline MenuItemInfo makeMenuSeparator(Uint id, bool drawByOwer = false) {
 			MenuItemInfo info = {};
