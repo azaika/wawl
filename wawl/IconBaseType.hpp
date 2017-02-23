@@ -9,14 +9,45 @@ namespace wawl {
 		using IconHandle = ::HICON;
 
 		// default window icon
-		struct OEMIcon {
-			static constexpr Tchar* App = IDI_APPLICATION;
-			static constexpr Tchar* Info = IDI_INFORMATION;
-			static constexpr Tchar* Question = IDI_QUESTION;
-			static constexpr Tchar* Error = IDI_ERROR;
-			static constexpr Tchar* Warning = IDI_WARNING;
-			static constexpr Tchar* WinLogo = IDI_WINLOGO;
+		class OEMIcon {
+		public:
+			OEMIcon() = delete;
+			OEMIcon(const OEMIcon&) = delete;
+			OEMIcon& operator = (const OEMIcon&) = delete;
+
+			// default exe icon
+			static const OEMIcon App;
+			// information mark
+			static const OEMIcon Info;
+			// question mark
+			static const OEMIcon Question;
+			// error mark
+			static const OEMIcon Error;
+			// warning mark
+			static const OEMIcon Warning;
+			// windows logo
+			static const OEMIcon WinLogo;
+
+			Tchar* operator () () const {
+				return kind;
+			}
+			Tchar* unpack() const {
+				return kind;
+			}
+
+		private:
+			explicit constexpr OEMIcon(Tchar* k) : kind(k) {}
+
+			Tchar* kind;
+
 		};
+
+		const OEMIcon OEMIcon::App(IDI_APPLICATION);
+		const OEMIcon OEMIcon::Info(IDI_INFORMATION);
+		const OEMIcon OEMIcon::Question(IDI_QUESTION);
+		const OEMIcon OEMIcon::Error(IDI_ERROR);
+		const OEMIcon OEMIcon::Warning(IDI_WARNING);
+		const OEMIcon OEMIcon::WinLogo(IDI_WINLOGO);
 
 	} // ::wawl::wnd
 } // ::wawl

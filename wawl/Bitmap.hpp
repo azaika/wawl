@@ -20,12 +20,10 @@ namespace wawl {
 			Bitmap& operator = (const Bitmap&) = delete;
 
 			~Bitmap() {
-				release();
+				destroy();
 			}
 
-			Bitmap(
-				const Tstring& path,
-				const Size& size = {}
+			Bitmap(const Tstring& path, const Size& size = {}
 			) {
 				handle = static_cast<BitmapHandle>(
 					::LoadImage(
@@ -50,11 +48,41 @@ namespace wawl {
 						flags.get() | LR_LOADFROMFILE
 					));
 			}
-
-			bool load(
-				const Tstring& path,
+			Bitmap(
+				ModuleHandle module,
+				const Tstring& instanceName,
 				const Size& size = {}
 			) {
+				handle = static_cast<BitmapHandle>(
+					::LoadImage(
+						module,
+						instanceName.c_str(),
+						IMAGE_BITMAP,
+						size.x,
+						size.y,
+						0
+					));
+			}
+			Bitmap(
+				ModuleHandle module,
+				const Tstring& instanceName,
+				Flags<ImageLoadOption> loadOption,
+				const Size& size = {}
+			) {
+				handle = static_cast<BitmapHandle>(
+					::LoadImage(
+						module,
+						instanceName.c_str(),
+						IMAGE_BITMAP,
+						size.x,
+						size.y,
+						loadOption.get()
+					));
+			}
+
+			bool load(const Tstring& path, const Size& size = {}) {
+				destroy();
+
 				handle = static_cast<BitmapHandle>(
 					::LoadImage(
 						0,
@@ -71,6 +99,8 @@ namespace wawl {
 				Flags<ImageLoadOption> flags,
 				const Size& size = {}
 			) {
+				destroy();
+
 				handle = static_cast<BitmapHandle>(
 					::LoadImage(
 						0,
@@ -92,7 +122,7 @@ namespace wawl {
 					::LoadImage(
 						module,
 						instanceName.c_str(),
-						IMAGE_ICON,
+						IMAGE_BITMAP,
 						size.x,
 						size.y,
 						0
@@ -110,7 +140,7 @@ namespace wawl {
 					::LoadImage(
 						module,
 						instanceName.c_str(),
-						IMAGE_ICON,
+						IMAGE_BITMAP,
 						size.x,
 						size.y,
 						loadOption.get()
@@ -119,7 +149,7 @@ namespace wawl {
 				return handle != 0;
 			}
 
-			bool release() {
+			bool destroy() {
 				return ::DeleteObject(handle) != 0;
 			}
 

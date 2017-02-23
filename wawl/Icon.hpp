@@ -8,69 +8,251 @@
 namespace wawl {
 	namespace wnd {
 
-		inline IconHandle loadOEMIcon(
-			Tchar* type,
-			Flags<ImageLoadOption> loadOption,
-			Size size = {}
-			) {
-			return
-				static_cast<IconHandle>(
+		class Icon {
+		public:
+			Icon() = default;
+			Icon(Icon&&) = default;
+			Icon& operator = (Icon&&) = default;
+
+			// uncopyable
+			Icon(const Icon&) = delete;
+			Icon& operator = (const Icon&) = delete;
+
+			// load OEM icon with system metrix
+			Icon(const OEMIcon& oem, Flags<ImageLoadOption> loadOption = {}) {
+				handle = static_cast<IconHandle>(
 					::LoadImage(
 						nullptr,
-						type,
+						oem.unpack(),
 						IMAGE_ICON,
-						size.x,
-						size.y,
-						loadOption.get()
-						)
-					);
-		}
-
-		inline IconHandle loadIcon(
-			ModuleHandle module,
-			const Tstring& fileName,
-			Flags<ImageLoadOption> loadOption,
-			const Size& size
+						0, 0,
+						loadOption.get() | LR_DEFAULTSIZE
+					));
+			}
+			// load OEM icon with specified size
+			Icon(
+				const OEMIcon& oem,
+				const Size& size,
+				Flags<ImageLoadOption> loadOption = {}
 			) {
-			return
-				static_cast<IconHandle>(
+				handle = static_cast<IconHandle>(
 					::LoadImage(
-						module,
-						fileName.c_str(),
+						nullptr,
+						oem.unpack(),
 						IMAGE_ICON,
-						size.x,
-						size.y,
+						size.x, size.y,
+						loadOption.get()
+					));
+			}
+
+			// load from file with system metrix
+			Icon(const Tstring& path, Flags<ImageLoadOption> loadOption = {}) {
+				handle = static_cast<IconHandle>(
+					::LoadImage(
+						nullptr,
+						path.c_str(),
+						IMAGE_ICON,
+						0, 0,
+						loadOption.get() | LR_LOADFROMFILE | LR_DEFAULTSIZE
+					));
+			}
+			// load from fiel with specified size
+			Icon(
+				const Tstring& path,
+				const Size& size,
+				Flags<ImageLoadOption> loadOption = {}
+			) {
+				handle = static_cast<IconHandle>(
+					::LoadImage(
+						nullptr,
+						path.c_str(),
+						IMAGE_ICON,
+						size.x, size.y,
 						loadOption.get() | LR_LOADFROMFILE
-						)
-					);
-		}
+					));
+			}
 
-		inline IconHandle loadIconFromResource(
-			ModuleHandle module,
-			const Tstring& instName,
-			Flags<ImageLoadOption> loadOption = ImageLoadOption::SystemSize,
-			const Size& size = {}
+			// load from resource with system metrix
+			Icon(
+				ModuleHandle module,
+				const Tstring& instanceName,
+				Flags<ImageLoadOption> loadOption = {}
 			) {
-			return
-				static_cast<IconHandle>(
+				handle = static_cast<IconHandle>(
 					::LoadImage(
 						module,
-						instName.c_str(),
+						instanceName.c_str(),
 						IMAGE_ICON,
-						size.x,
-						size.y,
+						0, 0,
+						loadOption.get() | LR_DEFAULTSIZE
+					));
+			}
+			// load from resource with specified size
+			Icon(
+				ModuleHandle module,
+				const Tstring& instanceName,
+				const Size& size,
+				Flags<ImageLoadOption> loadOption = {}
+			) {
+				handle = static_cast<IconHandle>(
+					::LoadImage(
+						module,
+						instanceName.c_str(),
+						IMAGE_ICON,
+						size.x, size.y,
 						loadOption.get()
-						)
-					);
-		}
+					));
+			}
 
-		inline IconHandle copyIcon(IconHandle icon) {
-			return ::CopyIcon(icon);
-		}
+			// load OEM icon with system metrix
+			bool load(const OEMIcon& oem, Flags<ImageLoadOption> loadOption = {}) {
+				handle = static_cast<IconHandle>(
+					::LoadImage(
+						nullptr,
+						oem.unpack(),
+						IMAGE_ICON,
+						0, 0,
+						loadOption.get() | LR_DEFAULTSIZE
+					));
 
-		inline bool destroyIcon(IconHandle icon) {
-			return ::DestroyIcon(icon) != 0;
-		}
+				return isActive();
+			}
+			// load OEM icon with specified size
+			bool load(
+				const OEMIcon& oem,
+				const Size& size,
+				Flags<ImageLoadOption> loadOption = {}
+			) {
+				handle = static_cast<IconHandle>(
+					::LoadImage(
+						nullptr,
+						oem.unpack(),
+						IMAGE_ICON,
+						size.x, size.y,
+						loadOption.get()
+					));
+
+				return isActive();
+			}
+
+			// load from file
+			bool load(const Tstring& path, Flags<ImageLoadOption> loadOption = {}) {
+				handle = static_cast<IconHandle>(
+					::LoadImage(
+						nullptr,
+						path.c_str(),
+						IMAGE_ICON,
+						0, 0,
+						loadOption.get() | LR_LOADFROMFILE | LR_DEFAULTSIZE
+					));
+
+				return isActive();
+			}
+			bool load(const Tstring& path, const Size& size) {
+				handle = static_cast<IconHandle>(
+					::LoadImage(
+						nullptr,
+						path.c_str(),
+						IMAGE_ICON,
+						size.x, size.y,
+						LR_LOADFROMFILE
+					));
+
+				return isActive();
+			}
+			bool load(
+				const Tstring& path,
+				const Size& size,
+				Flags<ImageLoadOption> loadOption
+			) {
+				handle = static_cast<IconHandle>(
+					::LoadImage(
+						nullptr,
+						path.c_str(),
+						IMAGE_ICON,
+						size.x, size.y,
+						loadOption.get() | LR_LOADFROMFILE
+					));
+
+				return isActive();
+			}
+
+			// load from resource
+			bool loadFromResource(
+				ModuleHandle module,
+				const Tstring& instanceName,
+				Flags<ImageLoadOption> loadOption = {}
+			) {
+				handle = static_cast<IconHandle>(
+					::LoadImage(
+						module,
+						instanceName.c_str(),
+						IMAGE_ICON,
+						0, 0,
+						loadOption.get() | LR_DEFAULTSIZE
+					));
+
+				return isActive();
+			}
+			bool loadFromResource(
+				ModuleHandle module,
+				const Tstring& instanceName,
+				const Size& size,
+				Flags<ImageLoadOption> loadOption = {}
+			) {
+				handle = static_cast<IconHandle>(
+					::LoadImage(
+						module,
+						instanceName.c_str(),
+						IMAGE_ICON,
+						size.x, size.y,
+						loadOption.get()
+					));
+
+				return isActive();
+			}
+
+			// release icon resource
+			// don't call this function if the icon is shared resource
+			bool destroy() {
+				return ::DestroyIcon(handle) != 0;
+			}
+			
+			// copy icon
+			// pay attention that the icon become a shared resource after call this
+			Icon copy() {
+				return Icon(::CopyIcon(handle));
+			}
+
+			bool validate() {
+				auto h = static_cast<IconHandle>(
+					::CopyImage(
+						handle,
+						IMAGE_ICON,
+						0, 0,
+						LR_COPYRETURNORG
+					));
+
+				if (h != 0) {
+					handle = h;
+					return true;
+				}
+				return false;
+			}
+
+			bool isActive() const {
+				return handle != 0;
+			}
+			explicit operator bool() const {
+				return isActive();
+			}
+
+		private:
+			explicit Icon(IconHandle h) : handle(h) {}
+
+			IconHandle handle = 0;
+
+		};
 
 	} // ::wawl::wnd
 } // ::wawl
