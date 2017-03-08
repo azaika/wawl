@@ -37,12 +37,21 @@ namespace wawl {
 				lpszMenuName = v.c_str();
 				return *this;
 			}
+			auto& icon(const Icon& v) {
+				hIcon = v.getHandle();
+				return *this;
+			}
+			auto& smallIcon(const Icon& v) {
+				hIconSm = v.getHandle();
+				return *this;
+			}
+			auto& cursor(const Cursor& v) {
+				hIcon = v.getHandle();
+				return *this;
+			}
 
 			WAWL_DETAIL_DEFINE_SETTER(proc, MsgProc&, lpfnWndProc)
 			WAWL_DETAIL_DEFINE_SETTER(appHandle, AppHandle, hInstance)
-			WAWL_DETAIL_DEFINE_SETTER(icon, IconHandle, hIcon)
-			WAWL_DETAIL_DEFINE_SETTER(smallIcon, IconHandle, hIconSm)
-			WAWL_DETAIL_DEFINE_SETTER(cursor, CursorHandle, hCursor)
 
 		};
 

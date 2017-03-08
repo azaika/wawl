@@ -10,9 +10,9 @@ namespace wawl {
 
 		class Cursor {
 		public:
-			Cursor() = default;
-			Cursor(Cursor&&) = default;
-			Cursor& operator = (Cursor&&) = default;
+			constexpr Cursor() = default;
+			constexpr Cursor(Cursor&&) = default;
+			constexpr Cursor& operator = (Cursor&&) = default;
 
 			// uncopyable
 			Cursor(const Cursor&) = delete;
@@ -222,15 +222,19 @@ namespace wawl {
 				return CopyCursor(handle);
 			}
 
-			bool isActive() const {
+			constexpr bool isActive() const {
 				return handle != 0;
 			}
-			explicit operator bool() const {
+			constexpr explicit operator bool() const {
 				return isActive();
 			}
 
+			constexpr CursorHandle getHandle() const {
+				return handle;
+			}
+
 		private:
-			Cursor(CursorHandle h) : handle(h) {}
+			constexpr explicit Cursor(CursorHandle h) : handle(h) {}
 
 			CursorHandle handle = 0;
 

@@ -40,7 +40,7 @@ namespace wawl {
 
 		// any handle
 		using Handle = ::HANDLE;
-		constexpr Handle InvalidHandle = INVALID_HANDLE_VALUE;
+		const Handle InvalidHandle = INVALID_HANDLE_VALUE;
 		inline bool closeHandle(Handle h) {
 			return ::CloseHandle(h) != 0;
 		}
@@ -54,31 +54,31 @@ namespace wawl {
 
 			constexpr Position() = default;
 			constexpr Position(const Position&) = default;
-			Position& operator = (const Position&) = default;
+			constexpr Position& operator = (const Position&) = default;
 
 			constexpr Position(long _x, long _y) :
 				x(_x), y(_y) {}
 			constexpr Position(const ::POINT& p) :
 				x(p.x), y(p.y) {}
 
-			Position operator + (const Position& p) {
+			constexpr Position operator + (const Position& p) {
 				return Position{ x + p.x, y + p.y };
 			}
-			Position& operator += (const Position& p) {
+			constexpr Position& operator += (const Position& p) {
 				x += p.x;
 				y += p.y;
 				return *this;
 			}
-			Position operator - (const Position& p) {
+			constexpr Position operator - (const Position& p) {
 				return Position{ x - p.x, y - p.y };
 			}
-			Position& operator -= (const Position& p) {
+			constexpr Position& operator -= (const Position& p) {
 				x -= p.x;
 				y -= p.y;
 				return *this;
 			}
 
-			operator const ::POINT& () {
+			constexpr operator const ::POINT& () {
 				return *reinterpret_cast<::POINT*>(this);
 			}
 			constexpr operator const ::POINT& () const {
@@ -132,19 +132,19 @@ namespace wawl {
 			constexpr Flags(UnderlyingType val) :
 				base(val) {}
 
-			ThisType& merge(UnderlyingType val) {
+			constexpr ThisType& merge(UnderlyingType val) {
 				base |= val;
 				return *this;
 			}
 			constexpr ThisType operator | (UnderlyingType val) const {
 				return ThisType(base | val);
 			}
-			ThisType& operator |= (UnderlyingType val) {
+			constexpr ThisType& operator |= (UnderlyingType val) {
 				base |= val;
 				return *this;
 			}
 
-			ThisType& rid(UnderlyingType val) {
+			constexpr ThisType& rid(UnderlyingType val) {
 				base &= (~val);
 				return *this;
 			}

@@ -174,10 +174,7 @@ namespace wawl {
 							0
 						)));
 			}
-			Bitmap copy(
-				ImageCopyOption options,
-				const Size& size = {}
-			) {
+			Bitmap copy(ImageCopyOption options, const Size& size = {}) {
 				return Bitmap(
 					static_cast<BitmapHandle>(
 						::CopyImage(
@@ -212,12 +209,12 @@ namespace wawl {
 				return isActive();
 			}
 
-			BitmapHandle get() const {
+			BitmapHandle getHandle() const {
 				return handle;
 			}
 
 		private:
-			Bitmap(BitmapHandle h) : handle(h) {}
+			constexpr explicit Bitmap(BitmapHandle h) : handle(h) {}
 
 			BitmapHandle handle = 0;
 

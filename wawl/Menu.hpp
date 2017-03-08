@@ -10,23 +10,36 @@ namespace wawl {
 	namespace wnd {
 
 		struct OEMMenuBarBitmap {
-			static constexpr BitmapHandle Callback = HBMMENU_CALLBACK;
-			static constexpr BitmapHandle Close = HBMMENU_MBAR_CLOSE;
-			static constexpr BitmapHandle DisabledClose = HBMMENU_MBAR_CLOSE_D;
-			static constexpr BitmapHandle Minimize = HBMMENU_MBAR_MINIMIZE;
-			static constexpr BitmapHandle DisabledMinimize = HBMMENU_MBAR_MINIMIZE_D;
-			static constexpr BitmapHandle Restore = HBMMENU_MBAR_RESTORE;
-			static constexpr BitmapHandle System = HBMMENU_SYSTEM;
+			static const BitmapHandle Callback;
+			static const BitmapHandle Close;
+			static const BitmapHandle DisabledClose;
+			static const BitmapHandle Minimize;
+			static const BitmapHandle DisabledMinimize;
+			static const BitmapHandle Restore;
+			static const BitmapHandle System;
 		};
+		const BitmapHandle OEMMenuBarBitmap::Callback = HBMMENU_CALLBACK;
+		const BitmapHandle OEMMenuBarBitmap::Close = HBMMENU_MBAR_CLOSE;
+		const BitmapHandle OEMMenuBarBitmap::DisabledClose = HBMMENU_MBAR_CLOSE_D;
+		const BitmapHandle OEMMenuBarBitmap::Minimize = HBMMENU_MBAR_MINIMIZE;
+		const BitmapHandle OEMMenuBarBitmap::DisabledMinimize = HBMMENU_MBAR_MINIMIZE_D;
+		const BitmapHandle OEMMenuBarBitmap::Restore = HBMMENU_MBAR_RESTORE;
+		const BitmapHandle OEMMenuBarBitmap::System = HBMMENU_SYSTEM;
 
 		struct OEMPopupMenuBitmap {
-			static constexpr BitmapHandle Callback = HBMMENU_CALLBACK;
-			static constexpr BitmapHandle Close = HBMMENU_POPUP_CLOSE;
-			static constexpr BitmapHandle Maximize = HBMMENU_POPUP_MAXIMIZE;
-			static constexpr BitmapHandle Minimize = HBMMENU_POPUP_MINIMIZE;
-			static constexpr BitmapHandle Restore = HBMMENU_POPUP_RESTORE;
-			static constexpr BitmapHandle System = HBMMENU_SYSTEM;
+			static const BitmapHandle Callback;
+			static const BitmapHandle Close;
+			static const BitmapHandle Maximize;
+			static const BitmapHandle Minimize;
+			static const BitmapHandle Restore;
+			static const BitmapHandle System;
 		};
+		const BitmapHandle OEMPopupMenuBitmap::Callback = HBMMENU_CALLBACK;
+		const BitmapHandle OEMPopupMenuBitmap::Close = HBMMENU_POPUP_CLOSE;
+		const BitmapHandle OEMPopupMenuBitmap::Maximize = HBMMENU_POPUP_MAXIMIZE;
+		const BitmapHandle OEMPopupMenuBitmap::Minimize = HBMMENU_POPUP_MINIMIZE;
+		const BitmapHandle OEMPopupMenuBitmap::Restore = HBMMENU_POPUP_RESTORE;
+		const BitmapHandle OEMPopupMenuBitmap::System = HBMMENU_SYSTEM;
 
 		inline MenuHandle createMenu() {
 			return ::CreateMenu();

@@ -10,9 +10,9 @@ namespace wawl {
 
 		class Icon {
 		public:
-			Icon() = default;
-			Icon(Icon&&) = default;
-			Icon& operator = (Icon&&) = default;
+			constexpr Icon() = default;
+			constexpr Icon(Icon&&) = default;
+			constexpr Icon& operator = (Icon&&) = default;
 
 			// uncopyable
 			Icon(const Icon&) = delete;
@@ -240,15 +240,19 @@ namespace wawl {
 				return false;
 			}
 
-			bool isActive() const {
+			constexpr bool isActive() const {
 				return handle != 0;
 			}
-			explicit operator bool() const {
+			constexpr explicit operator bool() const {
 				return isActive();
 			}
 
+			constexpr IconHandle getHandle() const {
+				return handle;
+			}
+
 		private:
-			explicit Icon(IconHandle h) : handle(h) {}
+			constexpr explicit Icon(IconHandle h) : handle(h) {}
 
 			IconHandle handle = 0;
 
