@@ -321,23 +321,19 @@ namespace wawl {
 
 		// convert client coordinate to screen coordinate
 		inline Position toScreenPos(WindowHandle window, const Position& clientPos) {
-			::LPPOINT posBuf;
-			posBuf->x = clientPos.x;
-			posBuf->y = clientPos.y;
+			::POINT posBuf = {.x = clientPos.x, .y = clientPos.y};
 
-			::ClientToScreen(window, posBuf);
+			::ClientToScreen(window, &posBuf);
 
-			return *posBuf;
+			return static_cast<Position>(posBuf);
 		}
 		// convert screen coordinate to client coordinate
 		inline Position toClientPos(WindowHandle window, const Position& screenPos) {
-			::LPPOINT posBuf;
-			posBuf->x = screenPos.x;
-			posBuf->y = screenPos.y;
+			::POINT posBuf = {.x = screenPos.x, .y = screenPos.y};
 
-			::ScreenToClient(window, posBuf);
+			::ScreenToClient(window, &posBuf);
 
-			return *posBuf;
+			return static_cast<Position>(posBuf);
 		}
 
 		// get top most window
