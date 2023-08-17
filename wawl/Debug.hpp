@@ -39,9 +39,9 @@ namespace wawl {
 			std::uint8_t* buffer,
 			std::uint32_t n
 		) {
-			::DWORD readByte;
+			::SIZE_T readByte;
 
-			return (
+			return static_cast<std::uint32_t>((
 				::ReadProcessMemory(
 					procHandle,
 					begin,
@@ -51,7 +51,7 @@ namespace wawl {
 				) != 0
 				? readByte
 				: 0
-				);
+				));
 		}
 		inline std::uint32_t readMemory(
 			Handle procHandle,
@@ -69,9 +69,9 @@ namespace wawl {
 			const void* begin,
 			std::vector<std::uint8_t>& buffer
 		) {
-			::DWORD writtenSize;
+			::SIZE_T writtenSize;
 
-			return (
+			return static_cast<std::uint32_t>((
 				::WriteProcessMemory(
 					procHandle,
 					const_cast<void*>(begin),
@@ -81,7 +81,7 @@ namespace wawl {
 				)
 				? writtenSize
 				: 0
-				);
+				));
 		}
 
 	} // ::wawl::debug
