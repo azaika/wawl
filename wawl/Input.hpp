@@ -11,10 +11,10 @@ namespace wawl {
 	namespace input {
 
 		inline Position getCursorPos() {
-			::LPPOINT pos;
-			::GetCursorPos(pos);
+			::POINT pos = {.x = 0l, .y = 0l};
+			::GetCursorPos(&pos);
 
-			return Position{ pos->x, pos->y };
+			return static_cast<Position>(pos);
 		}
 		inline bool setCursorPos(const Position& pos) {
 			return ::SetCursorPos(pos.x, pos.y) != 0;

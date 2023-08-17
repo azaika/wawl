@@ -1,6 +1,7 @@
 ﻿#pragma once
 #define WAWL_BASE_TYPE_HPP
 
+#include <bit>
 #include <string>
 #include <cstdint>
 #include <type_traits>
@@ -40,7 +41,7 @@ namespace wawl {
 
 		// any handle
 		using Handle = ::HANDLE;
-		constexpr Handle InvalidHandle = INVALID_HANDLE_VALUE;
+		Handle InvalidHandle = INVALID_HANDLE_VALUE;
 		inline bool closeHandle(Handle h) {
 			return ::CloseHandle(h) != 0;
 		}
@@ -82,7 +83,7 @@ namespace wawl {
 				return *reinterpret_cast<::POINT*>(this);
 			}
 			constexpr operator const ::POINT& () const {
-				return *reinterpret_cast<const ::POINT*>(this);
+				return *std::bit_cast<const ::POINT*>(this);
 			}
 		};
 		using Size = Position;
